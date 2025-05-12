@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-Have Fun!
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>W3lc0m3 t0 mY d1g174L L41R</title>
-  
+  <title>W3lc0m3 t0 My D1g174l L41R</title>
+
   <!-- Glitch & UI Styles -->
   <link rel="stylesheet" href="/css/glitch-effects.css">
   <link rel="stylesheet" href="/css/fix.css">
@@ -53,10 +52,6 @@ Have Fun!
 </head>
 
 <body>
-  
-  <div id="ai-assistant" aria-label="AI Assistant"></div>
-  
-  
   <!-- Scanlines Overlay -->
   <div class="scanlines"></div>
 
@@ -84,9 +79,16 @@ Have Fun!
         <span>About</span>
       </div>
 
-      <div class="icon" data-target="aquarium" role="button" aria-label="Trippy Aquarium">
-  <img src="img/aquarium-icon.png" alt="Aquarium">
-</div>
+      
+        <div id="desktop-icons">
+      <div class="desktop-icon" id="icon-about" data-window="about">
+        <img
+          src="https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/Benny.png?v=1746392528967"
+          alt="About"
+          loading="eager"
+        />
+        <span>About</span>
+      </div>
       
       <div class="desktop-icon" id="icon-tigerrr" data-window="TIGERRR">
         <img
@@ -296,7 +298,6 @@ Have Fun!
   </div>
 </div>
       
-    
       
     <!-- ABOUT.EXE -->
     <div id="about" class="popup-window hidden">
@@ -634,15 +635,6 @@ Have Fun!
   </div>
 
   <!-- Scripts -->
-    <!-- index.html -->
-<script type="module">
-  document.querySelectorAll('.icon').forEach(btn=>{
-    btn.onclick = async ()=>{
-      const { openWindow } = await import('./js/window-manager.js');
-      openWindow(btn.dataset.target);
-    };
-  });
-</script>
   <script src="/js/profile-glitch.js" defer></script>
   <script src="/js/boot-sequence.js"></script>
   <script src="/js/lazy-loader.js"></script>

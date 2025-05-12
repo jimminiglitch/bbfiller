@@ -622,15 +622,3 @@ self.addEventListener('notificationclick', event => {
 
 // Log successful registration
 log('Service Worker registered');
-
-// public/js/sw.js
-const CACHE = 'bbfiller-v2';
-self.addEventListener('install', evt=>{
-  evt.waitUntil(caches.open(CACHE).then(c=>c.addAll([
-    '/','/css/main.css','/js/crt-shader.js'
-  ])));
-});
-self.addEventListener('fetch', evt=>{
-  evt.respondWith(caches.match(evt.request)
-    .then(res=> res || fetch(evt.request)));
-});
