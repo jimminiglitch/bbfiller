@@ -1,185 +1,445 @@
-/* Enhanced Window Styling */
+/**
+ * Enhanced Windows CSS
+ * Provides advanced styling for windows with liquid animations,
+ * neon effects, and responsive design
+ */
 
-/* Base window styles */
+/* Window Container */
 .popup-window {
-  background-color: rgba(0, 0, 0, 0.85) !important;
-  border: 1px solid #00ffff !important;
-  border-radius: 5px !important;
-  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3) !important;
-  overflow: hidden !important;
-  transition: box-shadow 0.2s ease, transform 0.1s ease !important;
-  will-change: transform, box-shadow !important;
+  position: absolute;
+  background: rgba(10, 15, 25, 0.85);
+  border: 2px solid #00f0ff;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+  overflow: hidden;
+  min-width: 300px;
+  min-height: 200px;
+  backdrop-filter: blur(10px);
+  transition: border-color 0.3s, box-shadow 0.3s;
+  transform-origin: center;
 }
 
-/* Window header */
+/* Active Window */
+.window-active {
+  border-color: #00f0ff;
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.5), inset 0 0 15px rgba(0, 240, 255, 0.1);
+}
+
+/* Window Header */
 .window-header {
-  background-color: rgba(0, 0, 0, 0.85) !important;
-  border-bottom: 1px solid #00ffff !important;
-  color: #00ffff !important;
-  padding: 5px 10px !important;
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: center !important;
-  cursor: move !important;
-  user-select: none !important;
-  height: 30px !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+  background: linear-gradient(90deg, rgba(0, 70, 100, 0.9), rgba(0, 20, 40, 0.9));
+  color: #fff;
+  cursor: move;
+  user-select: none;
 }
 
-/* Window title */
-.window-title {
-  color: #00ffff !important;
-  font-family: 'VT323', monospace !important;
-  font-size: 16px !important;
-  text-transform: uppercase !important;
-  letter-spacing: 1px !important;
-  text-shadow: 0 0 5px rgba(0, 255, 255, 0.7) !important;
+.window-active .window-header {
+  background: linear-gradient(90deg, rgba(0, 120, 170, 0.9), rgba(0, 40, 80, 0.9));
 }
 
-/* Close button */
-.close-btn {
-  background-color: transparent !important;
-  border: none !important;
-  color: #00ffff !important;
-  cursor: pointer !important;
-  font-size: 16px !important;
-  transition: color 0.2s ease !important;
+.window-header span {
+  font-family: "Press Start 2P", monospace;
+  font-size: 14px;
+  text-shadow: 0 0 5px rgba(0, 240, 255, 0.7);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.close-btn:hover {
-  color: #ff5555 !important;
-  text-shadow: 0 0 5px rgba(255, 85, 85, 0.7) !important;
+/* Window Controls */
+.window-header button {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  border: none;
+  margin-left: 5px;
+  font-family: "VT323", monospace;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
-/* Window content */
+.window-header button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.window-header button:active {
+  transform: scale(0.95);
+}
+
+.window-header .minimize {
+  background: #ffcc00;
+  color: #333;
+}
+
+.window-header .minimize:hover {
+  background: #ffd700;
+}
+
+.window-header .maximize {
+  background: #00cc00;
+  color: #333;
+}
+
+.window-header .maximize:hover {
+  background: #00dd00;
+}
+
+.window-header .close {
+  background: #ff3b30;
+  color: #fff;
+}
+
+.window-header .close:hover {
+  background: #ff5146;
+}
+
+/* Window Content */
 .window-content {
-  background-color: transparent !important;
-  color: #ffffff !important;
-  padding: 10px !important;
-  overflow: auto !important;
-  height: calc(100% - 30px) !important;
-  scrollbar-width: thin !important;
-  scrollbar-color: #00ffff rgba(0, 0, 0, 0.3) !important;
+  padding: 15px;
+  height: calc(100% - 44px);
+  overflow: auto;
+  color: #fff;
+  font-family: "VT323", monospace;
+  font-size: 18px;
+  line-height: 1.4;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 240, 255, 0.5) rgba(0, 0, 0, 0.2);
 }
 
-/* Custom scrollbar */
 .window-content::-webkit-scrollbar {
-  width: 8px !important;
-  height: 8px !important;
+  width: 8px;
+  height: 8px;
 }
 
 .window-content::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.3) !important;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
 }
 
 .window-content::-webkit-scrollbar-thumb {
-  background-color: #00ffff !important;
-  border-radius: 4px !important;
+  background: rgba(0, 240, 255, 0.5);
+  border-radius: 4px;
 }
 
-/* Active window effect */
-.popup-window:focus-within {
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5) !important;
-  border-color: #00ffff !important;
+.window-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 240, 255, 0.7);
 }
 
-/* Resize handles - invisible but functional */
+/* Window States */
+.popup-window.hidden {
+  display: none;
+}
+
+.popup-window.minimized {
+  display: none;
+}
+
+/* Resize Handles */
 .resize-handle {
-  position: absolute !important;
-  background-color: transparent !important;
-  transition: background-color 0.2s ease !important;
-  z-index: 10 !important;
+  position: absolute;
+  background: transparent;
+  z-index: 1000;
 }
 
-.resize-handle:hover {
-  background-color: rgba(0, 255, 255, 0.2) !important;
+/* Taskbar */
+#start-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: rgba(10, 15, 25, 0.9);
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  z-index: 10000;
+  border-top: 2px solid #00f0ff;
+  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
 }
 
-/* Glitch effect during resize/drag */
-@keyframes windowGlitch {
-  0% {
-    transform: translate(0);
-    filter: none;
-  }
-  20% {
-    transform: translate(-2px, 1px);
-    filter: hue-rotate(-30deg) saturate(1.5);
-  }
-  40% {
-    transform: translate(2px, -1px);
-    filter: hue-rotate(30deg) saturate(1.2);
-  }
-  60% {
-    transform: translate(-1px, -1px);
-    filter: invert(0.1);
-  }
-  80% {
-    transform: translate(1px, 1px);
-    filter: brightness(1.2);
-  }
-  100% {
-    transform: translate(0);
-    filter: none;
-  }
+#start-button {
+  background: linear-gradient(90deg, #00f0ff, #0070ff);
+  border: none;
+  color: #fff;
+  font-family: "Press Start 2P", monospace;
+  font-size: 12px;
+  padding: 0 15px;
+  height: 30px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+  transition: all 0.2s;
 }
 
-.window-glitch {
-  animation: windowGlitch 0.15s steps(2) forwards;
+#start-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
 }
 
-/* Resizing effect */
-.resizing {
-  transition: none !important;
-  box-shadow: 0 0 25px rgba(0, 255, 255, 0.7) !important;
+#start-button:active {
+  transform: scale(0.95);
 }
 
-/* Maximized window */
-.window-maximized {
-  border-radius: 0 !important;
+#taskbar-icons {
+  display: flex;
+  flex: 1;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-/* Media content within windows */
-.window-content video,
-.window-content iframe {
-  max-width: 100% !important;
-  height: auto !important;
-  display: block !important;
-  margin: 0 auto !important;
-  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+#taskbar-icons::-webkit-scrollbar {
+  display: none;
 }
 
-.window-content img:not(.icon) {
-  max-width: 100% !important;
-  height: auto !important;
-  display: block !important;
-  margin: 10px auto !important;
+.taskbar-button {
+  height: 30px;
+  padding: 0 10px;
+  margin-right: 5px;
+  background: rgba(30, 40, 60, 0.7);
+  border: 1px solid #444;
+  border-radius: 4px;
+  color: #fff;
+  font-family: "VT323", monospace;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 100px;
+  max-width: 150px;
 }
 
-/* Text content */
-.window-content p,
-.window-content h1,
-.window-content h2,
-.window-content h3 {
-  max-width: 100% !important;
-  overflow-wrap: break-word !important;
-  color: #ffffff !important;
+.taskbar-button span {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* Window transition effects */
-@keyframes windowOpen {
-  0% {
-    opacity: 0;
+.taskbar-button:hover {
+  background: rgba(40, 50, 70, 0.8);
+  border-color: #666;
+}
+
+.taskbar-button.active {
+  background: linear-gradient(90deg, rgba(0, 120, 170, 0.8), rgba(0, 40, 80, 0.8));
+  border-color: #00f0ff;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+}
+
+#clock {
+  color: #00f0ff;
+  font-family: "VT323", monospace;
+  font-size: 18px;
+  margin-left: 10px;
+  min-width: 80px;
+  text-align: right;
+}
+
+/* Start Menu */
+#start-menu {
+  position: fixed;
+  bottom: 40px;
+  left: 10px;
+  width: 200px;
+  background: rgba(10, 15, 25, 0.95);
+  border: 2px solid #00f0ff;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+  padding: 10px 0;
+  display: none;
+  z-index: 10001;
+  backdrop-filter: blur(10px);
+  transform-origin: bottom left;
+  animation: startMenuOpen 0.2s ease-out;
+}
+
+@keyframes startMenuOpen {
+  from {
     transform: scale(0.9);
+    opacity: 0;
   }
-  50% {
-    opacity: 1;
-    transform: scale(1.02);
-  }
-  100% {
-    opacity: 1;
+  to {
     transform: scale(1);
+    opacity: 1;
   }
 }
 
-.popup-window[style*="display: block"] {
-  animation: windowOpen 0.3s ease forwards;
+#start-menu a {
+  display: block;
+  padding: 8px 15px;
+  color: #fff;
+  font-family: "VT323", monospace;
+  font-size: 18px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+#start-menu a:hover {
+  background: rgba(0, 240, 255, 0.2);
+  color: #00f0ff;
+  padding-left: 20px;
+}
+
+/* Dragging and Resizing States */
+.popup-window.dragging {
+  opacity: 0.8;
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.7);
+  transition: none;
+}
+
+.popup-window.resizing {
+  opacity: 0.8;
+  transition: none;
+}
+
+/* Window Animations */
+@keyframes windowOpen {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes windowClose {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+}
+
+/* Liquid Metal Close Animation */
+@keyframes liquidMetalClose {
+  0% {
+    transform: scale(1);
+    border-radius: 8px;
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(0);
+    border-radius: 50%;
+    opacity: 0;
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .popup-window {
+    min-width: 250px;
+    min-height: 150px;
+  }
+
+  .window-header span {
+    font-size: 12px;
+  }
+
+  .window-header button {
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+  }
+
+  .window-content {
+    font-size: 16px;
+    padding: 10px;
+  }
+
+  #start-bar {
+    height: 50px;
+  }
+
+  #start-button {
+    font-size: 10px;
+    padding: 0 10px;
+  }
+
+  .taskbar-button {
+    min-width: 80px;
+    max-width: 120px;
+    font-size: 14px;
+  }
+
+  #clock {
+    font-size: 16px;
+    min-width: 70px;
+  }
+
+  #start-menu {
+    width: 180px;
+  }
+
+  #start-menu a {
+    font-size: 16px;
+    padding: 6px 12px;
+  }
+}
+
+/* High Contrast Mode */
+body.high-contrast .popup-window {
+  background: #000;
+  border: 3px solid #fff;
+  box-shadow: none;
+}
+
+body.high-contrast .window-header {
+  background: #000;
+  border-bottom: 2px solid #fff;
+}
+
+body.high-contrast .window-header span {
+  text-shadow: none;
+}
+
+body.high-contrast #start-bar {
+  background: #000;
+  border-top: 2px solid #fff;
+  box-shadow: none;
+}
+
+body.high-contrast #start-button {
+  background: #000;
+  border: 2px solid #fff;
+  box-shadow: none;
+}
+
+body.high-contrast .taskbar-button {
+  background: #000;
+  border: 2px solid #fff;
+}
+
+body.high-contrast .taskbar-button.active {
+  background: #fff;
+  color: #000;
+}
+
+/* Reduced Motion */
+body.reduced-motion .popup-window,
+body.reduced-motion .window-header button,
+body.reduced-motion #start-button,
+body.reduced-motion .taskbar-button,
+body.reduced-motion #start-menu a {
+  transition: none;
+}
+
+body.reduced-motion #start-menu {
+  animation: none;
 }

@@ -1,599 +1,592 @@
 /**
- * Mobile & Responsive Enhancements
- * Improves the experience on mobile devices
+ * Enhanced mobile experience for bbfiller
+ * Provides touch-friendly interactions and responsive adjustments
  */
-document.addEventListener("DOMContentLoaded", function() {
-  console.log("📱 Initializing Mobile Enhancements...");
-  
-  // Configuration
-  const config = {
-    // Breakpoints
-    breakpoints: {
-      mobile: 768,
-      tablet: 1024
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Wait for boot sequence to complete
+  window.addEventListener("boot-sequence-complete", initMobileEnhancements)
+})
+
+function initMobileEnhancements() {
+  // Check if device is mobile
+  const isMobile =
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+    window.innerWidth < 768
+
+  if (isMobile) {
+    addMobileStyles()
+    addTouchInteractions()
+    optimizeForMobile()
+  }
+
+  // Add responsive listener for orientation changes
+  window.addEventListener("resize", handleResize)
+}
+
+// Add mobile-specific styles
+function addMobileStyles() {
+  const mobileStyles = document.createElement("style")
+  mobileStyles.id = "mobile-enhancements"
+  mobileStyles.textContent = `
+    /* Increase tap target sizes */
+    .desktop-icon {
+      width: 80px;
+      height: 80px;
+      margin: 15px;
+    }
+    
+    .icon-img {
+      width: 48px;
+      height: 48px;
+    }
+    
+    .icon-label {
+      font-size: 14px;
+    }
+    
+    /* Adjust window controls for touch */
+    .window-title-bar {
+      height: 40px;
+    }
+    
+    .window-control {
+      width: 30px;
+      height: 30px;
+      margin-left: 8px;
+    }
+    
+    /* Adjust taskbar for mobile */
+    .taskbar {
+      height: 50px;
+    }
+    
+    .taskbar-button {
+      height: 40px;
+      padding: 0 12px;
+    }
+    
+    /* Add mobile-specific scrolling */
+    .window-content {
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Optimize forms for mobile */
+    input, select, textarea, button {
+      font-size: 16px; /* Prevents zoom on focus in iOS */
+      padding: 10px;
+    }
+    
+    /* Add pull-to-refresh indicator */
+    .pull-indicator {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.7);
+      color: #00f0ff;
+      font-family: 'VT323', monospace;
+      transform: translateY(-100%);
+      transition: transform 0.3s;
+      z-index: 9999;
+    }
+    
+    /* Mobile menu button */
+    .mobile-menu-button {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      width: 40px;
+      height: 40px;
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid #00f0ff;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      cursor: pointer;
+    }
+    
+    .mobile-menu-button span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: #00f0ff;
+      margin: 2px 0;
+      transition: all 0.3s;
+    }
+    
+    .mobile-menu-button.active span:nth-child(1) {
+      transform: translateY(6px) rotate(45deg);
+    }
+    
+    .mobile-menu-button.active span:nth-child(2) {
+      opacity: 0;
+    }
+    
+    .mobile-menu-button.active span:nth-child(3) {
+      transform: translateY(-6px) rotate(-45deg);
+    }
+    
+    /* Mobile menu */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 250px;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 9999;
+      transform: translateX(100%);
+      transition: transform 0.3s;
+      border-left: 2px solid #00f0ff;
+      box-shadow: -5px 0 15px rgba(0, 240, 255, 0.3);
+      padding: 60px 20px 20px;
+      overflow-y: auto;
+    }
+    
+    .mobile-menu.active {
+      transform: translateX(0);
+    }
+    
+    .mobile-menu-item {
+      display: flex;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(0, 240, 255, 0.3);
+      color: #fff;
+      font-family: 'VT323', monospace;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    
+    .mobile-menu-item img {
+      width: 24px;
+      height: 24px;
+      margin-right: 12px;
+    }
+    
+    /* Fullscreen button */
+    .fullscreen-button {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      width: 40px;
+      height: 40px;
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid #00f0ff;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      cursor: pointer;
+    }
+    
+    .fullscreen-button svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: #00f0ff;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+  `
+
+  document.head.appendChild(mobileStyles)
+
+  // Add mobile indicator class to body
+  document.body.classList.add("mobile-device")
+}
+
+// Add touch-friendly interactions
+function addTouchInteractions() {
+  // Add mobile menu button
+  const menuButton = document.createElement("div")
+  menuButton.classList.add("mobile-menu-button")
+  menuButton.innerHTML = `
+    <span></span>
+    <span></span>
+    <span></span>
+  `
+  document.body.appendChild(menuButton)
+
+  // Add mobile menu
+  const mobileMenu = document.createElement("div")
+  mobileMenu.classList.add("mobile-menu")
+  document.body.appendChild(mobileMenu)
+
+  // Populate menu with desktop icons
+  const desktopIcons = document.querySelectorAll(".desktop-icon")
+  desktopIcons.forEach((icon) => {
+    const iconImg = icon.querySelector(".icon-img")
+    const iconLabel = icon.querySelector(".icon-label")
+
+    if (iconImg && iconLabel) {
+      const menuItem = document.createElement("div")
+      menuItem.classList.add("mobile-menu-item")
+      menuItem.innerHTML = `
+        <img src="${iconImg.getAttribute("src")}" alt="">
+        <span>${iconLabel.textContent}</span>
+      `
+
+      // Add click handler
+      menuItem.addEventListener("click", () => {
+        icon.click()
+        toggleMobileMenu(false)
+      })
+
+      mobileMenu.appendChild(menuItem)
+    }
+  })
+
+  // Toggle menu on button click
+  menuButton.addEventListener("click", () => {
+    toggleMobileMenu()
+  })
+
+  // Add fullscreen button
+  const fullscreenButton = document.createElement("div")
+  fullscreenButton.classList.add("fullscreen-button")
+  fullscreenButton.innerHTML = `
+    <svg viewBox="0 0 24 24">
+      <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+    </svg>
+  `
+  document.body.appendChild(fullscreenButton)
+
+  // Toggle fullscreen on button click
+  fullscreenButton.addEventListener("click", toggleFullscreen)
+
+  // Add pull-to-refresh indicator
+  const pullIndicator = document.createElement("div")
+  pullIndicator.classList.add("pull-indicator")
+  pullIndicator.textContent = "Pull down to refresh"
+  document.body.appendChild(pullIndicator)
+
+  // Add touch gestures for windows
+  addWindowTouchGestures()
+
+  // Add swipe navigation for galleries
+  addGallerySwipeSupport()
+}
+
+// Toggle mobile menu
+function toggleMobileMenu(force) {
+  const menuButton = document.querySelector(".mobile-menu-button")
+  const mobileMenu = document.querySelector(".mobile-menu")
+
+  if (!menuButton || !mobileMenu) return
+
+  const newState = force !== undefined ? force : !menuButton.classList.contains("active")
+
+  if (newState) {
+    menuButton.classList.add("active")
+    mobileMenu.classList.add("active")
+  } else {
+    menuButton.classList.remove("active")
+    mobileMenu.classList.remove("active")
+  }
+}
+
+// Toggle fullscreen
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch((err) => {
+      console.error(`Error attempting to enable fullscreen: ${err.message}`)
+    })
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen()
+    }
+  }
+}
+
+// Add touch gestures for windows
+function addWindowTouchGestures() {
+  // Track touch positions
+  let touchStartX = 0
+  let touchStartY = 0
+  let touchTimeStart = 0
+
+  // Add event listeners to window title bars
+  document.addEventListener(
+    "touchstart",
+    (e) => {
+      const titleBar = e.target.closest(".window-title-bar")
+      if (!titleBar) return
+
+      const window = titleBar.closest(".popup-window")
+      if (!window) return
+
+      // Record start position
+      touchStartX = e.touches[0].clientX
+      touchStartY = e.touches[0].clientY
+      touchTimeStart = Date.now()
+
+      // Bring window to front
+      window.style.zIndex = getHighestZIndex() + 1
     },
-    
-    // Touch settings
-    touch: {
-      tapThreshold: 10, // px
-      doubleTapDelay: 300, // ms
-      longPressDelay: 500, // ms
-      dragThreshold: 5 // px
-    }
-  };
-  
-  // State
-  const state = {
-    isMobile: false,
-    isTablet: false,
-    touchStartX: 0,
-    touchStartY: 0,
-    touchStartTime: 0,
-    lastTapTime: 0,
-    isDragging: false,
-    longPressTimer: null,
-    currentLayout: 'desktop'
-  };
-  
-  // Initialize mobile enhancements
-  function initMobileEnhancements() {
-    // Check device type
-    checkDeviceType();
-    
-    // Add viewport meta tag if missing
-    addViewportMeta();
-    
-    // Add touch event handlers
-    addTouchHandlers();
-    
-    // Add resize handler
-    window.addEventListener("resize", handleResize);
-    
-    // Initial layout adjustment
-    adjustLayout();
-    
-    console.log(`📱 Mobile Enhancements initialized (${state.currentLayout} mode)`);
-  }
-  
-  // Check device type
-  function checkDeviceType() {
-    const width = window.innerWidth;
-    state.isMobile = width <= config.breakpoints.mobile;
-    state.isTablet = width > config.breakpoints.mobile && width <= config.breakpoints.tablet;
-    
-    // Set layout mode
-    if (state.isMobile) {
-      state.currentLayout = 'mobile';
-    } else if (state.isTablet) {
-      state.currentLayout = 'tablet';
-    } else {
-      state.currentLayout = 'desktop';
-    }
-    
-    // Add class to body
-    document.body.classList.remove('layout-mobile', 'layout-tablet', 'layout-desktop');
-    document.body.classList.add(`layout-${state.currentLayout}`);
-  }
-  
-  // Add viewport meta tag if missing
-  function addViewportMeta() {
-    if (!document.querySelector('meta[name="viewport"]')) {
-      const meta = document.createElement('meta');
-      meta.name = 'viewport';
-      meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
-      document.head.appendChild(meta);
-      console.log("📱 Added viewport meta tag");
-    }
-  }
-  
-  // Add touch event handlers
-  function addTouchHandlers() {
-    // Desktop icons
-    document.querySelectorAll(".desktop-icon").forEach(icon => {
-      icon.addEventListener("touchstart", handleTouchStart);
-      icon.addEventListener("touchmove", handleTouchMove);
-      icon.addEventListener("touchend", handleTouchEnd);
-    });
-    
-    // Windows
-    document.querySelectorAll(".popup-window").forEach(win => {
-      // Window headers for dragging
-      const header = win.querySelector(".window-header");
-      if (header) {
-        header.addEventListener("touchstart", handleWindowTouchStart);
-        header.addEventListener("touchmove", handleWindowTouchMove);
-        header.addEventListener("touchend", handleWindowTouchEnd);
+    { passive: true },
+  )
+
+  document.addEventListener(
+    "touchend",
+    (e) => {
+      const titleBar = e.target.closest(".window-title-bar")
+      if (!titleBar) return
+
+      const window = titleBar.closest(".popup-window")
+      if (!window) return
+
+      // Calculate touch duration and distance
+      const touchEndX = e.changedTouches[0].clientX
+      const touchEndY = e.changedTouches[0].clientY
+      const touchDuration = Date.now() - touchTimeStart
+
+      const deltaX = touchEndX - touchStartX
+      const deltaY = touchEndY - touchStartY
+
+      // Detect swipe down to minimize
+      if (deltaY > 100 && Math.abs(deltaX) < 50 && touchDuration < 300) {
+        const minimizeBtn = window.querySelector(".window-minimize")
+        if (minimizeBtn) minimizeBtn.click()
       }
-      
-      // Window content for scrolling
-      const content = win.querySelector(".window-content");
-      if (content) {
-        content.addEventListener("touchstart", (e) => {
-          // Allow default behavior for scrolling
-          e.stopPropagation();
-        });
+
+      // Detect swipe up to maximize
+      if (deltaY < -100 && Math.abs(deltaX) < 50 && touchDuration < 300) {
+        // Toggle maximize
+        if (window.classList.contains("maximized")) {
+          window.classList.remove("maximized")
+          window.style.width = window.dataset.prevWidth || "600px"
+          window.style.height = window.dataset.prevHeight || "400px"
+          window.style.top = window.dataset.prevTop || "50px"
+          window.style.left = window.dataset.prevLeft || "50px"
+        } else {
+          // Save current dimensions
+          window.dataset.prevWidth = window.style.width
+          window.dataset.prevHeight = window.style.height
+          window.dataset.prevTop = window.style.top
+          window.dataset.prevLeft = window.style.left
+
+          // Maximize
+          window.classList.add("maximized")
+          window.style.width = "100%"
+          window.style.height = "calc(100% - 50px)" // Account for taskbar
+          window.style.top = "0"
+          window.style.left = "0"
+        }
       }
-    });
-    
-    // Taskbar
-    const taskbar = document.getElementById("start-bar");
-    if (taskbar) {
-      taskbar.addEventListener("touchstart", (e) => {
-        // Prevent default to avoid triggering clicks on desktop
-        e.stopPropagation();
-      });
-    }
-  }
-  
-  // Handle touch start on desktop icons
-  function handleTouchStart(e) {
-    // Store touch start position and time
-    state.touchStartX = e.touches[0].clientX;
-    state.touchStartY = e.touches[0].clientY;
-    state.touchStartTime = Date.now();
-    state.isDragging = false;
-    
-    // Set up long press timer
-    state.longPressTimer = setTimeout(() => {
-      // Trigger long press
-      handleLongPress(e);
-    }, config.touch.longPressDelay);
-  }
-  
-  // Handle touch move on desktop icons
-  function handleTouchMove(e) {
-    // Check if dragging
-    const touchX = e.touches[0].clientX;
-    const touchY = e.touches[0].clientY;
-    const deltaX = Math.abs(touchX - state.touchStartX);
-    const deltaY = Math.abs(touchY - state.touchStartY);
-    
-    // If moved beyond threshold, cancel long press and mark as dragging
-    if (deltaX > config.touch.dragThreshold || deltaY > config.touch.dragThreshold) {
-      clearTimeout(state.longPressTimer);
-      state.isDragging = true;
-    }
-  }
-  
-  // Handle touch end on desktop icons
-  function handleTouchEnd(e) {
-    // Clear long press timer
-    clearTimeout(state.longPressTimer);
-    
-    // If not dragging, handle as tap
-    if (!state.isDragging) {
-      const touchEndTime = Date.now();
-      const touchDuration = touchEndTime - state.touchStartTime;
-      
-      // Check for double tap
-      if (touchEndTime - state.lastTapTime < config.touch.doubleTapDelay) {
-        // Handle double tap
-        handleDoubleTap(e);
-        state.lastTapTime = 0; // Reset to prevent triple tap
+
+      // Detect swipe left to close
+      if (deltaX < -100 && Math.abs(deltaY) < 50 && touchDuration < 300) {
+        const closeBtn = window.querySelector(".window-close")
+        if (closeBtn) closeBtn.click()
+      }
+    },
+    { passive: true },
+  )
+
+  // Double tap to maximize
+  document.addEventListener(
+    "touchend",
+    (e) => {
+      const titleBar = e.target.closest(".window-title-bar")
+      if (!titleBar) return
+
+      if (titleBar.dataset.lastTap && Date.now() - titleBar.dataset.lastTap < 300) {
+        // Double tap detected
+        const window = titleBar.closest(".popup-window")
+        if (window) {
+          // Toggle maximize
+          if (window.classList.contains("maximized")) {
+            window.classList.remove("maximized")
+            window.style.width = window.dataset.prevWidth || "600px"
+            window.style.height = window.dataset.prevHeight || "400px"
+            window.style.top = window.dataset.prevTop || "50px"
+            window.style.left = window.dataset.prevLeft || "50px"
+          } else {
+            // Save current dimensions
+            window.dataset.prevWidth = window.style.width
+            window.dataset.prevHeight = window.style.height
+            window.dataset.prevTop = window.style.top
+            window.dataset.prevLeft = window.style.left
+
+            // Maximize
+            window.classList.add("maximized")
+            window.style.width = "100%"
+            window.style.height = "calc(100% - 50px)" // Account for taskbar
+            window.style.top = "0"
+            window.style.left = "0"
+          }
+        }
+
+        titleBar.dataset.lastTap = null
       } else {
-        // Handle single tap
-        handleTap(e);
-        state.lastTapTime = touchEndTime;
+        titleBar.dataset.lastTap = Date.now()
       }
-    }
-    
-    // Reset state
-    state.isDragging = false;
-  }
-  
-  // Handle tap on desktop icons
-  function handleTap(e) {
-    const icon = e.currentTarget;
-    
-    // Get window ID
-    const windowId = icon.getAttribute("data-window") || icon.id.replace("icon-", "");
-    
-    // Open window
-    if (typeof openWindow === 'function') {
-      openWindow(windowId);
-    }
-  }
-  
-  // Handle double tap on desktop icons
-  function handleDoubleTap(e) {
-    // Same as single tap for now
-    handleTap(e);
-  }
-  
-  // Handle long press on desktop icons
-  function handleLongPress(e) {
-    // Show context menu if available
-    const icon = e.currentTarget;
-    
-    // Create simple context menu if not exists
-    let contextMenu = document.getElementById("mobile-context-menu");
-    if (!contextMenu) {
-      contextMenu = document.createElement("div");
-      contextMenu.id = "mobile-context-menu";
-      contextMenu.style.position = "fixed";
-      contextMenu.style.backgroundColor = "rgba(0, 0, 0, 0.9)";
-      contextMenu.style.border = "1px solid #00ffff";
-      contextMenu.style.borderRadius = "5px";
-      contextMenu.style.padding = "10px";
-      contextMenu.style.zIndex = "10000";
-      document.body.appendChild(contextMenu);
-      
-      // Close on tap outside
-      document.addEventListener("touchstart", (e) => {
-        if (contextMenu.style.display === "block" && !contextMenu.contains(e.target)) {
-          contextMenu.style.display = "none";
+    },
+    { passive: true },
+  )
+}
+
+// Add swipe navigation for galleries
+function addGallerySwipeSupport() {
+  // Find gallery containers
+  const galleries = document.querySelectorAll(".gallery-container, .image-gallery, .project-gallery")
+
+  galleries.forEach((gallery) => {
+    let touchStartX = 0
+    let touchStartY = 0
+
+    gallery.addEventListener(
+      "touchstart",
+      (e) => {
+        touchStartX = e.touches[0].clientX
+        touchStartY = e.touches[0].clientY
+      },
+      { passive: true },
+    )
+
+    gallery.addEventListener(
+      "touchend",
+      (e) => {
+        const touchEndX = e.changedTouches[0].clientX
+        const touchEndY = e.changedTouches[0].clientY
+
+        const deltaX = touchEndX - touchStartX
+        const deltaY = touchEndY - touchStartY
+
+        // Only handle horizontal swipes
+        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+          if (deltaX > 0) {
+            // Swipe right - previous
+            const prevBtn = gallery.querySelector(".gallery-prev, .prev-button")
+            if (prevBtn) prevBtn.click()
+          } else {
+            // Swipe left - next
+            const nextBtn = gallery.querySelector(".gallery-next, .next-button")
+            if (nextBtn) nextBtn.click()
+          }
         }
-      });
-    }
-    
-    // Get window ID
-    const windowId = icon.getAttribute("data-window") || icon.id.replace("icon-", "");
-    
-    // Clear existing menu items
-    contextMenu.innerHTML = "";
-    
-    // Add menu items
-    addContextMenuItem(contextMenu, "Open", () => {
-      if (typeof openWindow === 'function') {
-        openWindow(windowId);
-      }
-      contextMenu.style.display = "none";
-    });
-    
-    // Position menu near the icon
-    const rect = icon.getBoundingClientRect();
-    contextMenu.style.left = `${rect.left}px`;
-    contextMenu.style.top = `${rect.bottom + 10}px`;
-    
-    // Show menu
-    contextMenu.style.display = "block";
+      },
+      { passive: true },
+    )
+  })
+}
+
+// Optimize for mobile
+function optimizeForMobile() {
+  // Adjust window positions for mobile
+  document.querySelectorAll(".popup-window").forEach((window) => {
+    // Set default position in the center
+    window.style.top = "50%"
+    window.style.left = "50%"
+    window.style.transform = "translate(-50%, -50%)"
+
+    // Make windows take more screen space on mobile
+    window.style.width = "90%"
+    window.style.height = "70%"
+
+    // Add mobile class for additional styling
+    window.classList.add("mobile-window")
+  })
+
+  // Optimize desktop layout
+  const desktop = document.querySelector(".desktop")
+  if (desktop) {
+    // Arrange icons in a grid that fits mobile screen
+    const icons = desktop.querySelectorAll(".desktop-icon")
+    const iconWidth = 80 // Width from mobile styles
+    const iconMargin = 15 // Margin from mobile styles
+    const iconsPerRow = Math.floor(window.innerWidth / (iconWidth + iconMargin * 2))
+
+    icons.forEach((icon, index) => {
+      const row = Math.floor(index / iconsPerRow)
+      const col = index % iconsPerRow
+
+      icon.style.position = "absolute"
+      icon.style.top = `${row * (iconWidth + iconMargin * 2) + 20}px`
+      icon.style.left = `${col * (iconWidth + iconMargin * 2) + (window.innerWidth - iconsPerRow * (iconWidth + iconMargin * 2)) / 2}px`
+    })
   }
-  
-  // Add context menu item
-  function addContextMenuItem(menu, text, action) {
-    const item = document.createElement("div");
-    item.textContent = text;
-    item.style.padding = "10px";
-    item.style.color = "#00ffff";
-    item.style.fontFamily = "'VT323', monospace";
-    item.style.fontSize = "16px";
-    item.style.cursor = "pointer";
-    
-    // Add hover effect
-    item.addEventListener("mouseover", () => {
-      item.style.backgroundColor = "rgba(0, 255, 255, 0.2)";
-    });
-    
-    item.addEventListener("mouseout", () => {
-      item.style.backgroundColor = "transparent";
-    });
-    
-    // Add click handler
-    item.addEventListener("click", action);
-    
-    // Add to menu
-    menu.appendChild(item);
-    
-    return item;
+
+  // Optimize forms for mobile
+  document.querySelectorAll("input, select, textarea").forEach((input) => {
+    input.classList.add("mobile-input")
+  })
+
+  // Add viewport meta tag if not present
+  if (!document.querySelector('meta[name="viewport"]')) {
+    const viewportMeta = document.createElement("meta")
+    viewportMeta.name = "viewport"
+    viewportMeta.content = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    document.head.appendChild(viewportMeta)
   }
-  
-  // Handle touch start on window headers
-  function handleWindowTouchStart(e) {
-    // Store touch start position and time
-    state.touchStartX = e.touches[0].clientX;
-    state.touchStartY = e.touches[0].clientY;
-    state.touchStartTime = Date.now();
-    state.isDragging = false;
-    
-    // Get window
-    const header = e.currentTarget;
-    const win = header.closest(".popup-window");
-    
-    // Focus window
-    if (win && typeof focusWindow === 'function') {
-      focusWindow(win.id);
-    }
-    
-    // Set up long press timer
-    state.longPressTimer = setTimeout(() => {
-      // Trigger long press
-      handleWindowLongPress(e);
-    }, config.touch.longPressDelay);
-  }
-  
-  // Handle touch move on window headers
-  function handleWindowTouchMove(e) {
-    // Check if dragging
-    const touchX = e.touches[0].clientX;
-    const touchY = e.touches[0].clientY;
-    const deltaX = Math.abs(touchX - state.touchStartX);
-    const deltaY = Math.abs(touchY - state.touchStartY);
-    
-    // If moved beyond threshold, cancel long press and mark as dragging
-    if (deltaX > config.touch.dragThreshold || deltaY > config.touch.dragThreshold) {
-      clearTimeout(state.longPressTimer);
-      state.isDragging = true;
-      
-      // Get window
-      const header = e.currentTarget;
-      const win = header.closest(".popup-window");
-      
-      // Move window
-      if (win) {
-        // Calculate new position
-        const dx = touchX - state.touchStartX;
-        const dy = touchY - state.touchStartY;
-        
-        const left = parseInt(win.style.left || 0) + dx;
-        const top = parseInt(win.style.top || 0) + dy;
-        
-        // Apply new position
-        win.style.left = `${left}px`;
-        win.style.top = `${top}px`;
-        
-        // Update touch start position
-        state.touchStartX = touchX;
-        state.touchStartY = touchY;
-      }
-    }
-  }
-  
-  // Handle touch end on window headers
-  function handleWindowTouchEnd(e) {
-    // Clear long press timer
-    clearTimeout(state.longPressTimer);
-    
-    // If not dragging, handle as tap
-    if (!state.isDragging) {
-      const touchEndTime = Date.now();
-      
-      // Check for double tap
-      if (touchEndTime - state.lastTapTime < config.touch.doubleTapDelay) {
-        // Handle double tap
-        handleWindowDoubleTap(e);
-        state.lastTapTime = 0; // Reset to prevent triple tap
-      } else {
-        // Handle single tap
-        handleWindowTap(e);
-        state.lastTapTime = touchEndTime;
-      }
-    }
-    
-    // Reset state
-    state.isDragging = false;
-  }
-  
-  // Handle tap on window headers
-  function handleWindowTap(e) {
-    // Just focus the window
-    const header = e.currentTarget;
-    const win = header.closest(".popup-window");
-    
-    if (win && typeof focusWindow === 'function') {
-      focusWindow(win.id);
-    }
-  }
-  
-  // Handle double tap on window headers
-  function handleWindowDoubleTap(e) {
-    // Toggle maximize
-    const header = e.currentTarget;
-    const win = header.closest(".popup-window");
-    
-    if (win && typeof toggleMaximize === 'function') {
-      toggleMaximize(win.id);
-    }
-  }
-  
-  // Handle long press on window headers
-  function handleWindowLongPress(e) {
-    // Show window context menu
-    const header = e.currentTarget;
-    const win = header.closest(".popup-window");
-    
-    if (!win) return;
-    
-    // Create window context menu if not exists
-    let contextMenu = document.getElementById("window-context-menu");
-    if (!contextMenu) {
-      contextMenu = document.createElement("div");
-      contextMenu.id = "window-context-menu";
-      contextMenu.style.position = "fixed";
-      contextMenu.style.backgroundColor = "rgba(0, 0, 0, 0.9)";
-      contextMenu.style.border = "1px solid #00ffff";
-      contextMenu.style.borderRadius = "5px";
-      contextMenu.style.padding = "10px";
-      contextMenu.style.zIndex = "10000";
-      document.body.appendChild(contextMenu);
-      
-      // Close on tap outside
-      document.addEventListener("touchstart", (e) => {
-        if (contextMenu.style.display === "block" && !contextMenu.contains(e.target)) {
-          contextMenu.style.display = "none";
-        }
-      });
-    }
-    
-    // Clear existing menu items
-    contextMenu.innerHTML = "";
-    
-    // Add menu items
-    addContextMenuItem(contextMenu, "Minimize", () => {
-      if (typeof minimizeWindow === 'function') {
-        minimizeWindow(win.id);
-      }
-      contextMenu.style.display = "none";
-    });
-    
-    addContextMenuItem(contextMenu, "Maximize", () => {
-      if (typeof toggleMaximize === 'function') {
-        toggleMaximize(win.id);
-      }
-      contextMenu.style.display = "none";
-    });
-    
-    addContextMenuItem(contextMenu, "Close", () => {
-      if (typeof closeWindow === 'function') {
-        closeWindow(win.id);
-      }
-      contextMenu.style.display = "none";
-    });
-    
-    // Position menu near the header
-    const rect = header.getBoundingClientRect();
-    contextMenu.style.left = `${rect.left}px`;
-    contextMenu.style.top = `${rect.bottom + 10}px`;
-    
-    // Show menu
-    contextMenu.style.display = "block";
-  }
-  
-  // Handle resize
-  function handleResize() {
-    // Check device type
-    checkDeviceType();
-    
-    // Adjust layout
-    adjustLayout();
-  }
-  
-  // Adjust layout based on device type
-  function adjustLayout() {
-    if (state.isMobile) {
-      // Mobile layout adjustments
-      adjustMobileLayout();
-    } else if (state.isTablet) {
-      // Tablet layout adjustments
-      adjustTabletLayout();
+}
+
+// Handle resize and orientation changes
+function handleResize() {
+  const isMobile = window.innerWidth < 768
+
+  if (isMobile) {
+    if (!document.body.classList.contains("mobile-device")) {
+      document.body.classList.add("mobile-device")
+      addMobileStyles()
+      addTouchInteractions()
+      optimizeForMobile()
     } else {
-      // Desktop layout adjustments
-      adjustDesktopLayout();
+      // Just re-optimize layout
+      optimizeForMobile()
+    }
+  } else {
+    // Switch to desktop mode
+    document.body.classList.remove("mobile-device")
+
+    // Remove mobile-specific elements
+    const mobileElements = document.querySelectorAll(
+      ".mobile-menu-button, .mobile-menu, .fullscreen-button, .pull-indicator",
+    )
+    mobileElements.forEach((el) => el.remove())
+
+    // Reset window positions
+    document.querySelectorAll(".popup-window").forEach((window) => {
+      window.classList.remove("mobile-window")
+
+      // Only reset if currently using mobile positioning
+      if (window.style.transform.includes("translate(-50%, -50%)")) {
+        window.style.top = `${50 + Math.floor(Math.random() * 100)}px`
+        window.style.left = `${50 + Math.floor(Math.random() * 100)}px`
+        window.style.transform = ""
+      }
+    })
+
+    // Reset desktop icon layout
+    const desktop = document.querySelector(".desktop")
+    if (desktop) {
+      const icons = desktop.querySelectorAll(".desktop-icon")
+      icons.forEach((icon) => {
+        icon.style.position = ""
+        icon.style.top = ""
+        icon.style.left = ""
+      })
     }
   }
-  
-  // Adjust layout for mobile
-  function adjustMobileLayout() {
-    // Make windows full screen when opened
-    if (typeof window.openWindow === 'function') {
-      const originalOpenWindow = window.openWindow;
-      
-      window.openWindow = function(id) {
-        const win = originalOpenWindow(id);
-        
-        if (win) {
-          // Make window full screen
-          win.style.width = "100%";
-          win.style.height = "calc(100% - 40px)"; // Leave space for taskbar
-          win.style.left = "0";
-          win.style.top = "0";
-          
-          // Add mobile class
-          win.classList.add("mobile-window");
-        }
-        
-        return win;
-      };
-    }
-    
-    // Adjust existing windows
-    document.querySelectorAll(".popup-window").forEach(win => {
-      // Make window full screen
-      win.style.width = "100%";
-      win.style.height = "calc(100% - 40px)"; // Leave space for taskbar
-      win.style.left = "0";
-      win.style.top = "0";
-      
-      // Add mobile class
-      win.classList.add("mobile-window");
-    });
-    
-    // Adjust desktop icons for mobile
-    document.querySelectorAll(".desktop-icon").forEach(icon => {
-      // Make icons larger and more touch-friendly
-      icon.style.width = "80px";
-      icon.style.height = "80px";
-      icon.style.margin = "10px";
-    });
-    
-    // Adjust taskbar for mobile
-    const taskbar = document.getElementById("start-bar");
-    if (taskbar) {
-      taskbar.style.height = "50px"; // Taller for touch
-    }
-  }
-  
-  // Adjust layout for tablet
-  function adjustTabletLayout() {
-    // Make windows larger but not full screen
-    if (typeof window.openWindow === 'function') {
-      const originalOpenWindow = window.openWindow;
-      
-      window.openWindow = function(id) {
-        const win = originalOpenWindow(id);
-        
-        if (win) {
-          // Make window larger
-          win.style.width = "80%";
-          win.style.height = "80%";
-          
-          // Center window
-          win.style.left = "10%";
-          win.style.top = "10%";
-          
-          // Add tablet class
-          win.classList.add("tablet-window");
-        }
-        
-        return win;
-      };
-    }
-    
-    // Adjust existing windows
-    document.querySelectorAll(".popup-window").forEach(win => {
-      // Make window larger
-      win.style.width = "80%";
-      win.style.height = "80%";
-      
-      // Center window
-      win.style.left = "10%";
-      win.style.top = "10%";
-      
-      // Add tablet class
-      win.classList.add("tablet-window");
-    });
-    
-    // Adjust desktop icons for tablet
-    document.querySelectorAll(".desktop-icon").forEach(icon => {
-      // Make icons slightly larger
-      icon.style.width = "70px";
-      icon.style.height = "70px";
-      icon.style.margin = "8px";
-    });
-  }
-  
-  // Adjust layout for desktop
-  function adjustDesktopLayout() {
-    // Restore windows to their original size and position
-    document.querySelectorAll(".popup-window").forEach(win => {
-      // Remove mobile/tablet classes
-      win.classList.remove("mobile-window", "tablet-window");
-    });
-    
-    // Restore desktop icons
-    document.querySelectorAll(".desktop-icon").forEach(icon => {
-      // Reset to default size
-      icon.style.width = "";
-      icon.style.height = "";
-      icon.style.margin = "";
-    });
-    
-    // Restore taskbar
-    const taskbar = document.getElementById("start-bar");
-    if (taskbar) {
-      taskbar.style.height = "";
-    }
-  }
-  
-  // Initialize after a short delay
-  setTimeout(initMobileEnhancements, 1000);
-});
+}
+
+// Helper function to get highest z-index
+function getHighestZIndex() {
+  let highest = 0
+  document.querySelectorAll(".popup-window").forEach((window) => {
+    const zIndex = Number.parseInt(window.style.zIndex || 0)
+    if (zIndex > highest) highest = zIndex
+  })
+  return highest
+}

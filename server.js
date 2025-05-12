@@ -1,21 +1,35 @@
-const express = require('express');
-const path    = require('path');
-const app     = express();
+// server.js - Express server for bbfiller
+const express = require("express")
+const path = require("path")
+const fs = require("fs")
 
-// serve public/ first
-app.use(express.static(path.join(__dirname, 'public')));
+const app = express()
+const PORT = process.env.PORT || 3000
 
-// explicit routes…
-app.get('/about', (req, res) =>
-  res.sendFile(path.join(__dirname, 'public/about.html'))
-);
-// …etc.
+// Serve static files from the public directory
+app.use(express.static("public"))
 
-// catch-all
-app.get('*', (req, res) =>
-  res.sendFile(path.join(__dirname, 'public/index.html'))
-);
+// Serve files from the dist directory (for webpack output)
+app.use("/dist", express.static("public/dist"))
 
-app.listen(process.env.PORT || 3000, () =>
-  console.log('Listening on port ' + (process.env.PORT||3000))
-);
+// API endpoint for projects data
+app.get("/api/projects", (req, res) => {
+  try {
+    const projectsData = fs.readFileSync(path.join(__dirname, "public", "projects.json"), "utf8")
+    res.json(JSON.parse(projectsData))
+  } catch (error) {
+    console.error("Error reading projects data:", error)
+    res.status(500).json({ error: "Failed to load projects data" })
+  }
+})
+
+// Catch-all route to serve index.html for client-side routing
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"))
+})
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`)
+  console.log(`Visit http://localhost:${PORT} to view the application`)
+})

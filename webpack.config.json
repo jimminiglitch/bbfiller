@@ -1,0 +1,141 @@
+const path = require("path")
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
+const TerserPlugin = require("terser-webpack-plugin")
+const { GenerateSW } = require("workbox-webpack-plugin")
+
+module.exports = (env, argv) => {
+  const isProduction = argv.mode === "production"
+
+  return {
+    entry: {
+      // Main React bundle
+      consolidated: "./src/index.tsx",
+
+      // Individual window applications as separate chunks
+      "game-launcher": "./src/components/apps/game-launcher.js",
+      "window-manager": "./src/components/window-manager/index.tsx",
+
+      // Keep existing JS modules separate
+      "boot-sequence": "./public/js/boot-sequence.js",
+      "lazy-loader": "./public/js/lazy-loader.js",
+      "profile-glitch": "./public/js/profile-glitch.js",
+      "music-player": "./public/js/music-player-simple.js",
+      "mobile-enhancements": "./public/js/mobile-enhancements.js",
+      accessibility: "./public/js/accessibility.js",
+    },
+    output: {
+      path: path.resolve(__dirname, "public/dist"),
+      filename: "[name].bundle.js",
+      chunkFilename: "[name].[contenthash].js",
+      publicPath: "/dist/",
+    },
+    module: {
+      rules: [
+        {
+          test: /\.(js|jsx|ts|tsx)$/,
+          exclude: /node_modules/,
+          use: {
+            loader: "babel-loader",
+            options: {
+              presets: [
+                "@babel/preset-env",
+                ["@babel/preset-react", { runtime: "automatic" }],
+                "@babel/preset-typescript",
+              ],
+            },
+          },
+        },
+        {
+          test: /\.css$/,
+          use: [MiniCssExtractPlugin.loader, "css-loader"],
+        },
+        {
+          test: /\.(png|svg|jpg|jpeg|gif|mp3|wav)$/i,
+          type: "asset/resource",
+        },
+        {
+          test: /\.(woff|woff2|eot|ttf|otf)$/i,
+          type: "asset/resource",
+        },
+      ],
+    },
+    resolve: {
+      extensions: [".js", ".jsx", ".ts", ".tsx"],
+      alias: {
+        "@": path.resolve(__dirname, "src"),
+      },
+    },
+    optimization: {
+      minimizer: [
+        new TerserPlugin({
+          terserOptions: {
+            format: {
+              comments: false,
+            },
+          },
+          extractComments: false,
+        }),
+        new CssMinimizerPlugin(),
+      ],
+      splitChunks: {
+        chunks: "all",
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: "vendors",
+            chunks: "all",
+          },
+        },
+      },
+      runtimeChunk: "single",
+    },
+    plugins: [
+      new MiniCssExtractPlugin({
+        filename: "[name].[contenthash].css",
+      }),
+      ...(isProduction
+        ? [
+            new GenerateSW({
+              clientsClaim: true,
+              skipWaiting: true,
+              exclude: [/\.map$/, /asset-manifest\.json$/],
+              // Customize to include all your routes and assets
+              runtimeCaching: [
+                {
+                  urlPattern: /\.(?:png|jpg|jpeg|svg|gif)$/,
+                  handler: "CacheFirst",
+                  options: {
+                    cacheName: "images",
+                    expiration: {
+                      maxEntries: 60,
+                      maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
+                    },
+                  },
+                },
+                {
+                  urlPattern: /\.(?:js|css)$/,
+                  handler: "StaleWhileRevalidate",
+                  options: {
+                    cacheName: "static-resources",
+                  },
+                },
+                {
+                  urlPattern: /^https:\/\/fonts\.(?:googleapis|gstatic)\.com/,
+                  handler: "CacheFirst",
+                  options: {
+                    cacheName: "google-fonts",
+                    expiration: {
+                      maxEntries: 30,
+                      maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+                    },
+                  },
+                },
+              ],
+            }),
+          ]
+        : []),
+    ],
+    devtool: isProduction ? "source-map" : "eval-source-map",
+  }
+}

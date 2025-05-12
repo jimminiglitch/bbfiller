@@ -1,5 +1,9 @@
 // snake.js – full logic for SPACEWORM.EXE (updated sizing & subtle trails)
-
+function spawnIdleSnake() {
+  const aiSnake = new Snake({ autoPlay:true, color:'#0f0' });
+  aiSnake.start();
+}
+window.addEventListener('minimize-snake', spawnIdleSnake);
 window.addEventListener('load', () => {
   // ─── Element refs ─────────────────────────────────────────────────────────
   const startOvl      = document.getElementById('start-overlay');
@@ -437,3 +441,4 @@ window.addEventListener('load', () => {
   initStars();
   resetGame();
 });
+

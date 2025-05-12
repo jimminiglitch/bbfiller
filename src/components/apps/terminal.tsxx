@@ -1,0 +1,423 @@
+"use client"
+
+import type React from "react"
+import { useState, useEffect, useRef } from "react"
+import styled from "styled-components"
+import { motion } from "framer-motion"
+
+const TerminalContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
+  color: #00f0ff;
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  padding: 10px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+`
+
+const TerminalOutput = styled.div`
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  white-space: pre-wrap;
+`
+
+const TerminalLine = styled(motion.div)`
+  margin-bottom: 5px;
+  line-height: 1.2;
+`
+
+const TerminalPrompt = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+const PromptSymbol = styled.span`
+  color: #0f0;
+  margin-right: 8px;
+`
+
+const TerminalInput = styled.input`
+  background: transparent;
+  border: none;
+  color: #00f0ff;
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  flex-grow: 1;
+  outline: none;
+  caret-color: #00f0ff;
+`
+
+const Cursor = styled.span`
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background-color: #00f0ff;
+  animation: blink 1s step-end infinite;
+  
+  @keyframes blink {
+    from, to { opacity: 1; }
+    50% { opacity: 0; }
+  }
+`
+
+// Easter egg commands and their responses
+const easterEggs = {
+  help: `Available commands:
+  help - Display this help message
+  clear - Clear the terminal
+  about - About this portfolio
+  skills - List my skills
+  projects - List my projects
+  contact - How to contact me
+  secret - ???
+  matrix - Enter the Matrix
+  snake - Launch Snake game
+  hack - "Hack" the system
+  theme [name] - Change theme (neon, retro, minimal)`,
+
+  about: `BBFiller Portfolio v2.0
+  A retro-futuristic desktop experience
+  Created with ♥ and lots of caffeine
+  
+  This portfolio showcases my work through an interactive
+  desktop environment inspired by 90s computing with a
+  cyberpunk twist.`,
+
+  skills: `TECHNICAL SKILLS:
+  ▓▓▓▓▓▓▓▓▓▓ JavaScript/TypeScript
+  ▓▓▓▓▓▓▓▓░░ React/Next.js
+  ▓▓▓▓▓▓▓░░░ Node.js
+  ▓▓▓▓▓▓░░░░ CSS/SCSS
+  ▓▓▓▓▓░░░░░ Python
+  ▓▓▓▓░░░░░░ WebGL/Three.js`,
+
+  projects: `FEATURED PROJECTS:
+  
+  [1] CyberDeck - A cyberpunk card game
+      Tech: React, Three.js, Firebase
+  
+  [2] NeonWave - Audio visualizer
+      Tech: Web Audio API, Canvas
+  
+  [3] RetroOS - Operating system simulator
+      Tech: JavaScript, CSS
+  
+  Type 'project [number]' for details`,
+
+  contact: `CONTACT INFORMATION:
+  
+  Email: example@domain.com
+  GitHub: github.com/username
+  Twitter: @username
+  LinkedIn: linkedin.com/in/username
+  
+  Or use the Contact window in the desktop environment.`,
+
+  secret: `You found a secret! 🎉
+  
+  Type 'unlock easter-egg' to enable special features.`,
+
+  matrix: null, // Special handling for matrix mode
+
+  snake: null, // Special handling for snake game
+
+  hack: null, // Special handling for hack simulation
+
+  theme: null, // Special handling for theme changing
+}
+
+interface TerminalProps {
+  onCommand?: (command: string) => void
+}
+
+const Terminal: React.FC<TerminalProps> = ({ onCommand }) => {
+  const [input, setInput] = useState("")
+  const [history, setHistory] = useState<string[]>(["BBFiller Terminal v2.0", 'Type "help" for available commands', ""])
+  const [commandHistory, setCommandHistory] = useState<string[]>([])
+  const [historyIndex, setHistoryIndex] = useState(-1)
+  const [easterEggsUnlocked, setEasterEggsUnlocked] = useState(false)
+
+  const outputRef = useRef<HTMLDivElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  // Auto-scroll to bottom when history changes
+  useEffect(() => {
+    if (outputRef.current) {
+      outputRef.current.scrollTop = outputRef.current.scrollHeight
+    }
+  }, [history])
+
+  // Focus input when terminal is clicked
+  useEffect(() => {
+    const container = document.querySelector(".terminal-container")
+    if (container) {
+      container.addEventListener("click", focusInput)
+    }
+
+    return () => {
+      if (container) {
+        container.removeEventListener("click", focusInput)
+      }
+    }
+  }, [])
+
+  const focusInput = () => {
+    if (inputRef.current) {
+      inputRef.current.focus()
+    }
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value)
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // Handle up/down arrows for command history
+    if (e.key === "ArrowUp") {
+      e.preventDefault()
+      if (historyIndex < commandHistory.length - 1) {
+        const newIndex = historyIndex + 1
+        setHistoryIndex(newIndex)
+        setInput(commandHistory[commandHistory.length - 1 - newIndex])
+      }
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault()
+      if (historyIndex > 0) {
+        const newIndex = historyIndex - 1
+        setHistoryIndex(newIndex)
+        setInput(commandHistory[commandHistory.length - 1 - newIndex])
+      } else if (historyIndex === 0) {
+        setHistoryIndex(-1)
+        setInput("")
+      }
+    } else if (e.key === "Enter") {
+      handleCommand()
+    }
+  }
+
+  const handleCommand = () => {
+    if (!input.trim()) {
+      addToHistory("")
+      return
+    }
+
+    // Add command to history
+    addToHistory(`> ${input}`)
+
+    // Add to command history for up/down navigation
+    setCommandHistory((prev) => [...prev, input])
+    setHistoryIndex(-1)
+
+    // Process command
+    const args = input.trim().split(" ")
+    const command = args[0].toLowerCase()
+
+    // Check if command exists in easter eggs
+    if (command in easterEggs) {
+      if (easterEggs[command as keyof typeof easterEggs] === null) {
+        // Special handling for certain commands
+        handleSpecialCommand(command, args.slice(1))
+      } else {
+        // Regular easter egg command
+        addToHistory(easterEggs[command as keyof typeof easterEggs] as string)
+      }
+    } else if (command === "clear") {
+      setHistory([""])
+    } else if (command === "unlock" && args[1] === "easter-egg") {
+      setEasterEggsUnlocked(true)
+      addToHistory("🎉 Easter eggs unlocked! Try some secret commands...")
+    } else if (command === "project" && args[1]) {
+      handleProjectCommand(args[1])
+    } else {
+      addToHistory(`Command not found: ${command}`)
+      addToHistory('Type "help" for available commands')
+    }
+
+    // Notify parent component of command
+    if (onCommand) {
+      onCommand(input)
+    }
+
+    // Clear input
+    setInput("")
+  }
+
+  const addToHistory = (text: string) => {
+    setHistory((prev) => [...prev, text])
+  }
+
+  const handleSpecialCommand = (command: string, args: string[]) => {
+    switch (command) {
+      case "matrix":
+        addToHistory("Entering the Matrix...")
+        // Trigger matrix effect
+        window.dispatchEvent(new CustomEvent("trigger-matrix-effect"))
+        break
+
+      case "snake":
+        addToHistory("Launching Snake game...")
+        // Open snake window
+        const snakeIcon = document.querySelector('[data-target="snake-game"]')
+        if (snakeIcon) {
+          ;(snakeIcon as HTMLElement).click()
+        } else {
+          addToHistory("Snake game not found. Try again later.")
+        }
+        break
+
+      case "hack":
+        simulateHacking()
+        break
+
+      case "theme":
+        if (args.length === 0) {
+          addToHistory("Please specify a theme: neon, retro, minimal")
+        } else {
+          const theme = args[0].toLowerCase()
+          if (["neon", "retro", "minimal"].includes(theme)) {
+            addToHistory(`Changing theme to ${theme}...`)
+            // Dispatch event to change theme
+            window.dispatchEvent(new CustomEvent("change-theme", { detail: { theme } }))
+          } else {
+            addToHistory(`Unknown theme: ${theme}`)
+            addToHistory("Available themes: neon, retro, minimal")
+          }
+        }
+        break
+
+      default:
+        addToHistory("Command not implemented yet.")
+    }
+  }
+
+  const handleProjectCommand = (projectNumber: string) => {
+    switch (projectNumber) {
+      case "1":
+        addToHistory(`
+PROJECT: CyberDeck
+
+A cyberpunk-themed digital card game with stunning
+visual effects and strategic gameplay.
+
+TECH STACK:
+- React for UI components
+- Three.js for 3D card effects
+- Firebase for multiplayer and data storage
+- Framer Motion for animations
+
+FEATURES:
+- 100+ unique cards with special abilities
+- Online multiplayer with matchmaking
+- Single-player campaign mode
+- Card collection and deck building
+
+LINK: https://cyberdeck-game.example.com
+        `)
+        break
+
+      case "2":
+        addToHistory(`
+PROJECT: NeonWave
+
+An audio visualizer that transforms music into
+stunning neon visuals and patterns.
+
+TECH STACK:
+- Web Audio API for sound analysis
+- Canvas API for rendering
+- JavaScript modules for effects
+- IndexedDB for local music storage
+
+FEATURES:
+- Multiple visualization modes
+- Audio frequency analysis
+- Custom color schemes
+- Music library management
+
+LINK: https://neonwave-viz.example.com
+        `)
+        break
+
+      case "3":
+        addToHistory(`
+PROJECT: RetroOS
+
+A nostalgic operating system simulator with
+working applications and easter eggs.
+
+TECH STACK:
+- Vanilla JavaScript
+- CSS for UI styling
+- Web Workers for multitasking
+- LocalStorage for persistence
+
+FEATURES:
+- Multiple working applications
+- File system simulation
+- Customizable desktop
+- Easter eggs and hidden games
+
+LINK: https://retro-os.example.com
+        `)
+        break
+
+      default:
+        addToHistory(`Project ${projectNumber} not found.`)
+        addToHistory("Available projects: 1, 2, 3")
+    }
+  }
+
+  const simulateHacking = () => {
+    const hackingLines = [
+      "Initializing hack sequence...",
+      "Bypassing security protocols...",
+      "Accessing mainframe...",
+      "Decrypting files...",
+      "Downloading data...",
+      "Covering tracks...",
+      "Exiting system...",
+      "Hack complete! Access granted.",
+    ]
+
+    let i = 0
+    const interval = setInterval(() => {
+      if (i < hackingLines.length) {
+        addToHistory(hackingLines[i])
+        i++
+      } else {
+        clearInterval(interval)
+        // Trigger glitch effect
+        window.dispatchEvent(new CustomEvent("trigger-glitch-effect"))
+      }
+    }, 500)
+  }
+
+  return (
+    <TerminalContainer className="terminal-container" onClick={focusInput}>
+      <TerminalOutput ref={outputRef}>
+        {history.map((line, index) => (
+          <TerminalLine key={index} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.2 }}>
+            {line}
+          </TerminalLine>
+        ))}
+      </TerminalOutput>
+      <TerminalPrompt>
+        <PromptSymbol>{">"}</PromptSymbol>
+        <TerminalInput
+          ref={inputRef}
+          type="text"
+          value={input}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
+          autoFocus
+        />
+      </TerminalPrompt>
+    </TerminalContainer>
+  )
+}
+
+export default Terminal
