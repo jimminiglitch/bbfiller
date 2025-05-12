@@ -1,0 +1,355 @@
+/* ULTRA TRIPPY PROFILE IMAGE EFFECTS */
+
+/* Base profile image styling */
+.profile-image {
+  position: relative;
+  z-index: 10;
+  transform-origin: center;
+  will-change: transform, filter;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  border-radius: 50%;
+  border: 3px solid #00ffff;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+}
+
+/* Extreme glitch effect for profile image */
+.profile-image.extreme-glitch {
+  animation: extremeProfileGlitch 0.5s steps(2) infinite;
+}
+
+/* Glitch layers */
+.profile-glitch-layer {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  opacity: 0.7;
+  mix-blend-mode: normal;
+  pointer-events: none;
+  will-change: transform, filter, opacity;
+  transition: transform 0.2s ease, filter 0.2s ease, opacity 0.2s ease;
+}
+
+.layer-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.layer-glitching {
+  animation: layerGlitch 0.5s steps(2) forwards;
+}
+
+/* Fractal overlay */
+.fractal-overlay {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: 
+    radial-gradient(circle at 30% 30%, rgba(0, 255, 255, 0.8) 0%, rgba(0, 255, 255, 0) 50%),
+    radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8) 0%, rgba(255, 0, 255, 0) 50%);
+  mix-blend-mode: screen;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 15;
+  transition: opacity 0.3s ease;
+}
+
+.fractal-active {
+  opacity: 0.8;
+  animation: fractalPulse 0.5s ease infinite alternate;
+}
+
+/* Pixel manipulation canvas */
+.pixel-manipulation-canvas {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  opacity: 0.7;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 12;
+}
+
+/* Geometric shapes overlay */
+.geometric-shapes {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 14;
+  mix-blend-mode: screen;
+}
+
+.geo-shape {
+  position: absolute;
+  background-color: rgba(0, 255, 255, 0.5);
+  mix-blend-mode: screen;
+  animation: floatShape 10s linear infinite;
+}
+
+.geo-circle {
+  border-radius: 50%;
+}
+
+.geo-triangle {
+  width: 0 !important;
+  height: 0 !important;
+  background-color: transparent !important;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 17px solid rgba(0, 255, 255, 0.5);
+}
+
+.geo-square {
+  border-radius: 2px;
+}
+
+/* Enhanced glow effect */
+.image-glow-effect {
+  background: 
+    radial-gradient(circle, rgba(0, 255, 255, 0.7) 0%, rgba(0, 255, 255, 0) 70%),
+    radial-gradient(circle at 30% 30%, rgba(255, 0, 255, 0.5) 0%, rgba(255, 0, 255, 0) 60%),
+    radial-gradient(circle at 70% 70%, rgba(0, 255, 255, 0.5) 0%, rgba(0, 255, 255, 0) 60%);
+  opacity: 0.8;
+  will-change: transform, opacity, filter;
+  animation: multicolorGlow 8s ease-in-out infinite alternate;
+}
+
+/* ANIMATIONS */
+
+@keyframes extremeProfileGlitch {
+  0% {
+    transform: translate(0) scale(1);
+    filter: none;
+  }
+  10% {
+    transform: translate(-10px, 5px) scale(1.05);
+    filter: hue-rotate(-90deg) saturate(3) contrast(1.5);
+  }
+  20% {
+    transform: translate(10px, -5px) scale(0.95);
+    filter: hue-rotate(90deg) saturate(2) brightness(1.2);
+  }
+  30% {
+    transform: translate(5px, 10px) scale(1.02);
+    filter: invert(0.5) hue-rotate(180deg);
+  }
+  40% {
+    transform: translate(-5px, -10px) scale(0.98);
+    filter: blur(2px) brightness(1.5);
+  }
+  50% {
+    transform: translate(-8px, 8px) skew(10deg, 5deg);
+    filter: contrast(2) saturate(2);
+  }
+  60% {
+    transform: translate(8px, -8px) skew(-10deg, -5deg);
+    filter: hue-rotate(-120deg) invert(0.3);
+  }
+  70% {
+    transform: translate(12px, 0) scale(1.1) rotate(5deg);
+    filter: brightness(0.8) contrast(1.5) saturate(3);
+  }
+  80% {
+    transform: translate(-12px, 0) scale(0.9) rotate(-5deg);
+    filter: hue-rotate(60deg) brightness(1.3);
+  }
+  90% {
+    transform: translate(0, 15px) skew(-5deg, 10deg);
+    filter: invert(0.2) saturate(2) contrast(1.3);
+  }
+  100% {
+    transform: translate(0, -15px) skew(5deg, -10deg);
+    filter: hue-rotate(-60deg) brightness(1.1) blur(1px);
+  }
+}
+
+@keyframes layerGlitch {
+  0% {
+    clip-path: inset(0 0 0 0);
+  }
+  10% {
+    clip-path: inset(20% 0 20% 0);
+  }
+  20% {
+    clip-path: inset(40% 0 40% 0);
+  }
+  30% {
+    clip-path: inset(60% 0 10% 0);
+  }
+  40% {
+    clip-path: inset(10% 0 50% 0);
+  }
+  50% {
+    clip-path: inset(30% 0 30% 0);
+  }
+  60% {
+    clip-path: inset(70% 0 10% 0);
+  }
+  70% {
+    clip-path: inset(10% 0 70% 0);
+  }
+  80% {
+    clip-path: inset(50% 0 30% 0);
+  }
+  90% {
+    clip-path: inset(20% 0 60% 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes fractalPulse {
+  0% {
+    transform: translateX(-50%) scale(1);
+    background-position: 0% 0%;
+  }
+  100% {
+    transform: translateX(-50%) scale(1.2);
+    background-position: 100% 100%;
+  }
+}
+
+@keyframes floatShape {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(20px, 20px) rotate(90deg);
+  }
+  50% {
+    transform: translate(0, 40px) rotate(180deg);
+  }
+  75% {
+    transform: translate(-20px, 20px) rotate(270deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(360deg);
+  }
+}
+
+@keyframes multicolorGlow {
+  0% {
+    opacity: 0.7;
+    transform: translateX(-50%) scale(1);
+    filter: hue-rotate(0deg);
+    background: 
+      radial-gradient(circle, rgba(0, 255, 255, 0.7) 0%, rgba(0, 255, 255, 0) 70%),
+      radial-gradient(circle at 30% 30%, rgba(255, 0, 255, 0.5) 0%, rgba(255, 0, 255, 0) 60%);
+  }
+  25% {
+    opacity: 0.9;
+    transform: translateX(-50%) scale(1.2);
+    filter: hue-rotate(90deg);
+    background: 
+      radial-gradient(circle, rgba(0, 255, 255, 0.7) 0%, rgba(0, 255, 255, 0) 70%),
+      radial-gradient(circle at 70% 30%, rgba(255, 255, 0, 0.5) 0%, rgba(255, 255, 0, 0) 60%);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateX(-50%) scale(1.1);
+    filter: hue-rotate(180deg);
+    background: 
+      radial-gradient(circle, rgba(255, 0, 255, 0.7) 0%, rgba(255, 0, 255, 0) 70%),
+      radial-gradient(circle at 30% 70%, rgba(0, 255, 255, 0.5) 0%, rgba(0, 255, 255, 0) 60%);
+  }
+  75% {
+    opacity: 0.9;
+    transform: translateX(-50%) scale(1.3);
+    filter: hue-rotate(270deg);
+    background: 
+      radial-gradient(circle, rgba(255, 255, 0, 0.7) 0%, rgba(255, 255, 0, 0) 70%),
+      radial-gradient(circle at 70% 70%, rgba(0, 255, 255, 0.5) 0%, rgba(0, 255, 255, 0) 60%);
+  }
+  100% {
+    opacity: 0.7;
+    transform: translateX(-50%) scale(1);
+    filter: hue-rotate(360deg);
+    background: 
+      radial-gradient(circle, rgba(0, 255, 255, 0.7) 0%, rgba(0, 255, 255, 0) 70%),
+      radial-gradient(circle at 30% 30%, rgba(255, 0, 255, 0.5) 0%, rgba(255, 0, 255, 0) 60%);
+  }
+}
+
+/* Additional trippy animations for the profile image */
+@keyframes dataCorruption {
+  0% {
+    background-position: 0 0;
+    background-size: 100% 100%;
+  }
+  25% {
+    background-position: 10px -5px;
+    background-size: 110% 90%;
+  }
+  50% {
+    background-position: -10px 5px;
+    background-size: 90% 110%;
+  }
+  75% {
+    background-position: 5px 10px;
+    background-size: 105% 95%;
+  }
+  100% {
+    background-position: 0 0;
+    background-size: 100% 100%;
+  }
+}
+
+/* Holographic effect */
+.holographic-effect {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 0, 255, 0.5) 0%,
+    rgba(0, 255, 255, 0.5) 25%,
+    rgba(255, 255, 0, 0.5) 50%,
+    rgba(0, 255, 255, 0.5) 75%,
+    rgba(255, 0, 255, 0.5) 100%
+  );
+  background-size: 400% 400%;
+  mix-blend-mode: screen;
+  opacity: 0.5;
+  z-index: 13;
+  animation: holographicShift 5s ease infinite;
+}
+
+@keyframes holographicShift {
+  0% {
+    background-position: 0% 0%;
+    opacity: 0.3;
+  }
+  50% {
+    background-position: 100% 100%;
+    opacity: 0.7;
+  }
+  100% {
+    background-position: 0% 0%;
+    opacity: 0.3;
+  }
+}

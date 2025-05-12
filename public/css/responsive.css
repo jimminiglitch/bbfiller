@@ -1,0 +1,202 @@
+/* Mobile Responsiveness */
+@media (max-width: 1024px) {
+  #desktop-icons {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+  }
+  
+  .popup-window {
+    width: 90%;
+    max-width: 90%;
+    height: 80%;
+  }
+}
+
+@media (max-width: 768px) {
+  #desktop-icons {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  
+  .popup-window {
+    width: 95%;
+    max-width: 95%;
+    height: 75%;
+  }
+  
+  h1.glitch {
+    font-size: 2.2rem;
+  }
+  
+  .desktop-icon img {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .desktop-icon span {
+    font-size: 0.8rem;
+  }
+  
+  #start-bar {
+    height: 40px;
+  }
+  
+  #start-button {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+  }
+  
+  #clock {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #desktop-icons {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 10px;
+  }
+  
+  h1.glitch {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+  }
+  
+  .window-content {
+    padding: 10px;
+  }
+  
+  .window-header {
+    padding: 5px 8px;
+  }
+  
+  .window-header button {
+    width: 20px;
+    height: 20px;
+    font-size: 0.7rem;
+  }
+  
+  #start-menu {
+    width: 200px;
+  }
+  
+  #start-menu a {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+}
+/* Direct CSS fixes */
+
+/* Fix boot log text alignment */
+#boot-log,
+.boot-log,
+#bootScreen * {
+  text-align: left !important;
+  margin: 0 !important;
+  padding: 10px !important;
+  font-family: "VT323", monospace !important;
+}
+
+/* Prevent any hover effects on desktop icons that might trigger sounds */
+.desktop-icon:hover {
+  /* Override any hover styles that might trigger effects */
+  transform: none !important;
+  filter: none !important;
+  animation: none !important;
+}
+
+/* Add a subtle visual hover effect instead */
+.desktop-icon:hover {
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5) !important;
+  border: 1px solid cyan !important;
+}
+/* Resize Handle Fixes */
+
+/* Make resize handles more reliable */
+.resize-handle {
+  position: absolute !important;
+  z-index: 1000 !important;
+  background-color: transparent !important;
+  transition: background-color 0.2s ease !important;
+}
+
+.resize-handle:hover {
+  background-color: rgba(0, 255, 255, 0.2) !important;
+}
+
+/* Ensure handles are properly positioned */
+.resize-n {
+  top: 0 !important;
+  left: 10px !important;
+  right: 10px !important;
+  height: 10px !important;
+  cursor: ns-resize !important;
+}
+
+.resize-e {
+  top: 10px !important;
+  right: 0 !important;
+  bottom: 10px !important;
+  width: 10px !important;
+  cursor: ew-resize !important;
+}
+
+.resize-s {
+  bottom: 0 !important;
+  left: 10px !important;
+  right: 10px !important;
+  height: 10px !important;
+  cursor: ns-resize !important;
+}
+
+.resize-w {
+  top: 10px !important;
+  left: 0 !important;
+  bottom: 10px !important;
+  width: 10px !important;
+  cursor: ew-resize !important;
+}
+
+.resize-ne {
+  top: 0 !important;
+  right: 0 !important;
+  width: 15px !important;
+  height: 15px !important;
+  cursor: ne-resize !important;
+}
+
+.resize-se {
+  bottom: 0 !important;
+  right: 0 !important;
+  width: 15px !important;
+  height: 15px !important;
+  cursor: se-resize !important;
+}
+
+.resize-sw {
+  bottom: 0 !important;
+  left: 0 !important;
+  width: 15px !important;
+  height: 15px !important;
+  cursor: sw-resize !important;
+}
+
+.resize-nw {
+  top: 0 !important;
+  left: 0 !important;
+  width: 15px !important;
+  height: 15px !important;
+  cursor: nw-resize !important;
+}
+
+/* Ensure window content doesn't interfere with resize handles */
+.popup-window {
+  box-sizing: border-box !important;
+}
+
+.window-content {
+  pointer-events: auto !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
