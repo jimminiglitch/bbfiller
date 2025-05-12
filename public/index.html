@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/video.css">
   <link rel="stylesheet" href="/css/profile-glitch.css">
-  <link rel="stylesheet" href="/css/dos-games.css">
+  
 
   <!-- Video.js -->
   <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
@@ -98,6 +98,7 @@
         />
         <span>TIGERRR</span>
       </div>
+
           
       <div class="desktop-icon" id="icon-octavia" data-window="OCTAVIA">
         <img
@@ -234,70 +235,7 @@
         <span>r3d3ch0</span>
       </div>
     </div>
-
-    <!-- Popup Windows -->
-
-<!-- DOSGAMES.EXE -->
-<div id="dosgames" class="popup-window hidden">
-  <div class="window-header">
-    <span>DOSGAMES.EXE</span>
-    <button class="minimize">_</button>
-    <button class="maximize">▭</button>
-    <button class="close">X</button>
-  </div>
-  <div class="window-content">
-    <div id="game-launcher-container" class="game-launcher-container">
-      <div class="launcher-header">
-        <h2>DOS GAME LAUNCHER v1.0</h2>
-      </div>
-      
-      <div class="search-bar">
-        <input type="text" placeholder="Search games..." class="game-search" id="game-search">
-      </div>
-      
-      <div class="games-list" id="games-list">
-        <table class="dos-table" id="dos-table">
-          <thead>
-            <tr>
-              <th>FILENAME</th>
-              <th>YEAR</th>
-              <th>SIZE</th>
-              <th>DESCRIPTION</th>
-            </tr>
-          </thead>
-          <tbody id="games-tbody">
-            <!-- Game entries will be inserted here by JavaScript -->
-          </tbody>
-        </table>
-      </div>
-      
-      <div class="command-prompt">
-        <span class="prompt-symbol">C:\GAMES--</span>
-        <input type="text" class="command-input" id="command-input" placeholder="Type RUN [FILENAME] to launch...">
-        <span class="cursor"></span>
-      </div>
-      
-      <div class="status-bar">
-        <span id="game-count">6 file(s) found</span>
-        <span>10,240 KB free</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- GAME-WINDOW.EXE (For playing DOS games) -->
-<div id="game-window" class="popup-window hidden game-window">
-  <div class="window-header">
-    <span id="game-window-title">DOS GAME</span>
-    <button class="minimize">_</button>
-    <button class="maximize">▭</button>
-    <button class="close">X</button>
-  </div>
-  <div class="window-content">
-    <iframe id="game-iframe" src="" allowfullscreen class="game-iframe"></iframe>
-  </div>
-</div>
-      
+    
       
     <!-- ABOUT.EXE -->
     <div id="about" class="popup-window hidden">
@@ -644,10 +582,6 @@
   <script src="/js/media-loading.js"></script>
   <script src="/js/sw.js"></script>
   <script src="/js/video-system.js"></script>
-    <script src="/js/window-size-fix.js"></script>
-    <script src="/js/utils.js"></script>
-      <script src="/js/desktop.js"></script>
-    
   </div> 
 </body>
 </html>
