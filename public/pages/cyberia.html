@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cyberia</title>
+  <!-- your main site CSS -->
+  <link rel="stylesheet" href="/css/main.css"/>
+  <style>
+    /* fill the window with the iframe */
+    #cyberia-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    /* make sure the body and window-content stretch */
+    body, .window-content {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background: #000;
+    }
+  </style>
+</head>
+<body class="scanlines">
+  <div class="window-content">
+    <div class="window-header">
+      <h2 class="window-title glitch-text">Cyberia</h2>
+      <div class="window-controls">
+        <button class="minimize">_</button>
+        <button class="maximize">▭</button>
+        <button class="close">X</button>
+      </div>
+    </div>
+    <iframe
+      id="cyberia-iframe"
+      src="https://dos.zone/cyberia/"
+      allowfullscreen
+      sandbox="allow-same-origin allow-scripts allow-pointer-lock"
+    ></iframe>
+  </div>
+</body>
+</html>

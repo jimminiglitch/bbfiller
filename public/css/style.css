@@ -353,6 +353,7 @@ body {
   left: 40px;
 }
 
+
 /* Selected state */
 .desktop-icon.selected {
   background: rgba(255, 255, 255, 0.1);
