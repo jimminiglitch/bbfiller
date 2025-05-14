@@ -3,562 +3,87 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Video Player</title>
-  
-  <!-- Fonts -->
+  <title>Responsive Video Player</title>
   <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/video.css">
-  
-  <!-- CSS -->
   <style>
     body {
       background-color: black;
       color: #00ffff;
       font-family: 'VT323', monospace;
       margin: 0;
-      padding: 1rem;
-      text-align: center;
-      overflow: hidden;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100vw;
+      height: 100vh;
     }
 
-    h1, h2 {
-      color: #00ff00;
-      margin-bottom: 1rem;
-    }
-
-    .video-container {
+    .video-wrapper {
       position: relative;
       width: 100%;
       max-width: 960px;
       margin: 0 auto;
-      overflow: hidden;
-      border: 2px solid #00ffff;
-      border-radius: 8px;
       background-color: black;
-    }
-
-    /* 16:9 aspect ratio container */
-    .aspect-ratio-container {
-      position: relative;
-      padding-bottom: 56.25%; /* 16:9 aspect ratio */
-      height: 0;
+      border-radius: 0;
       overflow: hidden;
-    }
-
-    video, iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: black;
-      outline: none;
-    }
-
-    .poster-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      aspect-ratio: 16 / 9;
       display: flex;
       align-items: center;
       justify-content: center;
-      background-size: cover;
-      background-position: center;
-      cursor: pointer;
-      z-index: 2;
-      transition: opacity 0.3s ease;
     }
 
-    .play-button {
-      font-family: 'Press Start 2P', monospace;
-      background: rgba(0, 0, 0, 0.7);
-      color: #00ffff;
-      padding: 0.5rem 1rem;
-      border: 2px solid #00ffff;
-      box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-      transition: all 0.2s ease;
-    }
-
-    .poster-overlay:hover .play-button {
-      background: rgba(0, 0, 0, 0.9);
-      transform: scale(1.05);
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
-    }
-
-    .video-info {
-      margin-top: 1rem;
-      padding: 0.5rem;
-      background-color: rgba(0, 0, 0, 0.5);
-      border: 1px solid #00ffff;
-      border-radius: 4px;
-    }
-
-    .video-title {
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-      color: #00ffff;
-      text-shadow: 0 0 5px #00ffff;
-    }
-
-    .video-description {
-      font-size: 1rem;
-      color: #ccffff;
-    }
-
-    /* Retro CRT effect */
-    .scanlines {
-      position: fixed;
-      top: 0;
-      left: 0;
+    .video-wrapper iframe,
+    .video-wrapper video {
       width: 100%;
       height: 100%;
-      background: linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, 0) 50%,
-        rgba(0, 0, 0, 0.3) 50%
-      );
-      background-size: 100% 4px;
-      z-index: 999;
-      pointer-events: none;
-      opacity: 0.15;
-    }
-
-    /* Loading indicator */
-    .loading-indicator {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: #00ffff;
-      font-family: 'Press Start 2P', monospace;
-      font-size: 1rem;
-      text-shadow: 0 0 5px #00ffff;
-      z-index: 1;
-      display: none;
-    }
-
-    /* Custom video controls */
-    .custom-controls {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      padding: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      z-index: 3;
-    }
-
-    .video-container:hover .custom-controls {
-      opacity: 1;
-    }
-
-    .control-button {
-      background: none;
+      display: block;
+      object-fit: contain;
+      border-radius: 0;
+      background-color: black;
       border: none;
-      color: #00ffff;
-      font-family: 'Press Start 2P', monospace;
-      font-size: 0.8rem;
-      cursor: pointer;
-      padding: 5px 10px;
-      margin: 0 5px;
-    }
-
-    .control-button:hover {
-      text-shadow: 0 0 5px #00ffff;
-    }
-
-    .volume-control {
-      display: flex;
-      align-items: center;
-    }
-
-    .volume-slider {
-      -webkit-appearance: none;
-      width: 80px;
-      height: 5px;
-      background: #005555;
-      outline: none;
-      border-radius: 5px;
-      margin: 0 10px;
-    }
-
-    .volume-slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 15px;
-      height: 15px;
-      background: #00ffff;
-      cursor: pointer;
-      border-radius: 50%;
-      box-shadow: 0 0 5px #00ffff;
-    }
-
-    .volume-slider::-moz-range-thumb {
-      width: 15px;
-      height: 15px;
-      background: #00ffff;
-      cursor: pointer;
-      border-radius: 50%;
-      box-shadow: 0 0 5px #00ffff;
-    }
-
-    /* Custom video controls will be styled by the browser's default */
-    ::-webkit-media-controls {
-      color-scheme: dark;
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-      .video-container {
-        max-width: 100%;
-      }
-      
-      .video-title {
-        font-size: 1.2rem;
-      }
-      
-      .video-description {
-        font-size: 0.9rem;
-      }
-      
-      .custom-controls {
-        padding: 5px;
-      }
-      
-      .control-button {
-        font-size: 0.7rem;
-        padding: 3px 6px;
-      }
-      
-      .volume-slider {
-        width: 60px;
-      }
     }
   </style>
 </head>
 <body>
-  <div class="scanlines"></div>
-  
-  <div class="video-container">
-    <div class="aspect-ratio-container">
-      <div id="loading-indicator" class="loading-indicator">LOADING...</div>
-      
-      <!-- Poster overlay with play button -->
-      <div id="poster-overlay" class="poster-overlay">
-        <div class="play-button">▶ PLAY</div>
-      </div>
-      
-      <!-- Video player (will be populated by JavaScript) -->
-      <div id="player-container"></div>
-    </div>
-  </div>
-  
-  <div class="video-info">
-    <div id="video-title" class="video-title">Video Title</div>
-    <div id="video-description" class="video-description">Video description will appear here.</div>
-  </div>
+  <div class="video-wrapper" id="video-wrapper"></div>
 
-  <!-- Vimeo API (only loaded if needed) -->
-  <script src="https://player.vimeo.com/api/player.js"></script>
-  
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      console.log('🎬 Video player initializing...');
-      
-      // Get URL parameters
-      const urlParams = new URLSearchParams(window.location.search);
-      const videoType = urlParams.get('type') || 'direct'; // 'direct' or 'vimeo'
-      const videoId = urlParams.get('id') || '';
-      const videoSrc = urlParams.get('src') || '';
-      const posterSrc = urlParams.get('poster') || 'https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/VaporTV.png?v=1746411817932';
-      const videoTitle = urlParams.get('title') || 'Untitled Video';
-      const videoDescription = urlParams.get('description') || '';
-      const autoplay = urlParams.get('autoplay') === 'true';
-      
-      console.log(`🎬 Video type: ${videoType}`);
-      console.log(`🎬 Video source: ${videoSrc || videoId}`);
-      console.log(`🎬 Autoplay: ${autoplay}`);
-      
-      // Get DOM elements
-      const posterOverlay = document.getElementById('poster-overlay');
-      const playerContainer = document.getElementById('player-container');
-      const loadingIndicator = document.getElementById('loading-indicator');
-      const videoTitleElement = document.getElementById('video-title');
-      const videoDescriptionElement = document.getElementById('video-description');
-      
-      // Set poster background
-      posterOverlay.style.backgroundImage = `url('${posterSrc}')`;
-      
-      // Set video info
-      videoTitleElement.textContent = videoTitle;
-      videoDescriptionElement.textContent = videoDescription;
-      
-      // Initialize player based on type
-      let player = null;
-      
-      // Function to create custom controls for direct videos
-      function createCustomControls(videoElement) {
-        const controlsContainer = document.createElement('div');
-        controlsContainer.className = 'custom-controls';
-        
-        // Play/Pause button
-        const playPauseButton = document.createElement('button');
-        playPauseButton.className = 'control-button';
-        playPauseButton.textContent = '⏸️ PAUSE';
-        playPauseButton.addEventListener('click', () => {
-          if (videoElement.paused) {
-            videoElement.play();
-            playPauseButton.textContent = '⏸️ PAUSE';
-          } else {
-            videoElement.pause();
-            playPauseButton.textContent = '▶️ PLAY';
-          }
-        });
-        
-        // Volume control
-        const volumeControl = document.createElement('div');
-        volumeControl.className = 'volume-control';
-        
-        const muteButton = document.createElement('button');
-        muteButton.className = 'control-button';
-        muteButton.textContent = '🔊';
-        muteButton.addEventListener('click', () => {
-          videoElement.muted = !videoElement.muted;
-          muteButton.textContent = videoElement.muted ? '🔇' : '🔊';
-          volumeSlider.disabled = videoElement.muted;
-        });
-        
-        const volumeSlider = document.createElement('input');
-        volumeSlider.type = 'range';
-        volumeSlider.className = 'volume-slider';
-        volumeSlider.min = 0;
-        volumeSlider.max = 1;
-        volumeSlider.step = 0.1;
-        volumeSlider.value = videoElement.volume;
-        volumeSlider.addEventListener('input', () => {
-          videoElement.volume = volumeSlider.value;
-          // Save volume preference to localStorage
-          localStorage.setItem('videoPlayerVolume', volumeSlider.value);
-        });
-        
-        // Load saved volume if available
-        const savedVolume = localStorage.getItem('videoPlayerVolume');
-        if (savedVolume !== null) {
-          videoElement.volume = parseFloat(savedVolume);
-          volumeSlider.value = parseFloat(savedVolume);
-        }
-        
-        volumeControl.appendChild(muteButton);
-        volumeControl.appendChild(volumeSlider);
-        
-        // Fullscreen button
-        const fullscreenButton = document.createElement('button');
-        fullscreenButton.className = 'control-button';
-        fullscreenButton.textContent = '⛶ FULL';
-        fullscreenButton.addEventListener('click', () => {
-          if (document.fullscreenElement) {
-            document.exitFullscreen();
-          } else {
-            document.querySelector('.video-container').requestFullscreen();
-          }
-        });
-        
-        // Add all controls to container
-        controlsContainer.appendChild(playPauseButton);
-        controlsContainer.appendChild(volumeControl);
-        controlsContainer.appendChild(fullscreenButton);
-        
-        // Add controls to video container
-        document.querySelector('.aspect-ratio-container').appendChild(controlsContainer);
-        
-        // Update play/pause button state when video state changes
-        videoElement.addEventListener('play', () => {
-          playPauseButton.textContent = '⏸️ PAUSE';
-        });
-        
-        videoElement.addEventListener('pause', () => {
-          playPauseButton.textContent = '▶️ PLAY';
-        });
-        
-        // Hide native controls when using custom controls
-        videoElement.controls = false;
-        
-        // Show custom controls
-        controlsContainer.style.opacity = '1';
-        
-        // Hide controls after inactivity
-        let controlsTimeout;
-        const hideControls = () => {
-          controlsContainer.style.opacity = '0';
-        };
-        
-        const showControls = () => {
-          controlsContainer.style.opacity = '1';
-          clearTimeout(controlsTimeout);
-          controlsTimeout = setTimeout(hideControls, 3000);
-        };
-        
-        document.querySelector('.video-container').addEventListener('mousemove', showControls);
-        document.querySelector('.video-container').addEventListener('touchstart', showControls);
-        
-        // Initial timeout
-        controlsTimeout = setTimeout(hideControls, 3000);
+    const params = new URLSearchParams(window.location.search);
+    const type = params.get('type');
+    const src = params.get('src');
+    const autoplay = params.get('autoplay') === 'true';
+    const wrapper = document.getElementById('video-wrapper');
+
+    if (type === 'youtube' && src) {
+      let videoId = src;
+      const idMatch = src.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|watch\?v=))([\w-]{11})/);
+      if (idMatch) {
+        videoId = idMatch[1];
+      } else if (!/^[\w-]{11}$/.test(src)) {
+        console.error("Invalid YouTube video ID or URL.");
+        wrapper.innerText = "Error: Invalid YouTube video source.";
+        return;
       }
-      
-      // Function to initialize the player
-      function initializePlayer() {
-        loadingIndicator.style.display = 'block';
-        
-        if (videoType === 'vimeo') {
-          console.log('🎬 Creating Vimeo player...');
-          // Create Vimeo player
-          player = new Vimeo.Player(playerContainer, {
-            id: videoId,
-            autoplay: true,
-            title: false,
-            byline: false,
-            portrait: false,
-            badge: false,
-            autopause: false
-          });
-          
-          player.on('loaded', () => {
-            console.log('✅ Vimeo player loaded');
-            posterOverlay.style.display = 'none';
-            loadingIndicator.style.display = 'none';
-          });
-          
-          player.on('error', (error) => {
-            console.error('❌ Vimeo player error:', error);
-            loadingIndicator.style.display = 'none';
-            loadingIndicator.textContent = 'ERROR LOADING VIDEO';
-            loadingIndicator.style.color = 'red';
-            loadingIndicator.style.display = 'block';
-          });
-        } else {
-          console.log('🎬 Creating HTML5 video player...');
-          // Create HTML5 video player
-          const video = document.createElement('video');
-          video.playsInline = true;
-          
-          // Set autoplay and muted attributes to help with autoplay policies
-          video.autoplay = true;
-          video.muted = false; // Start muted to ensure autoplay works
-          
-          // Load saved volume if available
-          const savedVolume = localStorage.getItem('videoPlayerVolume');
-          if (savedVolume !== null) {
-            video.volume = parseFloat(savedVolume);
-          }
-          
-          video.addEventListener('canplay', () => {
-            console.log('✅ Video can play');
-            posterOverlay.style.display = 'none';
-            loadingIndicator.style.display = 'none';
-            
-            // Create custom controls
-            createCustomControls(video);
-            
-            // Try to play the video
-            video.play().then(() => {
-              console.log('✅ Video playback started');
-              // After successful autoplay, unmute if user clicked play
-              if (!autoplay) {
-                // Only unmute if this wasn't an automatic autoplay
-                setTimeout(() => {
-                  video.muted = false;
-                }, 1000);
-              }
-            }).catch(error => {
-              console.error('❌ Video play error:', error);
-              // Show play button again if autoplay fails
-              posterOverlay.style.display = 'flex';
-              
-              // Add click handler to try again
-              posterOverlay.addEventListener('click', () => {
-                video.muted = true; // Ensure muted for autoplay
-                video.play().then(() => {
-                  posterOverlay.style.display = 'none';
-                  // Unmute after successful play
-                  setTimeout(() => {
-                    video.muted = false;
-                  }, 1000);
-                });
-              });
-            });
-          });
-          
-          video.addEventListener('error', (e) => {
-            console.error('❌ Video loading error:', e);
-            loadingIndicator.textContent = 'ERROR LOADING VIDEO';
-            loadingIndicator.style.color = 'red';
-            loadingIndicator.style.display = 'block';
-          });
-          
-          // Add source and load
-          video.src = videoSrc;
-          video.load();
-          playerContainer.appendChild(video);
-          player = video;
-        }
-      }
-      
-      // If autoplay parameter is true, initialize player immediately
+
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=${autoplay ? 1 : 0}&rel=0&modestbranding=1`;
+      iframe.allow = "autoplay; fullscreen";
+      wrapper.appendChild(iframe);
+    } else if (type === 'direct' && src) {
+      const video = document.createElement('video');
+      video.controls = true;
+      video.preload = 'auto';
       if (autoplay) {
-        console.log('🎬 Autoplay requested, initializing player...');
-        initializePlayer();
-      } else {
-        // Otherwise wait for poster click
-        posterOverlay.addEventListener('click', () => {
-          console.log('🎬 Poster clicked, initializing player...');
-          initializePlayer();
-        });
+        video.autoplay = true;
+        video.muted = false;
       }
-      
-      // Handle window unload/close
-      window.addEventListener('beforeunload', () => {
-        console.log('🧹 Cleaning up video player');
-        if (player) {
-          if (videoType === 'vimeo' && typeof player.unload === 'function') {
-            player.unload();
-          } else if (videoType === 'direct') {
-            player.pause();
-            player.currentTime = 0;
-            player.src = '';
-          }
-        }
-      });
-      
-      // Listen for messages from parent window to stop playback
-      window.addEventListener('message', (event) => {
-        console.log('📨 Received message:', event.data);
-        
-        if (event.data === 'stop' && player) {
-          console.log('🛑 Received stop message from parent window');
-          
-          if (videoType === 'vimeo' && typeof player.unload === 'function') {
-            player.unload();
-          } else if (videoType === 'direct') {
-            player.pause();
-            player.currentTime = 0;
-            player.src = '';
-          }
-          
-          // Show poster again
-          posterOverlay.style.display = 'flex';
-        }
-      });
-      
-      console.log('🎬 Video player initialization complete');
-    });
+      const source = document.createElement('source');
+      source.src = src;
+      source.type = 'video/mp4';
+      video.appendChild(source);
+      wrapper.appendChild(video);
+    }
   </script>
 </body>
 </html>

@@ -8,9 +8,7 @@
   <!-- Glitch & UI Styles -->
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/style.css">
-  <!-- Video.js -->
-  <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
-  <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+  <link rel="stylesheet" href="/css/video.css">
 
   <!-- Favicon -->
   <link
@@ -148,6 +146,20 @@
           alt="" aria-hidden="true" loading="lazy"
         />
         <span>Papaz</span>
+      </button>
+      <button class="desktop-icon" id="icon-future" data-window="future" aria-label="Open Future">
+        <img
+          src="https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/VaporTV.png?v=1746411817932"
+          alt="" aria-hidden="true" loading="lazy"
+        />
+        <span>Future Unknown</span>
+      </button>
+      <button class="desktop-icon" id="icon-critter" data-window="critter" aria-label="Open Critter">
+        <img
+          src="https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/VaporTV.png?v=1746411817932"
+          alt="" aria-hidden="true" loading="lazy"
+        />
+        <span>Critter</span>
       </button>
       <!-- Abstract -->
       <button class="desktop-icon" id="icon-Abstract" data-window="Abstract" aria-label="Open Abstract">
@@ -355,6 +367,32 @@
     <div id="birdbrian" class="popup-window hidden">
       <div class="window-header">
         <span>BRIAN_BIRDS.EXE</span>
+        <button class="minimize">_</button>
+        <button class="maximize">▭</button>
+        <button class="close">X</button>
+      </div>
+      <div class="window-content">
+        <!-- Populated by enhanced-video-system.js -->
+      </div>
+    </div>
+    
+     <!-- FUTURE_UNKNOWN.EXE -->
+    <div id="future" class="popup-window hidden">
+      <div class="window-header">
+        <span>FUTURE_UNKNOWN.EXE</span>
+        <button class="minimize">_</button>
+        <button class="maximize">▭</button>
+        <button class="close">X</button>
+      </div>
+      <div class="window-content">
+        <!-- Populated by enhanced-video-system.js -->
+      </div>
+    </div>
+    
+     <!-- CRITTER.EXE -->
+    <div id="critter" class="popup-window hidden">
+      <div class="window-header">
+        <span>CRITTER.EXE</span>
         <button class="minimize">_</button>
         <button class="maximize">▭</button>
         <button class="close">X</button>

@@ -12,26 +12,40 @@ document.addEventListener("DOMContentLoaded", () => {
   // thumbnails come from YouTube's image API.
   // ───────────────────────────────────────────────────────────────────────────────
   const videoConfig = {
-    "Joyful": {
-      type: "direct",
-      src: "https://cdn.glitch.me/25331b85-e206-4347-93a8-666983818ff8/A Joyful and Meaningful Life.mp4?v=1746824993856",
-      poster: "https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/VaporTV.png?v=1746411817932",
-      title: "A Joyful and Meaningful Life",
-      description: "Phantom of the Oprah pt. 3",
-    },
+  "future": {
+    type: "youtube",
+    id: "bySOMahBN7g",
+    poster: "https://img.youtube.com/vi/bySOMahBN7g/hqdefault.jpg",
+    title: "Future Unknown",
+    description: ""
+  },
+ "critter": {
+  type: "youtube",
+  id: "i8h72QCGTWE",
+    poster: "https://img.youtube.com/vi/i8h72QCGTWE/hqdefault.jpg",
+    title: "Curious Critter POV",
+    description: "S.E.P. Challenge Video 1"
+  },
+  "Joyful": {
+    type: "youtube",
+    id: "erZBbUa4Rac",
+    poster: "https://img.youtube.com/vi/erZBbUa4Rac/hqdefault.jpg",
+    title: "A Joyful and Meaningful Life",
+    description: "Phantom of the Oprah pt. 3"
+  },
+  "Abstract": {
+    type: "youtube",
+    id: "ieB-dxSihuo",
+    poster: "https://img.youtube.com/vi/ieB-dxSihuo/hqdefault.jpg",
+    title: "Abstract",
+    description: "S.E.P. Challenge Video 6"
+  },
     "Papaz": {
       type: "direct",
       src: "https://cdn.glitch.me/25331b85-e206-4347-93a8-666983818ff8/papaz.mp4?v=1746823684714",
       poster: "https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/VaporTV.png?v=1746411817932",
       title: "Papaz",
       description: "S.E.P. Challenge Video 2",
-    },
-    "Abstract": {
-      type: "direct",
-      src: "https://cdn.glitch.me/25331b85-e206-4347-93a8-666983818ff8/abstract.mp4?v=1746822321138",
-      poster: "https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/VaporTV.png?v=1746411817932",
-      title: "Abstract",
-      description: "S.E.P. Challenge Video 6",
     },
     "weight": {
       type: "vimeo",
@@ -87,8 +101,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Locate & set up each video window based on its config
   // ───────────────────────────────────────────────────────────────────────────────
   const videoWindows = document.querySelectorAll(
-    '[id="Joyful"], [id="Papaz"], [id="Abstract"], [id="weight"], [id="birdbrian"], [id="clydecup"]'
-  );
+  '[id="Joyful"], [id="Papaz"], [id="Abstract"], [id="weight"], [id="birdbrian"], [id="clydecup"], [id="future"], [id="critter"]'
+);
   console.log(`🔍 Found ${videoWindows.length} video windows`);
 
   videoWindows.forEach(win => {

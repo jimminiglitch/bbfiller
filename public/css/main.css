@@ -367,6 +367,16 @@ body {
   left: 440px;
 }
 
+#icon-future {
+  top: 100px;
+  left: 640px;
+}
+
+#icon-critter {
+  top: 200px;
+  left: 640px;
+}
+
 
 /* Selected state */
 .desktop-icon.selected {
