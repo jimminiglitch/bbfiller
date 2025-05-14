@@ -6,7 +6,8 @@
   border: 1px solid #00ffff !important;
   border-radius: 5px !important;
   box-shadow: 0 0 15px rgba(0, 255, 255, 0.3) !important;
-  overflow: hidden !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
   transition: box-shadow 0.2s ease, transform 0.1s ease !important;
   will-change: transform, box-shadow !important;
 }
@@ -55,7 +56,7 @@
   background-color: transparent !important;
   color: #ffffff !important;
   padding: 10px !important;
-  overflow: auto !important;
+  overflow: flex !important;
   height: calc(100% - 30px) !important;
   scrollbar-width: thin !important;
   scrollbar-color: #00ffff rgba(0, 0, 0, 0.3) !important;
@@ -182,4 +183,12 @@
 
 .popup-window[style*="display: block"] {
   animation: windowOpen 0.3s ease forwards;
+}
+
+
+.popup-window .window-content {
+  flex: 1 1 auto !important;
+  overflow: auto !important;
+  height: auto !important;
+  max-height: none !important;
 }

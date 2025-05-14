@@ -1,0 +1,2453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TRIPSCAPE RAVE - 3D Psychedelic Experience</title>
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      background-color: #000;
+      color: #fff;
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    canvas {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Loading screen */
+    #loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      transition: opacity 0.5s ease;
+    }
+
+    .loading-container {
+      width: 100%;
+      max-width: 400px;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    .loading-title {
+      font-size: 3.5rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(to right, #ff00ff, #00ffff, #ffff00);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: glitch 1s infinite, rainbow 4s infinite linear;
+    }
+
+    .loading-text {
+      color: #22d3ee;
+      font-family: monospace;
+      letter-spacing: 0.1em;
+      margin-bottom: 2rem;
+    }
+
+    .progress-bar {
+      position: relative;
+      height: 8px;
+      background-color: #1f2937;
+      border-radius: 9999px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .progress-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background: linear-gradient(to right, #ff00ff, #00ffff, #ffff00);
+      border-radius: 9999px;
+      transition: width 0.3s ease;
+      animation: rainbow 2s infinite linear;
+    }
+
+    .progress-glitch {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.7);
+    }
+
+    .progress-text {
+      color: #22d3ee;
+      font-family: monospace;
+      font-size: 0.875rem;
+    }
+
+    .loading-info {
+      margin-top: 2rem;
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+
+    /* Control panel */
+    #control-panel {
+      position: absolute;
+      top: 50%;
+      right: 16px;
+      transform: translateY(-50%);
+      width: 280px;
+      background-color: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 8px;
+      border: 1px solid rgba(255, 0, 255, 0.5);
+      color: white;
+      overflow: hidden;
+      z-index: 100;
+      display: none;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      border-bottom: 1px solid rgba(255, 0, 255, 0.3);
+      background: linear-gradient(90deg, rgba(255,0,255,0.2) 0%, rgba(0,255,255,0.2) 100%);
+    }
+
+    .panel-title {
+      color: #ff00ff;
+      font-weight: bold;
+      text-shadow: 0 0 5px #ff00ff;
+    }
+
+    .close-button {
+      background: none;
+      border: none;
+      color: #9ca3af;
+      cursor: pointer;
+    }
+
+    .close-button:hover {
+      color: white;
+    }
+
+    .panel-tabs {
+      display: flex;
+      border-bottom: 1px solid rgba(255, 0, 255, 0.3);
+    }
+
+    .panel-tab {
+      flex: 1;
+      padding: 8px;
+      text-align: center;
+      font-size: 0.875rem;
+      color: #9ca3af;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .panel-tab.active {
+      color: #ff00ff;
+      border-bottom: 2px solid #ff00ff;
+      text-shadow: 0 0 5px #ff00ff;
+    }
+
+    .panel-content {
+      padding: 16px;
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+
+    .control-group {
+      margin-bottom: 16px;
+    }
+
+    .control-label {
+      display: block;
+      font-size: 0.875rem;
+      color: #9ca3af;
+      margin-bottom: 4px;
+    }
+
+    .control-select {
+      width: 100%;
+      background-color: #1f2937;
+      border: 1px solid #4b5563;
+      border-radius: 4px;
+      padding: 8px 12px;
+      color: white;
+    }
+
+    .control-range {
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    .control-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .toggle-switch {
+      width: 48px;
+      height: 24px;
+      background-color: #4b5563;
+      border-radius: 9999px;
+      padding: 4px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .toggle-switch.active {
+      background-color: #ff00ff;
+      box-shadow: 0 0 10px #ff00ff;
+    }
+
+    .toggle-handle {
+      width: 16px;
+      height: 16px;
+      background-color: white;
+      border-radius: 50%;
+      transition: transform 0.2s ease;
+    }
+
+    .toggle-switch.active .toggle-handle {
+      transform: translateX(24px);
+    }
+
+    /* Control buttons */
+    .control-buttons {
+      position: absolute;
+      bottom: 16px;
+      right: 16px;
+      display: flex;
+      gap: 16px;
+      z-index: 50;
+    }
+
+    .control-button {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+      border: 1px solid #ff00ff;
+      color: #ff00ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+    }
+
+    .control-button:hover {
+      background-color: rgba(0, 0, 0, 0.7);
+      box-shadow: 0 0 15px rgba(255, 0, 255, 0.8);
+    }
+
+    .control-button.active {
+      background-color: rgba(255, 0, 255, 0.3);
+      border-color: #00ffff;
+      color: #00ffff;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+    }
+
+    /* Audio visualizer */
+    #audio-visualizer {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      z-index: 50;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 0, 255, 0.3);
+      border-radius: 8px;
+      display: none;
+    }
+
+    /* Audio status */
+    #audio-status {
+      position: absolute;
+      bottom: 80px;
+      right: 16px;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: #ff00ff;
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-size: 0.875rem;
+      z-index: 50;
+      display: none;
+    }
+
+    /* Fullscreen button */
+    #fullscreen-button {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+      border: 1px solid #00ffff;
+      color: #00ffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    }
+
+    #fullscreen-button:hover {
+      background-color: rgba(0, 0, 0, 0.7);
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+    }
+
+    /* Keyboard controls overlay */
+    #keyboard-controls {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0, 0, 0, 0.7);
+      border: 1px solid #ff00ff;
+      border-radius: 8px;
+      padding: 8px 16px;
+      color: #00ffff;
+      font-size: 0.8rem;
+      z-index: 100;
+      display: none;
+      text-align: center;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+    }
+
+    #keyboard-controls h4 {
+      margin: 0 0 8px 0;
+      color: #ff00ff;
+      font-size: 1rem;
+    }
+
+    #keyboard-controls ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 4px 16px;
+      text-align: left;
+    }
+
+    #keyboard-controls li {
+      display: flex;
+      align-items: center;
+    }
+
+    .key {
+      display: inline-block;
+      background-color: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 4px;
+      padding: 2px 6px;
+      margin-right: 8px;
+      font-family: monospace;
+      min-width: 20px;
+      text-align: center;
+    }
+
+    /* Rave mode indicator */
+    #rave-mode {
+      position: absolute;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0, 0, 0, 0.7);
+      border: 1px solid #ff00ff;
+      border-radius: 8px;
+      padding: 4px 16px;
+      color: #ff00ff;
+      font-size: 1.2rem;
+      font-weight: bold;
+      z-index: 100;
+      display: none;
+      text-align: center;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+      animation: pulse 1s infinite alternate;
+    }
+
+    /* Animations */
+    @keyframes glitch {
+      0% {
+        text-shadow: 0.05em 0 0 rgba(255, 0, 255, 0.75), -0.05em -0.025em 0 rgba(0, 255, 255, 0.75), -0.025em 0.05em 0 rgba(255, 255, 0, 0.75);
+      }
+      14% {
+        text-shadow: 0.05em 0 0 rgba(255, 0, 255, 0.75), -0.05em -0.025em 0 rgba(0, 255, 255, 0.75), -0.025em 0.05em 0 rgba(255, 255, 0, 0.75);
+      }
+      15% {
+        text-shadow: -0.05em -0.025em 0 rgba(255, 0, 255, 0.75), 0.025em 0.025em 0 rgba(0, 255, 255, 0.75), -0.05em -0.05em 0 rgba(255, 255, 0, 0.75);
+      }
+      49% {
+        text-shadow: -0.05em -0.025em 0 rgba(255, 0, 255, 0.75), 0.025em 0.025em 0 rgba(0, 255, 255, 0.75), -0.05em -0.05em 0 rgba(255, 255, 0, 0.75);
+      }
+      50% {
+        text-shadow: 0.025em 0.05em 0 rgba(255, 0, 255, 0.75), 0.05em 0 0 rgba(0, 255, 255, 0.75), 0 -0.05em 0 rgba(255, 255, 0, 0.75);
+      }
+      99% {
+        text-shadow: 0.025em 0.05em 0 rgba(255, 0, 255, 0.75), 0.05em 0 0 rgba(0, 255, 255, 0.75), 0 -0.05em 0 rgba(255, 255, 0, 0.75);
+      }
+      100% {
+        text-shadow: -0.025em 0 0 rgba(255, 0, 255, 0.75), -0.025em -0.025em 0 rgba(0, 255, 255, 0.75), -0.025em -0.05em 0 rgba(255, 255, 0, 0.75);
+      }
+    }
+
+    @keyframes rainbow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .rainbow-text {
+      background: linear-gradient(to right, #ff00ff, #00ffff, #ffff00, #ff00ff);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: rainbow 4s linear infinite;
+    }
+
+    /* Pulse animation for audio status */
+    @keyframes pulse {
+      0% { opacity: 0.7; }
+      50% { opacity: 1; }
+      100% { opacity: 0.7; }
+    }
+
+    .pulse {
+      animation: pulse 1.5s infinite ease-in-out;
+    }
+
+    /* Beat animation for dancers */
+    @keyframes beat {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Main Canvas (Three.js will use this) -->
+  <canvas id="scene-canvas"></canvas>
+  
+  <!-- Audio Visualizer -->
+  <canvas id="audio-visualizer" width="256" height="80"></canvas>
+  
+  <!-- Audio Status -->
+  <div id="audio-status" class="pulse">
+    Loading audio...
+  </div>
+  
+  <!-- Loading Screen -->
+  <div id="loading-screen">
+    <div class="loading-container">
+      <h1 class="loading-title">TRIPSCAPE RAVE</h1>
+      <p id="loading-text" class="loading-text">INITIALIZING NEURAL INTERFACE</p>
+      
+      <div class="progress-bar">
+        <div id="progress-fill" class="progress-fill" style="width: 0%; background-size: 200% auto;"></div>
+        <!-- Glitch effects will be added dynamically -->
+      </div>
+      
+      <div class="progress-text">
+        <span id="progress-percent">0%</span>
+      </div>
+      
+      <div class="loading-info">
+        <p>CALIBRATING PSYCHEDELIC PARAMETERS</p>
+        <p>LOADING DIMENSIONAL GATEWAYS</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Control Buttons -->
+  <div class="control-buttons">
+    <button id="fullscreen-button" title="Toggle Fullscreen">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 3 21 3 21 9"></polyline>
+        <polyline points="9 21 3 21 3 15"></polyline>
+        <line x1="21" y1="3" x2="14" y2="10"></line>
+        <line x1="3" y1="21" x2="10" y2="14"></line>
+      </svg>
+    </button>
+    
+    <button id="settings-button" class="control-button" title="Settings">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+        <circle cx="12" cy="12" r="3"></circle>
+      </svg>
+    </button>
+    
+    <button id="audio-button" class="control-button" title="Toggle Audio">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Keyboard Controls -->
+  <div id="keyboard-controls">
+    <h4>Keyboard Controls</h4>
+    <ul>
+      <li><span class="key">W</span> Move forward</li>
+      <li><span class="key">S</span> Move backward</li>
+      <li><span class="key">A</span> Move left</li>
+      <li><span class="key">D</span> Move right</li>
+      <li><span class="key">Q</span> Move up</li>
+      <li><span class="key">E</span> Move down</li>
+      <li><span class="key">R</span> Reset camera</li>
+      <li><span class="key">F</span> Fullscreen</li>
+      <li><span class="key">Space</span> Toggle audio</li>
+      <li><span class="key">C</span> Change theme</li>
+      <li><span class="key">V</span> Toggle dancers</li>
+      <li><span class="key">B</span> Toggle buildings</li>
+      <li><span class="key">N</span> Toggle sky objects</li>
+      <li><span class="key">M</span> Toggle auto-camera</li>
+      <li><span class="key">+</span> / <span class="key">-</span> Adjust trippy level</li>
+      <li><span class="key">H</span> Toggle this help</li>
+    </ul>
+  </div>
+  
+  <!-- Rave Mode Indicator -->
+  <div id="rave-mode">
+    RAVE MODE ACTIVATED
+  </div>
+  
+  <!-- Control Panel -->
+  <div id="control-panel">
+    <div class="panel-header">
+      <h3 class="panel-title">TRIPSCAPE CONTROLS</h3>
+      <button id="close-panel" class="close-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="panel-tabs">
+      <button class="panel-tab active" data-tab="visuals">Visuals</button>
+      <button class="panel-tab" data-tab="audio">Audio</button>
+      <button class="panel-tab" data-tab="scene">Scene</button>
+      <button class="panel-tab" data-tab="effects">Effects</button>
+    </div>
+    
+    <div class="panel-content">
+      <!-- Visuals Tab -->
+      <div id="visuals-tab" class="tab-content">
+        <div class="control-group">
+          <label class="control-label">Visual Theme</label>
+          <select id="visual-theme" class="control-select">
+            <option value="rave">Rave Madness</option>
+            <option value="hyperspace">Hyperspace</option>
+            <option value="vaporwave">Vaporwave</option>
+            <option value="cyberdelic">Cyberdelic</option>
+            <option value="neon">Neon Dreams</option>
+          </select>
+        </div>
+        
+        <div class="control-group">
+          <label class="control-label">Density: <span id="density-value">40</span></label>
+          <input id="density-slider" type="range" min="10" max="100" step="5" value="40" class="control-range">
+        </div>
+        
+        <div class="control-group">
+          <label class="control-label">Camera Speed: <span id="camera-speed-value">1.0</span></label>
+          <input id="camera-speed-slider" type="range" min="0.1" max="3.0" step="0.1" value="1.0" class="control-range">
+        </div>
+        
+        <div class="control-group control-toggle">
+          <label class="control-label">Auto Camera</label>
+          <div id="auto-camera-toggle" class="toggle-switch active">
+            <div class="toggle-handle"></div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Audio Tab -->
+      <div id="audio-tab" class="tab-content" style="display: none;">
+        <div class="control-group control-toggle">
+          <label class="control-label">Audio Reactive</label>
+          <div id="audio-reactive-toggle" class="toggle-switch active">
+            <div class="toggle-handle"></div>
+          </div>
+        </div>
+        
+        <div class="control-group">
+          <label class="control-label">Audio Volume: <span id="volume-value">0.7</span></label>
+          <input id="volume-slider" type="range" min="0" max="1" step="0.1" value="0.7" class="control-range">
+        </div>
+        
+        <div class="control-group">
+          <label class="control-label">Bass Impact: <span id="bass-value">1.5</span></label>
+          <input id="bass-slider" type="range" min="0.5" max="3.0" step="0.1" value="1.5" class="control-range">
+        </div>
+        
+        <div class="control-group">
+          <label class="control-label">Audio Track</label>
+          <select id="audio-track" class="control-select">
+  <option value="song1">SoundHelix Song 1</option>
+  <option value="song2">SoundHelix Song 2</option>
+  <option value="song3">SoundHelix Song 3</option>
+  <option value="song4">SoundHelix Song 4</option>
+</select>
+        </div>
+      </div>
+      
+      <!-- Scene Tab -->
+      <div id="scene-tab" class="tab-content" style="display: none;">
+        <div class="control-group control-toggle">
+          <label class="control-label">Show Dancers</label>
+          <div id="dancers-toggle" class="toggle-switch active">
+            <div class="toggle-handle"></div>
+          </div>
+        </div>
+        
+        <div class="control-group">
+          <label class="control-label">Dancer Count: <span id="dancer-count-value">20</span></label>
+          <input id="dancer-count-slider" type="range" min="5" max="50" step="5" value="20" class="control-range">
+        </div>
+        
+        <div class="control-group control-toggle">
+          <label class="control-label">Show Buildings</label>
+          <div id="buildings-toggle" class="toggle-switch active">
+            <div class="toggle-handle"></div>
+          </div>
+        </div>
+        
+        <div class="control-group control-toggle">
+          <label class="control-label">Show Sky Objects</label>
+          <div id="sky-toggle" class="toggle-switch active">
+            <div class="toggle-handle"></div>
+          </div>
+        </div>
+        
+        <div class="control-group">
+          <label class="control-label">Sky Object Count: <span id="sky-count-value">100</span></label>
+          <input id="sky-count-slider" type="range" min="20" max="200" step="10" value="100" class="control-range">
+        </div>
+      </div>
+      
+      <!-- Effects Tab -->
+      <div id="effects-tab" class="tab-content" style="display: none;">
+        <div class="control-group">
+          <label class="control-label">Trippy Level: <span id="trippy-value">2.0</span></label>
+          <input id="trippy-slider" type="range" min="0.5" max="3.0" step="0.1" value="2.0" class="control-range">
+        </div>
+        
+        <div class="control-group">
+          <label class="control-label">Glitch Intensity: <span id="glitch-value">0.7</span></label>
+          <input id="glitch-slider" type="range" min="0" max="1" step="0.1" value="0.7" class="control-range">
+        </div>
+        
+        <div class="control-group">
+          <label class="control-label">Color Shift Speed: <span id="color-shift-value">1.0</span></label>
+          <input id="color-shift-slider" type="range" min="0.1" max="2.0" step="0.1" value="1.0" class="control-range">
+        </div>
+        
+        <div class="control-group control-toggle">
+          <label class="control-label">Bloom Effect</label>
+          <div id="bloom-toggle" class="toggle-switch active">
+            <div class="toggle-handle"></div>
+          </div>
+        </div>
+        
+        <div class="control-group control-toggle">
+          <label class="control-label">Laser Beams</label>
+          <div id="lasers-toggle" class="toggle-switch active">
+            <div class="toggle-handle"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Load Three.js from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/RGBShiftShader.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/DigitalGlitch.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/GlitchPass.min.js"></script>
+
+  <script>
+    // Configuration and state
+    const config = {
+      density: 40,
+      cameraSpeed: 1.0,
+      visualTheme: 'rave',
+      audioReactive: true,
+      volume: 0.7,
+      bassImpact: 1.5,
+      audioTrack: 'song1',
+      trippyLevel: 2.0,
+      glitchIntensity: 0.7,
+      colorShiftSpeed: 1.0,
+      bloomEnabled: true,
+      autoCamera: true,
+      showDancers: true,
+      dancerCount: 20,
+      showBuildings: true,
+      showSkyObjects: true,
+      skyObjectCount: 100,
+      showLasers: true
+    };
+
+    // Visual themes
+    const visualThemes = {
+      rave: {
+        fogColor: 0x000022,
+        particleColor1: 0xff00ff,
+        particleColor2: 0x00ffff,
+        gridColor: 0xffff00,
+        buildingColor1: 0xff00ff,
+        buildingColor2: 0x00ffff,
+        skyColor: 0x000033,
+        bloomStrength: 2.0,
+        bloomRadius: 0.8,
+        bloomThreshold: 0.1
+      },
+      hyperspace: {
+        fogColor: 0x000033,
+        particleColor1: 0xff00ff,
+        particleColor2: 0x00ffff,
+        gridColor: 0xffff00,
+        buildingColor1: 0x8800ff,
+        buildingColor2: 0x0088ff,
+        skyColor: 0x000066,
+        bloomStrength: 1.5,
+        bloomRadius: 0.75,
+        bloomThreshold: 0.2
+      },
+      vaporwave: {
+        fogColor: 0x551a8b,
+        particleColor1: 0xff71ce,
+        particleColor2: 0x01cdfe,
+        gridColor: 0x05ffa1,
+        buildingColor1: 0xff71ce,
+        buildingColor2: 0x05ffa1,
+        skyColor: 0x2d1b4e,
+        bloomStrength: 1.2,
+        bloomRadius: 0.5,
+        bloomThreshold: 0.3
+      },
+      cyberdelic: {
+        fogColor: 0x000000,
+        particleColor1: 0xff3300,
+        particleColor2: 0x33ff00,
+        gridColor: 0x0033ff,
+        buildingColor1: 0xff3300,
+        buildingColor2: 0x0033ff,
+        skyColor: 0x000000,
+        bloomStrength: 1.8,
+        bloomRadius: 0.8,
+        bloomThreshold: 0.1
+      },
+      neon: {
+        fogColor: 0x000000,
+        particleColor1: 0xff0066,
+        particleColor2: 0x00ff66,
+        gridColor: 0x6600ff,
+        buildingColor1: 0xff0066,
+        buildingColor2: 0x6600ff,
+        skyColor: 0x000000,
+        bloomStrength: 2.2,
+        bloomRadius: 0.6,
+        bloomThreshold: 0.1
+      }
+    };
+
+    // Audio tracks
+   // Audio tracks (now using SoundHelix examples)
+const audioTracks = {
+  song1: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+  song2: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+  song3: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+  song4: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"
+};
+
+
+    // DOM Elements
+    const loadingScreen = document.getElementById('loading-screen');
+    const loadingText = document.getElementById('loading-text');
+    const progressFill = document.getElementById('progress-fill');
+    const progressPercent = document.getElementById('progress-percent');
+    const sceneCanvas = document.getElementById('scene-canvas');
+    const audioVisualizer = document.getElementById('audio-visualizer');
+    const audioStatus = document.getElementById('audio-status');
+    const controlPanel = document.getElementById('control-panel');
+    const keyboardControls = document.getElementById('keyboard-controls');
+    const raveMode = document.getElementById('rave-mode');
+    const settingsButton = document.getElementById('settings-button');
+    const audioButton = document.getElementById('audio-button');
+    const fullscreenButton = document.getElementById('fullscreen-button');
+    const closePanel = document.getElementById('close-panel');
+    const tabs = document.querySelectorAll('.panel-tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    // Canvas contexts
+    const visualizerCtx = audioVisualizer.getContext('2d');
+
+    // Mouse/touch tracking
+    const mouse = {
+      x: 0,
+      y: 0,
+      active: false
+    };
+
+    // Keyboard state
+    const keys = {};
+
+    // Animation state
+    let animationFrameId;
+    let time = 0;
+
+    // Audio state
+    let audioContext = null;
+    let audioSource = null;
+    let audioAnalyser = null;
+    let audioData = null;
+    let frequencyData = null;
+    let audioElement = null;
+    let isPlaying = false;
+    let audioLoaded = false;
+
+    // Three.js variables
+    let scene, camera, renderer, composer;
+    let controls, clock;
+    let particles, grid, cubes = [];
+    let bloomPass, glitchPass, rgbShiftPass;
+    let dancers = [], buildings = [], skyObjects = [], lasers = [];
+    let floorMesh, skyMesh;
+    
+    // ===== Loading Screen =====
+    function initLoadingScreen() {
+      // Create glitch effects on progress bar
+      for (let i = 0; i < 5; i++) {
+        const glitch = document.createElement('div');
+        glitch.className = 'progress-glitch';
+        glitch.style.left = `${Math.random() * 100}%`;
+        glitch.style.width = `${Math.random() * 10}px`;
+        glitch.style.opacity = Math.random() * 0.5;
+        document.querySelector('.progress-bar').appendChild(glitch);
+      }
+
+      // Simulate loading progress
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += Math.random() * 10;
+        if (progress >= 100) {
+          progress = 100;
+          clearInterval(interval);
+          setTimeout(() => {
+            loadingScreen.style.opacity = '0';
+            setTimeout(() => {
+              loadingScreen.style.display = 'none';
+              // Show keyboard controls after loading
+              keyboardControls.style.display = 'block';
+            }, 500);
+          }, 500);
+        }
+        progressFill.style.width = `${progress}%`;
+        progressPercent.textContent = `${Math.round(progress)}%`;
+      }, 150);
+
+      // Glitch text effect
+      setInterval(() => {
+        if (Math.random() > 0.6) {
+          const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+{}|:<>?";
+          let glitched = "";
+          const originalText = "INITIALIZING NEURAL INTERFACE";
+
+          for (let i = 0; i < originalText.length; i++) {
+            if (Math.random() > 0.7) {
+              glitched += characters.charAt(Math.floor(Math.random() * characters.length));
+            } else {
+              glitched += originalText[i];
+            }
+          }
+
+          loadingText.textContent = glitched;
+        } else {
+          loadingText.textContent = "INITIALIZING NEURAL INTERFACE";
+        }
+      }, 80);
+    }
+
+    // ===== Three.js Scene Setup =====
+    function initScene() {
+      // Create scene
+      scene = new THREE.Scene();
+      
+      // Add fog for depth
+      const theme = visualThemes[config.visualTheme];
+      scene.fog = new THREE.FogExp2(theme.fogColor, 0.015);
+      
+      // Create camera
+      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.set(0, 5, 20);
+      camera.lookAt(0, 0, 0);
+      
+      // Create renderer
+      renderer = new THREE.WebGLRenderer({ 
+        canvas: sceneCanvas,
+        antialias: true,
+        alpha: true
+      });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      
+      // Create clock for animation
+      clock = new THREE.Clock();
+      
+      // Create orbit controls
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.autoRotate = config.autoCamera;
+      controls.autoRotateSpeed = 0.5;
+      
+      // Set up post-processing
+      setupPostProcessing();
+      
+      // Create scene objects
+      createSceneObjects();
+      
+      // Handle window resize
+      window.addEventListener('resize', onWindowResize);
+      
+      // Mouse/touch event handlers
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('touchmove', handleTouchMove);
+      
+      // Keyboard event handlers
+      window.addEventListener('keydown', handleKeyDown);
+      window.addEventListener('keyup', handleKeyUp);
+    }
+    
+    function setupPostProcessing() {
+      const theme = visualThemes[config.visualTheme];
+      
+      // Create composer
+      composer = new THREE.EffectComposer(renderer);
+      
+      // Add render pass
+      const renderPass = new THREE.RenderPass(scene, camera);
+      composer.addPass(renderPass);
+      
+      // Add bloom pass
+      bloomPass = new THREE.UnrealBloomPass(
+        new THREE.Vector2(window.innerWidth, window.innerHeight),
+        theme.bloomStrength,
+        theme.bloomRadius,
+        theme.bloomThreshold
+      );
+      composer.addPass(bloomPass);
+      
+      // Add RGB shift pass
+      rgbShiftPass = new THREE.ShaderPass(THREE.RGBShiftShader);
+      rgbShiftPass.uniforms.amount.value = 0.0015;
+      rgbShiftPass.uniforms.angle.value = 0;
+      composer.addPass(rgbShiftPass);
+      
+      // Add glitch pass
+      glitchPass = new THREE.GlitchPass();
+      glitchPass.goWild = false;
+      glitchPass.enabled = true;
+      composer.addPass(glitchPass);
+    }
+    
+    function createSceneObjects() {
+      const theme = visualThemes[config.visualTheme];
+      
+      // Create floor (dance floor)
+      createDanceFloor(theme);
+      
+      // Create sky dome
+      createSkyDome(theme);
+      
+      // Create particle system
+      createParticles(theme);
+      
+      // Create dancers
+      createDancers(theme);
+      
+      // Create buildings
+      createBuildings(theme);
+      
+      // Create sky objects (stars, comets, satellites)
+      createSkyObjects(theme);
+      
+      // Create laser beams
+      createLasers(theme);
+    }
+    
+    function createDanceFloor(theme) {
+      // Create a grid floor for the dance floor
+      const floorSize = 100;
+      const floorSegments = 50;
+      
+      const floorGeometry = new THREE.PlaneGeometry(floorSize, floorSize, floorSegments, floorSegments);
+      const floorMaterial = new THREE.MeshBasicMaterial({
+        color: theme.gridColor,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.5
+      });
+      
+      floorMesh = new THREE.Mesh(floorGeometry, floorMaterial);
+      floorMesh.rotation.x = -Math.PI / 2;
+      floorMesh.position.y = -2;
+      scene.add(floorMesh);
+      
+      // Add a reflective surface under the wireframe
+      const reflectiveGeometry = new THREE.PlaneGeometry(floorSize, floorSize);
+      const reflectiveMaterial = new THREE.MeshBasicMaterial({
+        color: 0x000000,
+        transparent: true,
+        opacity: 0.3
+      });
+      
+      const reflectiveMesh = new THREE.Mesh(reflectiveGeometry, reflectiveMaterial);
+      reflectiveMesh.rotation.x = -Math.PI / 2;
+      reflectiveMesh.position.y = -2.1;
+      scene.add(reflectiveMesh);
+    }
+    
+    function createSkyDome(theme) {
+      // Create a large sphere for the sky
+      const skyGeometry = new THREE.SphereGeometry(400, 32, 32);
+      const skyMaterial = new THREE.MeshBasicMaterial({
+        color: theme.skyColor,
+        side: THREE.BackSide,
+        transparent: true,
+        opacity: 0.8
+      });
+      
+      skyMesh = new THREE.Mesh(skyGeometry, skyMaterial);
+      scene.add(skyMesh);
+    }
+    
+    function createParticles(theme) {
+      const particleGeometry = new THREE.BufferGeometry();
+      const particleCount = config.density * 100;
+      
+      const positions = new Float32Array(particleCount * 3);
+      const colors = new Float32Array(particleCount * 3);
+      const sizes = new Float32Array(particleCount);
+      
+      const color1 = new THREE.Color(theme.particleColor1);
+      const color2 = new THREE.Color(theme.particleColor2);
+      
+      for (let i = 0; i < particleCount; i++) {
+        // Position
+        const x = (Math.random() - 0.5) * 100;
+        const y = Math.random() * 50;
+        const z = (Math.random() - 0.5) * 100;
+        
+        positions[i * 3] = x;
+        positions[i * 3 + 1] = y;
+        positions[i * 3 + 2] = z;
+        
+        // Color
+        const mixRatio = Math.random();
+        const mixedColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
+        
+        colors[i * 3] = mixedColor.r;
+        colors[i * 3 + 1] = mixedColor.g;
+        colors[i * 3 + 2] = mixedColor.b;
+        
+        // Size
+        sizes[i] = Math.random() * 2 + 0.5;
+      }
+      
+      particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+      particleGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+      
+      const particleMaterial = new THREE.ShaderMaterial({
+        uniforms: {
+          time: { value: 0 },
+          size: { value: 30 * renderer.getPixelRatio() }
+        },
+        vertexShader: `
+          uniform float time;
+          uniform float size;
+          attribute float size;
+          varying vec3 vColor;
+          
+          void main() {
+            vColor = color;
+            
+            // Animated position
+            vec3 pos = position;
+            float dist = length(pos);
+            
+            // Spiral motion
+            float angle = time * 0.2 * (0.1 + 0.5 / dist);
+            mat2 rotation = mat2(cos(angle), -sin(angle), sin(angle), cos(angle));
+            pos.xz = rotation * pos.xz;
+            
+            // Pulsating
+            pos *= 0.9 + 0.2 * sin(time * 0.5 + dist);
+            
+            vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+            gl_PointSize = size * size * (1.0 / -mvPosition.z);
+            gl_Position = projectionMatrix * mvPosition;
+          }
+        `,
+        fragmentShader: `
+          varying vec3 vColor;
+          
+          void main() {
+            // Create circular point
+            float r = length(gl_PointCoord - vec2(0.5, 0.5));
+            if (r > 0.5) discard;
+            
+            // Glow effect
+            float glow = 1.0 - r * 2.0;
+            glow = pow(glow, 1.5);
+            
+            gl_FragColor = vec4(vColor * glow, glow);
+          }
+        `,
+        transparent: true,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+        vertexColors: true
+      });
+      
+      particles = new THREE.Points(particleGeometry, particleMaterial);
+      scene.add(particles);
+    }
+    
+    function createDancers(theme) {
+      // Clear existing dancers
+      dancers.forEach(dancer => scene.remove(dancer));
+      dancers = [];
+      
+      // Create new dancers
+      for (let i = 0; i < config.dancerCount; i++) {
+        // Create dancer with vector outline style
+        const dancer = createDancer(theme);
+        
+        // Random position on the floor
+        dancer.position.x = (Math.random() - 0.5) * 60;
+        dancer.position.z = (Math.random() - 0.5) * 60;
+        dancer.position.y = -2; // On the floor
+        
+        // Random rotation
+        dancer.rotation.y = Math.random() * Math.PI * 2;
+        
+        // Random animation phase
+        dancer.userData = {
+          animPhase: Math.random() * Math.PI * 2,
+          animSpeed: 0.5 + Math.random() * 1.5,
+          rotSpeed: (Math.random() - 0.5) * 0.02
+        };
+        
+        scene.add(dancer);
+        dancers.push(dancer);
+      }
+    }
+    
+    function createDancer(theme) {
+      // Create a group for the dancer
+      const dancer = new THREE.Group();
+      
+      // Random color for this dancer
+      const color1 = new THREE.Color(theme.particleColor1);
+      const color2 = new THREE.Color(theme.particleColor2);
+      const mixRatio = Math.random();
+      const dancerColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
+      
+      // Material for the dancer - wireframe for vector outline look
+      const material = new THREE.MeshBasicMaterial({
+        color: dancerColor,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.8
+      });
+      
+      // Head
+      const headGeometry = new THREE.SphereGeometry(0.5, 8, 8);
+      const head = new THREE.Mesh(headGeometry, material);
+      head.position.y = 4.5;
+      dancer.add(head);
+      
+      // Body
+      const bodyGeometry = new THREE.CylinderGeometry(0.5, 0.7, 3, 8);
+      const body = new THREE.Mesh(bodyGeometry, material);
+      body.position.y = 2.5;
+      dancer.add(body);
+      
+      // Arms
+      const armGeometry = new THREE.CylinderGeometry(0.2, 0.2, 2, 6);
+      
+      // Left arm
+      const leftArm = new THREE.Mesh(armGeometry, material);
+      leftArm.position.set(-0.8, 3, 0);
+      leftArm.rotation.z = Math.PI / 4;
+      dancer.add(leftArm);
+      
+      // Right arm
+      const rightArm = new THREE.Mesh(armGeometry, material);
+      rightArm.position.set(0.8, 3, 0);
+      rightArm.rotation.z = -Math.PI / 4;
+      dancer.add(rightArm);
+      
+      // Legs
+      const legGeometry = new THREE.CylinderGeometry(0.25, 0.25, 2.5, 6);
+      
+      // Left leg
+      const leftLeg = new THREE.Mesh(legGeometry, material);
+      leftLeg.position.set(-0.5, 0.5, 0);
+      dancer.add(leftLeg);
+      
+      // Right leg
+      const rightLeg = new THREE.Mesh(legGeometry, material);
+      rightLeg.position.set(0.5, 0.5, 0);
+      dancer.add(rightLeg);
+      
+      // Add a "glow" effect
+      const glowGeometry = new THREE.SphereGeometry(2, 16, 16);
+      const glowMaterial = new THREE.MeshBasicMaterial({
+        color: dancerColor,
+        transparent: true,
+        opacity: 0.2,
+        side: THREE.BackSide
+      });
+      const glow = new THREE.Mesh(glowGeometry, glowMaterial);
+      glow.position.y = 2;
+      dancer.add(glow);
+      
+      // Add a small object in hand (like a glowstick or drink)
+      const objectGeometry = new THREE.BoxGeometry(0.2, 0.8, 0.2);
+      const objectMaterial = new THREE.MeshBasicMaterial({
+        color: Math.random() > 0.5 ? 0x00ffff : 0xffff00,
+        transparent: true,
+        opacity: 0.9
+      });
+      const object = new THREE.Mesh(objectGeometry, objectMaterial);
+      object.position.set(-1.5, 3.5, 0);
+      dancer.add(object);
+      
+      return dancer;
+    }
+    
+    function createBuildings(theme) {
+      // Clear existing buildings
+      buildings.forEach(building => scene.remove(building));
+      buildings = [];
+      
+      // Create city grid
+      const gridSize = 5;
+      const spacing = 25;
+      
+      for (let x = -gridSize; x <= gridSize; x++) {
+        for (let z = -gridSize; z <= gridSize; z++) {
+          // Skip center area (dance floor)
+          if (Math.abs(x) < 2 && Math.abs(z) < 2) continue;
+          
+          // Random building height
+          const height = 10 + Math.random() * 40;
+          
+          // Create building
+          const building = createBuilding(height, theme);
+          
+          // Position
+          building.position.x = x * spacing;
+          building.position.z = z * spacing;
+          building.position.y = height / 2 - 2; // Half height (origin at center) and floor offset
+          
+          scene.add(building);
+          buildings.push(building);
+        }
+      }
+    }
+    
+    function createBuilding(height, theme) {
+      // Create a group for the building
+      const building = new THREE.Group();
+      
+      // Random color for this building
+      const color1 = new THREE.Color(theme.buildingColor1);
+      const color2 = new THREE.Color(theme.buildingColor2);
+      const mixRatio = Math.random();
+      const buildingColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
+      
+      // Building base geometry
+      const width = 5 + Math.random() * 10;
+      const depth = 5 + Math.random() * 10;
+      const geometry = new THREE.BoxGeometry(width, height, depth);
+      
+      // Wireframe material for vector outline look
+      const material = new THREE.MeshBasicMaterial({
+        color: buildingColor,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.6
+      });
+      
+      const mesh = new THREE.Mesh(geometry, material);
+      building.add(mesh);
+      
+      // Add windows (points of light)
+      const windowCount = Math.floor(height / 2);
+      const windowGeometry = new THREE.PlaneGeometry(0.5, 0.5);
+      const windowMaterial = new THREE.MeshBasicMaterial({
+        color: 0xffffff,
+        transparent: true,
+        opacity: 0.9,
+        side: THREE.DoubleSide
+      });
+      
+      for (let i = 0; i < windowCount; i++) {
+        for (let j = 0; j < 4; j++) {
+          if (Math.random() > 0.7) continue; // Some windows are dark
+          
+          const window = new THREE.Mesh(windowGeometry, windowMaterial);
+          
+          // Position on building sides
+          const side = j % 4;
+          const y = -height / 2 + 1 + i * 2;
+          
+          if (side === 0) {
+            window.position.set(0, y, depth / 2 + 0.1);
+            window.position.x = (Math.random() - 0.5) * (width - 1);
+          } else if (side === 1) {
+            window.position.set(width / 2 + 0.1, y, 0);
+            window.position.z = (Math.random() - 0.5) * (depth - 1);
+            window.rotation.y = Math.PI / 2;
+          } else if (side === 2) {
+            window.position.set(0, y, -depth / 2 - 0.1);
+            window.position.x = (Math.random() - 0.5) * (width - 1);
+          } else {
+            window.position.set(-width / 2 - 0.1, y, 0);
+            window.position.z = (Math.random() - 0.5) * (depth - 1);
+            window.rotation.y = Math.PI / 2;
+          }
+          
+          building.add(window);
+        }
+      }
+      
+      // Add neon outline at the top
+      const outlineGeometry = new THREE.BoxGeometry(width + 0.2, 0.5, depth + 0.2);
+      const outlineMaterial = new THREE.MeshBasicMaterial({
+        color: buildingColor,
+        transparent: true,
+        opacity: 0.9
+      });
+      
+      const outline = new THREE.Mesh(outlineGeometry, outlineMaterial);
+      outline.position.y = height / 2 + 0.25;
+      building.add(outline);
+      
+      // Add animation data
+      building.userData = {
+        pulseSpeed: Math.random() * 2 + 1,
+        originalColor: buildingColor.clone()
+      };
+      
+      return building;
+    }
+    
+    function createSkyObjects(theme) {
+      // Clear existing sky objects
+      skyObjects.forEach(obj => scene.remove(obj));
+      skyObjects = [];
+      
+      // Create stars
+      for (let i = 0; i < config.skyObjectCount * 0.8; i++) {
+        const star = createStar(theme);
+        scene.add(star);
+        skyObjects.push(star);
+      }
+      
+      // Create comets
+      for (let i = 0; i < config.skyObjectCount * 0.1; i++) {
+        const comet = createComet(theme);
+        scene.add(comet);
+        skyObjects.push(comet);
+      }
+      
+      // Create satellites
+      for (let i = 0; i < config.skyObjectCount * 0.1; i++) {
+        const satellite = createSatellite(theme);
+        scene.add(satellite);
+        skyObjects.push(satellite);
+      }
+    }
+    
+    function createStar(theme) {
+      // Random color
+      const color1 = new THREE.Color(theme.particleColor1);
+      const color2 = new THREE.Color(theme.particleColor2);
+      const mixRatio = Math.random();
+      const starColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
+      
+      // Create a point light for the star
+      const star = new THREE.PointLight(starColor, 0.5, 0, 2);
+      
+      // Random position in the sky
+      const phi = Math.random() * Math.PI * 2;
+      const theta = Math.random() * Math.PI;
+      const radius = 300 + Math.random() * 50;
+      
+      star.position.x = radius * Math.sin(theta) * Math.cos(phi);
+      star.position.y = radius * Math.sin(theta) * Math.sin(phi);
+      star.position.z = radius * Math.cos(theta);
+      
+      // Add a small sphere to make the star visible
+      const geometry = new THREE.SphereGeometry(0.5 + Math.random() * 1.5, 8, 8);
+      const material = new THREE.MeshBasicMaterial({
+        color: starColor,
+        transparent: true,
+        opacity: 0.8
+      });
+      
+      const mesh = new THREE.Mesh(geometry, material);
+      star.add(mesh);
+      
+      // Add animation data
+      star.userData = {
+        twinkleSpeed: Math.random() * 2 + 1,
+        originalIntensity: star.intensity
+      };
+      
+      return star;
+    }
+    
+    function createComet(theme) {
+      // Create a group for the comet
+      const comet = new THREE.Group();
+      
+      // Random color
+      const color1 = new THREE.Color(theme.particleColor1);
+      const color2 = new THREE.Color(theme.particleColor2);
+      const mixRatio = Math.random();
+      const cometColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
+      
+      // Create comet head
+      const headGeometry = new THREE.SphereGeometry(1, 8, 8);
+      const headMaterial = new THREE.MeshBasicMaterial({
+        color: cometColor,
+        transparent: true,
+        opacity: 0.9
+      });
+      
+      const head = new THREE.Mesh(headGeometry, headMaterial);
+      comet.add(head);
+      
+      // Create comet tail
+      const tailGeometry = new THREE.ConeGeometry(0.5, 10, 8);
+      const tailMaterial = new THREE.MeshBasicMaterial({
+        color: cometColor,
+        transparent: true,
+        opacity: 0.5
+      });
+      
+      const tail = new THREE.Mesh(tailGeometry, tailMaterial);
+      tail.position.z = -5;
+      tail.rotation.x = Math.PI / 2;
+      comet.add(tail);
+      
+      // Random position in the sky
+      const phi = Math.random() * Math.PI * 2;
+      const theta = Math.random() * Math.PI;
+      const radius = 200 + Math.random() * 100;
+      
+      comet.position.x = radius * Math.sin(theta) * Math.cos(phi);
+      comet.position.y = radius * Math.sin(theta) * Math.sin(phi);
+      comet.position.z = radius * Math.cos(theta);
+      
+      // Random rotation
+      comet.rotation.x = Math.random() * Math.PI * 2;
+      comet.rotation.y = Math.random() * Math.PI * 2;
+      comet.rotation.z = Math.random() * Math.PI * 2;
+      
+      // Add animation data
+      comet.userData = {
+        speed: Math.random() * 0.5 + 0.1,
+        rotationAxis: new THREE.Vector3(
+          Math.random() - 0.5,
+          Math.random() - 0.5,
+          Math.random() - 0.5
+        ).normalize(),
+        rotationSpeed: Math.random() * 0.01
+      };
+      
+      return comet;
+    }
+    
+    function createSatellite(theme) {
+      // Create a group for the satellite
+      const satellite = new THREE.Group();
+      
+      // Random color
+      const color1 = new THREE.Color(theme.particleColor1);
+      const color2 = new THREE.Color(theme.particleColor2);
+      const mixRatio = Math.random();
+      const satelliteColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
+      
+      // Create satellite body
+      const bodyGeometry = new THREE.BoxGeometry(1, 1, 3);
+      const bodyMaterial = new THREE.MeshBasicMaterial({
+        color: satelliteColor,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.8
+      });
+      
+      const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+      satellite.add(body);
+      
+      // Create satellite panels
+      const panelGeometry = new THREE.PlaneGeometry(4, 1);
+      const panelMaterial = new THREE.MeshBasicMaterial({
+        color: satelliteColor,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.7,
+        side: THREE.DoubleSide
+      });
+      
+      const leftPanel = new THREE.Mesh(panelGeometry, panelMaterial);
+      leftPanel.position.x = -2.5;
+      satellite.add(leftPanel);
+      
+      const rightPanel = new THREE.Mesh(panelGeometry, panelMaterial);
+      rightPanel.position.x = 2.5;
+      satellite.add(rightPanel);
+      
+      // Random position in the sky
+      const phi = Math.random() * Math.PI * 2;
+      const theta = Math.random() * Math.PI;
+      const radius = 150 + Math.random() * 100;
+      
+      satellite.position.x = radius * Math.sin(theta) * Math.cos(phi);
+      satellite.position.y = radius * Math.sin(theta) * Math.sin(phi);
+      satellite.position.z = radius * Math.cos(theta);
+      
+      // Random rotation
+      satellite.rotation.x = Math.random() * Math.PI * 2;
+      satellite.rotation.y = Math.random() * Math.PI * 2;
+      satellite.rotation.z = Math.random() * Math.PI * 2;
+      
+      // Add animation data
+      satellite.userData = {
+        orbitAxis: new THREE.Vector3(
+          Math.random() - 0.5,
+          Math.random() - 0.5,
+          Math.random() - 0.5
+        ).normalize(),
+        orbitSpeed: Math.random() * 0.005 + 0.001,
+        rotationSpeed: Math.random() * 0.01
+      };
+      
+      return satellite;
+    }
+    
+    function createLasers(theme) {
+      // Clear existing lasers
+      lasers.forEach(laser => scene.remove(laser));
+      lasers = [];
+      
+      if (!config.showLasers) return;
+      
+      // Create laser beams
+      const laserCount = 20;
+      
+      for (let i = 0; i < laserCount; i++) {
+        const laser = createLaser(theme);
+        scene.add(laser);
+        lasers.push(laser);
+      }
+    }
+    
+    function createLaser(theme) {
+      // Create a group for the laser
+      const laser = new THREE.Group();
+      
+      // Random color
+      const color1 = new THREE.Color(theme.particleColor1);
+      const color2 = new THREE.Color(theme.particleColor2);
+      const mixRatio = Math.random();
+      const laserColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
+      
+      // Create laser beam
+      const beamGeometry = new THREE.CylinderGeometry(0.1, 0.1, 100, 8);
+      const beamMaterial = new THREE.MeshBasicMaterial({
+        color: laserColor,
+        transparent: true,
+        opacity: 0.7
+      });
+      
+      const beam = new THREE.Mesh(beamGeometry, beamMaterial);
+      beam.position.y = 50;
+      beam.rotation.x = Math.PI / 2;
+      laser.add(beam);
+      
+      // Random position around the dance floor
+      const angle = Math.random() * Math.PI * 2;
+      const radius = 30 + Math.random() * 20;
+      
+      laser.position.x = Math.cos(angle) * radius;
+      laser.position.z = Math.sin(angle) * radius;
+      laser.position.y = -2;
+      
+      // Random rotation
+      laser.rotation.y = Math.random() * Math.PI * 2;
+      
+      // Add animation data
+      laser.userData = {
+        rotationSpeed: (Math.random() - 0.5) * 0.02,
+        pulseSpeed: Math.random() * 2 + 1
+      };
+      
+      return laser;
+    }
+    
+    function onWindowResize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      composer.setSize(window.innerWidth, window.innerHeight);
+    }
+    
+    function handleMouseMove(e) {
+      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+      mouse.active = true;
+    }
+    
+    function handleTouchMove(e) {
+      if (e.touches && e.touches[0]) {
+        mouse.x = (e.touches[0].clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(e.touches[0].clientY / window.innerHeight) * 2 + 1;
+        mouse.active = true;
+      }
+    }
+    
+    function handleKeyDown(e) {
+      keys[e.key.toLowerCase()] = true;
+      
+      // Toggle keyboard controls display with H key
+      if (e.key.toLowerCase() === 'h') {
+        keyboardControls.style.display = keyboardControls.style.display === 'none' ? 'block' : 'none';
+      }
+      
+      // Toggle fullscreen with F key
+      if (e.key.toLowerCase() === 'f') {
+        toggleFullscreen();
+      }
+      
+      // Toggle audio with Space key
+      if (e.key === ' ') {
+        toggleAudio();
+      }
+      
+      // Reset camera with R key
+      if (e.key.toLowerCase() === 'r') {
+        camera.position.set(0, 5, 20);
+        camera.lookAt(0, 0, 0);
+      }
+      
+      // Change visual theme with C key
+      if (e.key.toLowerCase() === 'c') {
+        const themes = Object.keys(visualThemes);
+        const currentIndex = themes.indexOf(config.visualTheme);
+        const nextIndex = (currentIndex + 1) % themes.length;
+        config.visualTheme = themes[nextIndex];
+        
+        // Update UI
+        document.getElementById('visual-theme').value = config.visualTheme;
+        
+        // Update scene
+        updateVisualTheme();
+      }
+      
+      // Toggle dancers with V key
+      if (e.key.toLowerCase() === 'v') {
+        config.showDancers = !config.showDancers;
+        
+        // Update UI
+        document.getElementById('dancers-toggle').classList.toggle('active', config.showDancers);
+        
+        // Update scene
+        dancers.forEach(dancer => {
+          dancer.visible = config.showDancers;
+        });
+      }
+      
+      // Toggle buildings with B key
+      if (e.key.toLowerCase() === 'b') {
+        config.showBuildings = !config.showBuildings;
+        
+        // Update UI
+        document.getElementById('buildings-toggle').classList.toggle('active', config.showBuildings);
+        
+        // Update scene
+        buildings.forEach(building => {
+          building.visible = config.showBuildings;
+        });
+      }
+      
+      // Toggle sky objects with N key
+      if (e.key.toLowerCase() === 'n') {
+        config.showSkyObjects = !config.showSkyObjects;
+        
+        // Update UI
+        document.getElementById('sky-toggle').classList.toggle('active', config.showSkyObjects);
+        
+        // Update scene
+        skyObjects.forEach(obj => {
+          obj.visible = config.showSkyObjects;
+        });
+      }
+      
+      // Toggle auto camera with M key
+      if (e.key.toLowerCase() === 'm') {
+        config.autoCamera = !config.autoCamera;
+        
+        // Update UI
+        document.getElementById('auto-camera-toggle').classList.toggle('active', config.autoCamera);
+        
+        // Update controls
+        controls.autoRotate = config.autoCamera;
+      }
+      
+      // Adjust trippy level with + and - keys
+      if (e.key === '+' || e.key === '=') {
+        config.trippyLevel = Math.min(3.0, config.trippyLevel + 0.1);
+        
+        // Update UI
+        document.getElementById('trippy-slider').value = config.trippyLevel;
+        document.getElementById('trippy-value').textContent = config.trippyLevel.toFixed(1);
+      }
+      
+      if (e.key === '-' || e.key === '_') {
+        config.trippyLevel = Math.max(0.5, config.trippyLevel - 0.1);
+        
+        // Update UI
+        document.getElementById('trippy-slider').value = config.trippyLevel;
+        document.getElementById('trippy-value').textContent = config.trippyLevel.toFixed(1);
+      }
+    }
+    
+    function handleKeyUp(e) {
+      keys[e.key.toLowerCase()] = false;
+    }
+
+    function updateCameraFromKeyboard() {
+      const moveSpeed = 0.5 * config.cameraSpeed;
+      
+      // Get camera direction vectors
+      const forward = new THREE.Vector3(0, 0, -1).applyQuaternion(camera.quaternion);
+      const right = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion);
+      
+      // Forward/backward
+      if (keys['w'] || keys['arrowup']) {
+        camera.position.addScaledVector(forward, moveSpeed);
+      }
+      if (keys['s'] || keys['arrowdown']) {
+        camera.position.addScaledVector(forward, -moveSpeed);
+      }
+      
+      // Left/right
+      if (keys['a'] || keys['arrowleft']) {
+        camera.position.addScaledVector(right, -moveSpeed);
+      }
+      if (keys['d'] || keys['arrowright']) {
+        camera.position.addScaledVector(right, moveSpeed);
+      }
+      
+      // Up/down
+      if (keys['q']) {
+        camera.position.y += moveSpeed;
+      }
+      if (keys['e']) {
+        camera.position.y -= moveSpeed;
+      }
+    }
+    
+    function animate() {
+      animationFrameId = requestAnimationFrame(animate);
+      
+      const delta = clock.getDelta();
+      time += delta;
+      
+      // Update camera from keyboard
+      updateCameraFromKeyboard();
+      
+      // Update controls
+      controls.update();
+      
+      // Get audio reactivity factor if enabled
+      let audioFactor = 1;
+      let bassValue = 0;
+      
+      if (config.audioReactive && isPlaying && frequencyData) {
+        // Get bass frequencies (typically the first few bins)
+        bassValue = 0;
+        for (let i = 0; i < 10; i++) {
+          bassValue += frequencyData[i];
+        }
+        bassValue = bassValue / 10 / 255; // Normalize
+        
+        // Apply bass impact multiplier
+        audioFactor = 1 + bassValue * config.bassImpact;
+      }
+      
+      // Update particle system
+      if (particles) {
+        particles.material.uniforms.time.value = time;
+        
+        // Audio reactivity
+        if (audioFactor > 1) {
+          particles.material.uniforms.size.value = (30 + 20 * bassValue * config.bassImpact) * renderer.getPixelRatio();
+          
+          // Pulse the particles based on audio
+          const positions = particles.geometry.attributes.position.array;
+          for (let i = 0; i < positions.length; i += 3) {
+            const originalX = positions[i];
+            const originalY = positions[i + 1];
+            const originalZ = positions[i + 2];
+            
+            const distance = Math.sqrt(originalX * originalX + originalY * originalY + originalZ * originalZ);
+            const pulseFactor = 1 + 0.2 * bassValue * Math.sin(time * 2 + distance);
+            
+            positions[i] = originalX * pulseFactor;
+            positions[i + 1] = originalY * pulseFactor;
+            positions[i + 2] = originalZ * pulseFactor;
+          }
+          
+          particles.geometry.attributes.position.needsUpdate = true;
+        }
+      }
+      
+      // Update floor
+      if (floorMesh) {
+        // Warp floor based on audio
+        if (audioFactor > 1) {
+          const positions = floorMesh.geometry.attributes.position.array;
+          const count = positions.length / 3;
+          
+          for (let i = 0; i < count; i++) {
+            const x = positions[i * 3];
+            const z = positions[i * 3 + 2];
+            
+            const distance = Math.sqrt(x * x + z * z);
+            const y = Math.sin(distance * 0.1 + time * 2) * bassValue * 2;
+            
+            positions[i * 3 + 1] = y;
+          }
+          
+          floorMesh.geometry.attributes.position.needsUpdate = true;
+        }
+      }
+      
+      // Update dancers
+      if (config.showDancers) {
+        dancers.forEach(dancer => {
+          // Rotate dancer
+          dancer.rotation.y += dancer.userData.rotSpeed;
+          
+          // Animate dancer parts based on time and audio
+          const phase = time * dancer.userData.animSpeed + dancer.userData.animPhase;
+          const intensity = 1 + (audioFactor - 1) * 2;
+          
+          // Get dancer parts
+          const head = dancer.children[0];
+          const body = dancer.children[1];
+          const leftArm = dancer.children[2];
+          const rightArm = dancer.children[3];
+          const leftLeg = dancer.children[4];
+          const rightLeg = dancer.children[5];
+          const glow = dancer.children[6];
+          const object = dancer.children[7];
+          
+          // Animate head bobbing
+          head.position.y = 4.5 + Math.sin(phase) * 0.2 * intensity;
+          
+          // Animate arms
+          leftArm.rotation.z = Math.PI / 4 + Math.sin(phase) * 0.5 * intensity;
+          rightArm.rotation.z = -Math.PI / 4 + Math.sin(phase + Math.PI) * 0.5 * intensity;
+          
+          // Animate legs
+          leftLeg.rotation.x = Math.sin(phase) * 0.3 * intensity;
+          rightLeg.rotation.x = Math.sin(phase + Math.PI) * 0.3 * intensity;
+          
+          // Animate glow
+          glow.scale.setScalar(1 + bassValue * 0.5);
+          glow.material.opacity = 0.2 + bassValue * 0.3;
+          
+          // Animate object in hand
+          object.position.y = 3.5 + Math.sin(phase * 2) * 0.3 * intensity;
+          object.material.opacity = 0.7 + Math.sin(phase * 3) * 0.3;
+        });
+      }
+      
+      // Update buildings
+      if (config.showBuildings) {
+        buildings.forEach(building => {
+          // Pulse building color based on audio
+          const mesh = building.children[0];
+          const outline = building.children[building.children.length - 1];
+          
+          const pulsePhase = time * building.userData.pulseSpeed;
+          const pulseIntensity = 1 + (audioFactor - 1) * 0.5;
+          
+          const originalColor = building.userData.originalColor;
+          const pulseColor = new THREE.Color(originalColor).lerp(
+            new THREE.Color(0xffffff),
+            0.2 * Math.sin(pulsePhase) * pulseIntensity
+          );
+          
+          mesh.material.color.copy(pulseColor);
+          outline.material.color.copy(pulseColor);
+          outline.material.opacity = 0.7 + 0.3 * Math.sin(pulsePhase) * pulseIntensity;
+        });
+      }
+      
+      // Update sky objects
+      if (config.showSkyObjects) {
+        skyObjects.forEach(obj => {
+          // Different updates based on object type
+          if (obj.type === 'PointLight') {
+            // This is a star
+            const twinklePhase = time * obj.userData.twinkleSpeed;
+            obj.intensity = obj.userData.originalIntensity * (0.7 + 0.3 * Math.sin(twinklePhase));
+          } else if (obj.children.length === 2) {
+            // This is a comet
+            // Rotate around its axis
+            obj.rotateOnAxis(obj.userData.rotationAxis, obj.userData.rotationSpeed);
+            
+            // Move along its path
+            const moveDir = new THREE.Vector3(
+              Math.sin(time * obj.userData.speed),
+              Math.cos(time * obj.userData.speed),
+              Math.sin(time * obj.userData.speed * 0.5)
+            ).normalize();
+            
+            obj.position.addScaledVector(moveDir, obj.userData.speed);
+            
+            // Keep within bounds
+            const distance = obj.position.length();
+            if (distance > 350) {
+              obj.position.multiplyScalar(350 / distance);
+            }
+          } else {
+            // This is a satellite
+            // Orbit around a point
+            const orbitCenter = new THREE.Vector3(0, 0, 0);
+            const orbitRadius = obj.position.distanceTo(orbitCenter);
+            
+            const orbitAngle = time * obj.userData.orbitSpeed;
+            const orbitX = Math.cos(orbitAngle) * orbitRadius;
+            const orbitZ = Math.sin(orbitAngle) * orbitRadius;
+            
+            obj.position.x = orbitX;
+            obj.position.z = orbitZ;
+            
+            // Rotate the satellite
+            obj.rotateOnAxis(obj.userData.orbitAxis, obj.userData.rotationSpeed);
+          }
+        });
+      }
+      
+      // Update lasers
+      if (config.showLasers) {
+        lasers.forEach(laser => {
+          // Rotate laser
+          laser.rotation.y += laser.userData.rotationSpeed;
+          
+          // Pulse laser opacity based on audio
+          const beam = laser.children[0];
+          const pulsePhase = time * laser.userData.pulseSpeed;
+          const pulseIntensity = 1 + (audioFactor - 1) * 2;
+          
+          beam.material.opacity = 0.5 + 0.5 * Math.sin(pulsePhase) * pulseIntensity;
+        });
+      }
+      
+      // Update post-processing effects
+      if (rgbShiftPass) {
+        rgbShiftPass.uniforms.angle.value = time * 0.5 * config.colorShiftSpeed;
+        rgbShiftPass.uniforms.amount.value = 0.001 + 0.004 * config.trippyLevel + (audioFactor - 1) * 0.01;
+      }
+      
+      if (glitchPass) {
+        // Occasional glitches based on intensity
+        if (Math.random() < 0.01 * config.glitchIntensity) {
+          glitchPass.goWild = true;
+          setTimeout(() => {
+            glitchPass.goWild = false;
+          }, 100 + Math.random() * 200);
+        }
+      }
+      
+      if (bloomPass) {
+        const theme = visualThemes[config.visualTheme];
+        bloomPass.strength = theme.bloomStrength * (1 + (audioFactor - 1) * 0.5);
+      }
+      
+      // Render scene with post-processing
+      composer.render();
+    }
+
+    // ===== Audio Handling =====
+    function initAudio() {
+      // Create audio element
+      audioElement = new Audio();
+      audioElement.crossOrigin = "anonymous";
+      audioElement.src = audioTracks[config.audioTrack];
+      
+      // Show audio status
+      audioStatus.textContent = "Loading audio...";
+      audioStatus.style.display = "block";
+      
+      // Set up audio button
+      audioButton.addEventListener('click', toggleAudio);
+      
+      // Audio loaded event
+      audioElement.addEventListener('canplaythrough', () => {
+        audioLoaded = true;
+        audioStatus.textContent = "Audio ready! Click play button to start.";
+        setTimeout(() => {
+          audioStatus.style.display = "none";
+        }, 3000);
+      });
+      
+      // Audio error event
+      audioElement.addEventListener('error', (e) => {
+        console.error("Audio error:", e);
+        audioStatus.textContent = "Audio failed to load. Try another track.";
+        audioStatus.style.color = "#ff0000";
+      });
+      
+      // Preload audio
+      audioElement.load();
+    }
+
+    function toggleAudio() {
+      if (!audioLoaded) {
+        audioStatus.textContent = "Audio still loading... Please wait.";
+        audioStatus.style.display = "block";
+        setTimeout(() => {
+          audioStatus.style.display = "none";
+        }, 3000);
+        return;
+      }
+      
+      if (isPlaying) {
+        audioElement.pause();
+        audioButton.classList.remove('active');
+        audioButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
+        audioVisualizer.style.display = 'none';
+        audioStatus.style.display = "none";
+      } else {
+        // Set up audio context if not already done
+        if (!audioContext) {
+          try {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            audioContext = new AudioContext();
+            
+            // Create analyzer
+            audioAnalyser = audioContext.createAnalyser();
+            audioAnalyser.fftSize = 256;
+            
+            // Connect audio element to the audio context
+            audioSource = audioContext.createMediaElementSource(audioElement);
+            audioSource.connect(audioAnalyser);
+            audioAnalyser.connect(audioContext.destination);
+            
+            // Create data arrays
+            audioData = new Float32Array(audioAnalyser.frequencyBinCount);
+            frequencyData = new Uint8Array(audioAnalyser.frequencyBinCount);
+            
+            // Start audio data update loop
+            updateAudioData();
+          } catch (e) {
+            console.error("Web Audio API error:", e);
+            audioStatus.textContent = "Audio API error. Try a different browser.";
+            audioStatus.style.color = "#ff0000";
+            audioStatus.style.display = "block";
+            return;
+          }
+        }
+        
+        // Resume audio context if suspended
+        if (audioContext.state === "suspended") {
+          audioContext.resume();
+        }
+        
+        // Set volume
+        audioElement.volume = config.volume;
+        
+        // Play audio
+        audioElement.play().then(() => {
+          audioButton.classList.add('active');
+          audioButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>';
+          audioVisualizer.style.display = 'block';
+          audioStatus.textContent = "Audio playing";
+          audioStatus.style.color = "#00ffff";
+          audioStatus.style.display = "block";
+          setTimeout(() => {
+            audioStatus.style.display = "none";
+          }, 2000);
+        }).catch(e => {
+          console.error("Audio play error:", e);
+          audioStatus.textContent = "Couldn't play audio. Try clicking again.";
+          audioStatus.style.color = "#ff0000";
+          audioStatus.style.display = "block";
+        });
+      }
+      
+      isPlaying = !isPlaying;
+    }
+
+    function updateAudioData() {
+      if (!audioAnalyser) return;
+      
+      // Get time domain data
+      audioAnalyser.getFloatTimeDomainData(audioData);
+      
+      // Get frequency data
+      audioAnalyser.getByteFrequencyData(frequencyData);
+      
+      // Update visualizer
+      drawAudioVisualizer();
+      
+      requestAnimationFrame(updateAudioData);
+    }
+
+    function drawAudioVisualizer() {
+      if (!visualizerCtx || !frequencyData) return;
+      
+      // Clear canvas
+      visualizerCtx.clearRect(0, 0, audioVisualizer.width, audioVisualizer.height);
+      
+      // Set up visualization style
+      const barWidth = 3;
+      const barGap = 1;
+      const barCount = Math.min(64, frequencyData.length);
+      const centerY = audioVisualizer.height / 2;
+      
+      // Draw frequency bars
+      for (let i = 0; i < barCount; i++) {
+        const amplitude = frequencyData[i] / 255; // Normalize to 0-1
+        const barHeight = Math.max(2, amplitude * audioVisualizer.height / 2);
+        
+        // Create gradient for each bar
+        const gradient = visualizerCtx.createLinearGradient(0, centerY - barHeight, 0, centerY + barHeight);
+        gradient.addColorStop(0, "rgba(255, 0, 255, 0.8)");
+        gradient.addColorStop(0.5, "rgba(0, 255, 255, 0.8)");
+        gradient.addColorStop(1, "rgba(255, 0, 255, 0.8)");
+        
+        visualizerCtx.fillStyle = gradient;
+        
+        // Draw mirrored bars
+        visualizerCtx.fillRect(i * (barWidth + barGap), centerY - barHeight, barWidth, barHeight);
+        visualizerCtx.fillRect(i * (barWidth + barGap), centerY, barWidth, barHeight);
+      }
+      
+      // Draw center line
+      visualizerCtx.strokeStyle = "rgba(255, 255, 255, 0.5)";
+      visualizerCtx.beginPath();
+      visualizerCtx.moveTo(0, centerY);
+      visualizerCtx.lineTo(audioVisualizer.width, centerY);
+      visualizerCtx.stroke();
+    }
+
+    // ===== Control Panel =====
+    function initControlPanel() {
+      // Control panel toggle
+      settingsButton.addEventListener('click', () => {
+        controlPanel.style.display = controlPanel.style.display === 'none' ? 'block' : 'none';
+      });
+      
+      // Close button
+      closePanel.addEventListener('click', () => {
+        controlPanel.style.display = 'none';
+      });
+      
+      // Tab switching
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          // Update active tab
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          
+          // Show corresponding content
+          const tabName = tab.getAttribute('data-tab');
+          tabContents.forEach(content => {
+            content.style.display = content.id === `${tabName}-tab` ? 'block' : 'none';
+          });
+        });
+      });
+      
+      // Control sliders
+      document.getElementById('density-slider').addEventListener('input', function() {
+        config.density = parseInt(this.value);
+        document.getElementById('density-value').textContent = config.density;
+      });
+      
+      document.getElementById('camera-speed-slider').addEventListener('input', function() {
+        config.cameraSpeed = parseFloat(this.value);
+        document.getElementById('camera-speed-value').textContent = config.cameraSpeed.toFixed(1);
+        controls.autoRotateSpeed = 0.5 * config.cameraSpeed;
+      });
+      
+      document.getElementById('volume-slider').addEventListener('input', function() {
+        config.volume = parseFloat(this.value);
+        document.getElementById('volume-value').textContent = config.volume.toFixed(1);
+        if (audioElement) {
+          audioElement.volume = config.volume;
+        }
+      });
+      
+      document.getElementById('bass-slider').addEventListener('input', function() {
+        config.bassImpact = parseFloat(this.value);
+        document.getElementById('bass-value').textContent = config.bassImpact.toFixed(1);
+      });
+      
+      document.getElementById('dancer-count-slider').addEventListener('input', function() {
+        config.dancerCount = parseInt(this.value);
+        document.getElementById('dancer-count-value').textContent = config.dancerCount;
+        createDancers(visualThemes[config.visualTheme]);
+      });
+      
+      document.getElementById('sky-count-slider').addEventListener('input', function() {
+        config.skyObjectCount = parseInt(this.value);
+        document.getElementById('sky-count-value').textContent = config.skyObjectCount;
+        createSkyObjects(visualThemes[config.visualTheme]);
+      });
+      
+      document.getElementById('trippy-slider').addEventListener('input', function() {
+        config.trippyLevel = parseFloat(this.value);
+        document.getElementById('trippy-value').textContent = config.trippyLevel.toFixed(1);
+      });
+      
+      document.getElementById('glitch-slider').addEventListener('input', function() {
+        config.glitchIntensity = parseFloat(this.value);
+        document.getElementById('glitch-value').textContent = config.glitchIntensity.toFixed(1);
+      });
+      
+      document.getElementById('color-shift-slider').addEventListener('input', function() {
+        config.colorShiftSpeed = parseFloat(this.value);
+        document.getElementById('color-shift-value').textContent = config.colorShiftSpeed.toFixed(1);
+      });
+      
+      // Visual theme select
+      document.getElementById('visual-theme').addEventListener('change', function() {
+        config.visualTheme = this.value;
+        updateVisualTheme();
+      });
+      
+      // Audio track select
+      document.getElementById('audio-track').addEventListener('change', function() {
+        config.audioTrack = this.value;
+        
+        // If audio is playing, stop it first
+        if (isPlaying) {
+          toggleAudio();
+        }
+        
+        // Update audio source
+        audioElement.src = audioTracks[config.audioTrack];
+        audioLoaded = false;
+        
+        // Show loading status
+        audioStatus.textContent = "Loading audio...";
+        audioStatus.style.color = "#ff00ff";
+        audioStatus.style.display = "block";
+        
+        // Preload audio
+        audioElement.load();
+      });
+      
+      // Toggle switches
+      document.getElementById('audio-reactive-toggle').addEventListener('click', function() {
+        config.audioReactive = !config.audioReactive;
+        this.classList.toggle('active', config.audioReactive);
+      });
+      
+      document.getElementById('auto-camera-toggle').addEventListener('click', function() {
+        config.autoCamera = !config.autoCamera;
+        this.classList.toggle('active', config.autoCamera);
+        controls.autoRotate = config.autoCamera;
+      });
+      
+      document.getElementById('dancers-toggle').addEventListener('click', function() {
+        config.showDancers = !config.showDancers;
+        this.classList.toggle('active', config.showDancers);
+        dancers.forEach(dancer => {
+          dancer.visible = config.showDancers;
+        });
+      });
+      
+      document.getElementById('buildings-toggle').addEventListener('click', function() {
+        config.showBuildings = !config.showBuildings;
+        this.classList.toggle('active', config.showBuildings);
+        buildings.forEach(building => {
+          building.visible = config.showBuildings;
+        });
+      });
+      
+      document.getElementById('sky-toggle').addEventListener('click', function() {
+        config.showSkyObjects = !config.showSkyObjects;
+        this.classList.toggle('active', config.showSkyObjects);
+        skyObjects.forEach(obj => {
+          obj.visible = config.showSkyObjects;
+        });
+      });
+      
+      document.getElementById('bloom-toggle').addEventListener('click', function() {
+        config.bloomEnabled = !config.bloomEnabled;
+        this.classList.toggle('active', config.bloomEnabled);
+        if (bloomPass) {
+          bloomPass.enabled = config.bloomEnabled;
+        }
+      });
+      
+      document.getElementById('lasers-toggle').addEventListener('click', function() {
+        config.showLasers = !config.showLasers;
+        this.classList.toggle('active', config.showLasers);
+        createLasers(visualThemes[config.visualTheme]);
+      });
+    }
+    
+    function updateVisualTheme() {
+      const theme = visualThemes[config.visualTheme];
+      
+      // Update fog
+      if (scene && scene.fog) {
+        scene.fog.color.set(theme.fogColor);
+      }
+      
+      // Update sky
+      if (skyMesh) {
+        skyMesh.material.color.set(theme.skyColor);
+      }
+      
+      // Update floor
+      if (floorMesh) {
+        floorMesh.material.color.set(theme.gridColor);
+      }
+      
+      // Update particles
+      if (particles) {
+        const positions = particles.geometry.attributes.position.array;
+        const colors = particles.geometry.attributes.color.array;
+        const color1 = new THREE.Color(theme.particleColor1);
+        const color2 = new THREE.Color(theme.particleColor2);
+        
+        for (let i = 0; i < colors.length / 3; i++) {
+          const mixRatio = Math.random();
+          const mixedColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
+          
+          colors[i * 3] = mixedColor.r;
+          colors[i * 3 + 1] = mixedColor.g;
+          colors[i * 3 + 2] = mixedColor.b;
+        }
+        
+        particles.geometry.attributes.color.needsUpdate = true;
+      }
+      
+      // Update dancers
+      dancers.forEach(dancer => scene.remove(dancer));
+      createDancers(theme);
+      
+      // Update buildings
+      buildings.forEach(building => scene.remove(building));
+      createBuildings(theme);
+      
+      // Update sky objects
+      skyObjects.forEach(obj => scene.remove(obj));
+      createSkyObjects(theme);
+      
+      // Update lasers
+      lasers.forEach(laser => scene.remove(laser));
+      createLasers(theme);
+      
+      // Update bloom settings
+      if (bloomPass) {
+        bloomPass.strength = theme.bloomStrength;
+        bloomPass.radius = theme.bloomRadius;
+        bloomPass.threshold = theme.bloomThreshold;
+      }
+    }
+    
+    // ===== Fullscreen Handling =====
+    function initFullscreen() {
+      fullscreenButton.addEventListener('click', toggleFullscreen);
+    }
+    
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+          console.error(`Error attempting to enable fullscreen: ${err.message}`);
+        });
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    // ===== Initialization =====
+    function init() {
+      initLoadingScreen();
+      initScene();
+      initAudio();
+      initControlPanel();
+      initFullscreen();
+      
+      // Start animation loop
+      animate();
+    }
+
+    // Start everything
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>

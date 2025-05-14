@@ -352,6 +352,21 @@ body {
   top: 100px;
   left: 440px;
 }
+#icon-gta1 {
+  top: 100px;
+  left: 540px;
+}
+
+#icon-cyberia {
+  top: 200px;
+  left: 540px;
+}
+
+#icon-3drave {
+  top: 200px;
+  left: 440px;
+}
+
 
 /* Selected state */
 .desktop-icon.selected {
@@ -1436,3 +1451,8 @@ body {
 }
 
 /* Focus styles are in the JS file */
+button.desktop-icon {
+  background: transparent;
+  border: none;
+  padding: 0;
+}

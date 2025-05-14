@@ -773,7 +773,7 @@ console.log("Accessibility Enhancements script loaded");style.backgroundColor = 
     
     // Add to document
     document.body.insertBefore(skipLink, document.body.firstChild);
-  }
+  
   
   // Make windows accessible
   function makeWindowsAccessible() {
@@ -822,4 +822,4 @@ console.log("Accessibility Enhancements script loaded");style.backgroundColor = 
   
   // Initialize after a short delay
   setTimeout(initAccessibility, 1000);
-});
+;

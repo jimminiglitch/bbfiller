@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/video.css">
   <link rel="stylesheet" href="/css/profile-glitch.css">
-  
+  <link rel="stylesheet" href="/css/style.css">
 
   <!-- Video.js -->
   <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
@@ -53,7 +53,7 @@
 
 <body>
   <!-- Scanlines Overlay -->
-  <div class="scanlines"></div>
+  <div class="scanlines" aria-hidden="true"></div>
 
   <!-- Boot Screen -->
   <div id="bootScreen" class="boot-screen">
@@ -69,165 +69,170 @@
     <h1 class="glitch" data-text="Benjamin Filler">Benjamin Filler</h1>
 
     <!-- Desktop Icons -->
-
-      
-        <div id="desktop-icons">
-      <div class="desktop-icon" id="icon-about" data-window="about">
+    <div id="desktop-icons">
+      <!-- About -->
+      <button class="desktop-icon" id="icon-about" data-window="about" aria-label="Open About">
         <img
           src="https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/Benny.png?v=1746392528967"
-          alt="About"
-          loading="eager"
+          alt="" aria-hidden="true" loading="eager"
         />
         <span>About</span>
-      </div>
-      
-      <div class="desktop-icon" id="icon-tigerrr" data-window="TIGERRR">
+      </button>
+      <!-- TIGERRR -->
+      <button class="desktop-icon" id="icon-tigerrr" data-window="TIGERRR" aria-label="Open TIGERRR">
         <img
           src="https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/whodat.gif?v=1746365769069"
-          alt="TIGERRR"
-          loading="lazy"
+          alt="" aria-hidden="true" loading="lazy"
         />
         <span>TIGERRR</span>
-      </div>
-
-          
-      <div class="desktop-icon" id="icon-octavia" data-window="OCTAVIA">
+      </button>
+      <!-- OCTAVIA -->
+      <button class="desktop-icon" id="icon-octavia" data-window="OCTAVIA" aria-label="Open OCTAVIA">
         <img
           src="https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/octavia.jpg?v=1746412752104"
-          alt="OCTAVIA"
-          loading="lazy"
+          alt="" aria-hidden="true" loading="lazy"
         />
         <span>OCTAVIA</span>
-      </div>
-
-      <div class="desktop-icon" id="icon-MILES" data-window="MILES">
+      </button>
+      <!-- MILES -->
+      <button class="desktop-icon" id="icon-MILES" data-window="MILES" aria-label="Open MILES">
         <img
           src="https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/MilesSwings2025.jpg?v=1746410914289"
-          alt="MILES"
-          loading="lazy"
+          alt="" aria-hidden="true" loading="lazy"
         />
         <span>MILES</span>
-      </div>
-
-      <div class="desktop-icon" id="icon-resume" data-window="resume">
+      </button>
+      <!-- Resume -->
+      <button class="desktop-icon" id="icon-resume" data-window="resume" aria-label="Open Resume">
         <img
           src="https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/cv.png?v=1746621876924"
-          alt="Resume"
-          loading="lazy"
+          alt="" aria-hidden="true" loading="lazy"
         />
         <span>Resume</span>
-      </div>
-
-      <div class="desktop-icon" id="icon-toader" data-window="toader">
+      </button>
+      <!-- Psych Toad -->
+      <button class="desktop-icon" id="icon-toader" data-window="toader" aria-label="Open Psych Toad">
         <img
           src="https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/psychtoadglow.gif?v=1746572262753"
-          alt="Toader"
-          loading="lazy"
+          alt="" aria-hidden="true" loading="lazy"
         />
         <span>Psych Toad</span>
-      </div>
-
-      <div class="desktop-icon" id="icon-contact" data-window="contact">
+      </button>
+      <!-- Contact -->
+      <button class="desktop-icon" id="icon-contact" data-window="contact" aria-label="Open Contact">
         <img
           src="https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/EmailPic.png?v=1746392934373"
-          alt="Contact"
-          loading="lazy"
+          alt="" aria-hidden="true" loading="lazy"
         />
         <span>Contact</span>
-      </div>
-
-      <div class="desktop-icon" id="icon-nature" data-window="nature">
+      </button>
+      <!-- 3DRave -->
+      <button class="desktop-icon" id="icon-3drave" data-window="3drave" aria-label="Open 3DRave">
         <img
           src="https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/VaporTree.png?v=1746411815542"
-          alt="Nature"
-          loading="lazy"
+          alt="" aria-hidden="true" loading="lazy"
+        />
+        <span>3DRave</span>
+      </button>
+      <!-- Nature -->
+      <button class="desktop-icon" id="icon-nature" data-window="nature" aria-label="Open Nature">
+        <img
+          src="https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/VaporTree.png?v=1746411815542"
+          alt="" aria-hidden="true" loading="lazy"
         />
         <span>Nature</span>
-      </div>
-
-      <div class="desktop-icon" id="icon-Joyful" data-window="Joyful">
+      </button>
+      <!-- Joyful -->
+      <button class="desktop-icon" id="icon-Joyful" data-window="Joyful" aria-label="Open Joyful">
         <img
           src="https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/VaporTV.png?v=1746411817932"
-          alt="Joyful"
-          loading="lazy"
+          alt="" aria-hidden="true" loading="lazy"
         />
         <span>Joyful</span>
-      </div>
-
-      <div class="desktop-icon" id="icon-Papaz" data-window="Papaz">
+      </button>
+      <!-- Papaz -->
+      <button class="desktop-icon" id="icon-Papaz" data-window="Papaz" aria-label="Open Papaz">
         <img
           src="https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/VaporTV.png?v=1746411817932"
-          alt="Papaz"
-          loading="lazy"
+          alt="" aria-hidden="true" loading="lazy"
         />
         <span>Papaz</span>
-      </div>
-
-      <div class="desktop-icon" id="icon-Abstract" data-window="Abstract">
+      </button>
+      <!-- Abstract -->
+      <button class="desktop-icon" id="icon-Abstract" data-window="Abstract" aria-label="Open Abstract">
         <img
           src="https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/VaporTV.png?v=1746411817932"
-          alt="Abstract"
-          loading="lazy"
+          alt="" aria-hidden="true" loading="lazy"
         />
         <span>Abstract</span>
-      </div>
-
-      <div class="desktop-icon" id="icon-weight" data-window="weight">
+      </button>
+      <!-- Weight -->
+      <button class="desktop-icon" id="icon-weight" data-window="weight" aria-label="Open Weight">
         <img
           src="https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/VaporTV.png?v=1746411817932"
-          alt="Weight"
-          loading="lazy"
+          alt="" aria-hidden="true" loading="lazy"
         />
         <span>Weight</span>
-      </div>
-
-      <div class="desktop-icon" id="icon-clydecup" data-window="clydecup">
+      </button>
+      <!-- Clyde Cup -->
+      <button class="desktop-icon" id="icon-clydecup" data-window="clydecup" aria-label="Open Clyde Cup">
         <img
           src="https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/VaporTV.png?v=1746411817932"
-          alt="Clyde Cup"
-          loading="lazy"
+          alt="" aria-hidden="true" loading="lazy"
         />
-        <span>ClydeCup</span>
-      </div>
-
-      <div class="desktop-icon" id="icon-birdbrian" data-window="birdbrian">
+        <span>Clyde Cup</span>
+      </button>
+      <!-- Brian Birds -->
+      <button class="desktop-icon" id="icon-birdbrian" data-window="birdbrian" aria-label="Open Brian Birds">
         <img
           src="https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/VaporTV.png?v=1746411817932"
-          alt="Birding with Brian"
-          loading="lazy"
+          alt="" aria-hidden="true" loading="lazy"
         />
         <span>BrianBirds</span>
-      </div>
-
-      <div class="desktop-icon" id="icon-music" data-window="music">
+      </button>
+      <!-- Music -->
+      <button class="desktop-icon" id="icon-music" data-window="music" aria-label="Open Music">
         <img
           src="https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/CDROM.gif?v=1746411773467"
-          alt="Music"
-          loading="lazy"
+          alt="" aria-hidden="true" loading="lazy"
         />
         <span>Music</span>
-      </div>
-
-      <div class="desktop-icon" id="icon-SPACEWORM" data-window="snake">
+      </button>
+      <!-- Spaceworm -->
+      <button class="desktop-icon" id="icon-SPACEWORM" data-window="snake" aria-label="Open Spaceworm">
         <img
           src="https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/TrippyWorm.png?v=1746410810962"
-          alt="SPACEWORM"
-          loading="lazy"
+          alt="" aria-hidden="true" loading="lazy"
         />
         <span>Spaceworm</span>
-      </div>
-
-      <div class="desktop-icon" id="icon-r3d3ch0" data-window="r3d3ch0">
+      </button>
+      <!-- GTA1 -->
+      <button class="desktop-icon" id="icon-gta1" data-window="gta1" aria-label="Open GTA1">
+        <img
+          src="https://cdn.glitch.global/25331b85-e206-4347-93a8-666983818ff8/gta1.png?v=1747184549182"
+          alt="" aria-hidden="true" loading="lazy"
+        />
+        <span>GTA1</span>
+      </button>
+      <!-- Cyberia -->
+      <button class="desktop-icon" id="icon-cyberia" data-window="cyberia" aria-label="Open Cyberia">
+        <img
+          src="https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/TrippyWorm.png?v=1746410810962"
+          alt="" aria-hidden="true" loading="lazy"
+        />
+        <span>Cyberia</span>
+      </button>
+      <!-- r3d3ch0 -->
+      <button class="desktop-icon" id="icon-r3d3ch0" data-window="r3d3ch0" aria-label="Open r3d3ch0">
         <img
           src="https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/VaporTree.png?v=1746411815542"
-          alt="r3d3ch0"
-          loading="lazy"
+          alt="" aria-hidden="true" loading="lazy"
         />
         <span>r3d3ch0</span>
-      </div>
+      </button>
     </div>
-    
-      
+
+    <!-- Popup windows… -->
     <!-- ABOUT.EXE -->
     <div id="about" class="popup-window hidden">
       <div class="window-header">
@@ -238,15 +243,8 @@
       </div>
       <div class="window-content">
         <h2>👾 WHO IS BENJAMIN FILLER?</h2>
-        <p>
-          I'm a media creator, director, and narrative systems designer from
-          Michigan. I tell stories across Art, Film, Games, Music, and Interactive Spaces.
-        </p>
-        <p>
-          My work blends cinematic technique, code-based immersion, and analog
-          grit. I like strange archives, gripping installations, modular synths,
-          and custom hardware.
-        </p>
+        <p>I'm a media creator, director, and narrative systems designer from Michigan. I tell stories across Art, Film, Games, Music, and Interactive Spaces.</p>
+        <p>My work blends cinematic technique, code-based immersion, and analog grit. I like strange archives, gripping installations, modular synths, and custom hardware.</p>
         <h3>💾 KEYWORDS</h3>
         <ul>
           <li>⛓ Experimental Documentary</li>
@@ -267,12 +265,7 @@
         <button class="close">X</button>
       </div>
       <div class="window-content">
-        <iframe
-          src="/pages/resume.html"
-          allowfullscreen
-          style="width: 100%; height: 100%; border: none;"
-          loading="lazy"
-        ></iframe>
+        <iframe src="/pages/resume.html" allowfullscreen style="width:100%;height:100%;border:none" loading="lazy"></iframe>
       </div>
     </div>
 
@@ -285,12 +278,7 @@
         <button class="close">X</button>
       </div>
       <div class="window-content">
-        <iframe
-          src="/pages/contact.html"
-          allowfullscreen
-          loading="lazy"
-          style="width: 100%; height: 100%; border: none;"
-        ></iframe>
+        <iframe src="/pages/contact.html" allowfullscreen style="width:100%;height:100%;border:none" loading="lazy"></iframe>
       </div>
     </div>
 
@@ -303,12 +291,20 @@
         <button class="close">X</button>
       </div>
       <div class="window-content">
-        <iframe
-          src="/pages/nature.html"
-          style="width: 100%; height: 100%; border: none;"
-          allowfullscreen
-          loading="lazy"
-        ></iframe>
+        <iframe src="/pages/nature.html" allowfullscreen style="width:100%;height:100%;border:none" loading="lazy"></iframe>
+      </div>
+    </div>
+
+    <!-- 3DRAVE.EXE -->
+    <div id="3drave" class="popup-window hidden">
+      <div class="window-header">
+        <span>3DRAVE.EXE</span>
+        <button class="minimize">_</button>
+        <button class="maximize">▭</button>
+        <button class="close">X</button>
+      </div>
+      <div class="window-content">
+        <iframe src="/pages/3drave.html" allowfullscreen style="width:100%;height:100%;border:none" loading="lazy"></iframe>
       </div>
     </div>
 
@@ -401,9 +397,9 @@
       <div class="window-content">
         <iframe
           src="/pages/music.html"
-          style="width: 100%; height: 100%; border: none;"
           allowfullscreen
           allow="autoplay"
+          style="width: 100%; height: 100%; border: none;"
           loading="lazy"
         ></iframe>
       </div>
@@ -420,15 +416,16 @@
       <div class="window-content">
         <iframe
           src="/pages/snake.html"
-          style="width:100%; height:100%; border:none; display:block;"
           allowfullscreen
           allow="autoplay"
           id="snake-iframe"
+          style="width:100%;height:100%;border:none;display:block"
+          loading="lazy"
         ></iframe>
       </div>
     </div>
 
-    <!-- r3d3ch0.EXE -->
+    <!-- R3D3CH0.EXE -->
     <div id="r3d3ch0" class="popup-window hidden">
       <div class="window-header">
         <span>r3d3ch0.EXE</span>
@@ -445,11 +442,46 @@
       </div>
     </div>
 
+    <!-- GTA1.EXE -->
+    <div id="gta1" class="popup-window hidden">
+      <div class="window-header">
+        <span>GTA1.EXE</span>
+        <button class="minimize">_</button>
+        <button class="maximize">▭</button>
+        <button class="close">X</button>
+      </div>
+      <div class="window-content">
+        <iframe
+          src="https://dos.zone/grand-theft-auto-1997/"
+          style="width: 100%; height: 100%; border: none; display: block; background: black;"
+          loading="lazy"
+        ></iframe>
+      </div>
+    </div>
+
+    <!-- CYBERIA.EXE -->
+    <div id="cyberia" class="popup-window hidden">
+      <div class="window-header">
+        <span>CYBERIA.EXE</span>
+        <button class="minimize">_</button>
+        <button class="maximize">▭</button>
+        <button class="close">X</button>
+      </div>
+      <div class="window-content">
+        <iframe
+          src="https://dos.zone/cyberia/"
+          style="width: 100%; height: 100%; border: none; display: block; background: black;"
+          loading="lazy"
+        ></iframe>
+      </div>
+    </div>
+
     <!-- TOADER.EXE -->
     <div id="toader" class="popup-window hidden">
       <div class="window-header">
         <span>TOADER.EXE</span>
-        <button class="minimize">_</button>
+
+      <button class="minimize">_</button>
         <button class="maximize">▭</button>
         <button class="close">X</button>
       </div>
@@ -469,8 +501,6 @@
         ></audio>
       </div>
     </div>
-      
-
 
     <!-- TIGERRR.EXE -->
     <div id="TIGERRR" class="popup-window hidden">
@@ -482,18 +512,10 @@
       </div>
       <div class="window-content TIGERRR">
         <img
-          src="https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/whodat.gif?v=1746365769069"
-          alt="TIGERRR"
-          style="max-width: 100%; max-height: 300px; display: block; margin: 1rem auto;"
-          loading="lazy"
-        />
-        <h2 class="psychedelic-text">TIGERRR</h2>
-        <audio
-          id="TIGERRR-audio"
-          src="https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/tiger-roar.mp3?v=1746577634973"
+          src="https://cdn.glitch.global/25331b85-e206-4347-93a8-666983818ff8/whodat.gif?v=1747210582093"
           preload="none"
           loop
-        ></audio>
+        />
       </div>
     </div>
 
@@ -573,6 +595,7 @@
   <script src="/js/media-loading.js"></script>
   <script src="/js/sw.js"></script>
   <script src="/js/video-system.js"></script>
+     <script src="/js/utils.js"></script>
   </div> 
 </body>
 </html>

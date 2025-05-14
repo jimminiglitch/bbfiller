@@ -53,7 +53,10 @@ function initWindowControls() {
     const btnCls = header.querySelector(".close");
 
     if (btnMin) btnMin.addEventListener("click", () => minimizeWindow(id));
-    if (btnMax) btnMax.addEventListener("click", () => toggleMaximizeWindow(id));
+    if (btnMax) btnMax.addEventListener("click", e => {
+      const winEl = e.currentTarget.closest(".popup-window");
+      toggleMaximize(winEl);
+    });
     if (btnCls) btnCls.addEventListener("click", () => closeWindow(id));
 
     // Dragging logic
@@ -388,14 +391,17 @@ function closeWindow(id) {
   }
 
 
-      // Special handling for snake game
-      if (id === "snake") {
-        const snakeIframe = document.getElementById("snake-iframe");
-        if (snakeIframe) {
-          // Clear the iframe src to stop the game and free resources
-          snakeIframe.src = '';
-        }
-      }
+    // Special handling for snake game
+if (id === "snake") {
+  const snakeIframe = document.getElementById("snake-iframe");
+  if (snakeIframe) {
+    const currentSrc = snakeIframe.src;
+    snakeIframe.src = '';
+    setTimeout(() => {
+      snakeIframe.src = currentSrc;
+    }, 50); // delay ensures proper unload before reload
+  }
+}
 
       // Hide window
       win.classList.remove("window-closing");
@@ -414,6 +420,30 @@ function closeWindow(id) {
   const icon = document.getElementById(`taskbar-icon-${id}`);
   if (icon) icon.remove();
 }
+
+function toggleMaximize(win) {
+  if (win.classList.contains('maximized')) {
+    // restore
+    win.classList.remove('maximized');
+    win.style.top    = win.dataset.prevTop;
+    win.style.left   = win.dataset.prevLeft;
+    win.style.width  = win.dataset.prevWidth;
+    win.style.height = win.dataset.prevHeight;
+  } else {
+    // stash current geometry
+    win.dataset.prevTop    = win.style.top;
+    win.dataset.prevLeft   = win.style.left;
+    win.dataset.prevWidth  = win.style.width;
+    win.dataset.prevHeight = win.style.height;
+    // maximize
+    win.style.top    = '0';
+    win.style.left   = '0';
+    win.style.width  = '100vw';
+    win.style.height = '100vh';
+    win.classList.add('maximized');
+  }
+}
+
 
 function toggleMaximizeWindow(id) {
   const win = document.getElementById(id);
