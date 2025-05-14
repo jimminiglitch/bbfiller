@@ -2449,29 +2449,50 @@ body {
   }
 }
 
-/* Window resizers */
+//* Window resizers */
 .resizer {
   position: absolute;
   background: transparent;
   z-index: 10;
 }
 
-.resizer-top,
-.resizer-bottom {
-  height: 4px;
+/* top edge */
+.resizer-top {
+  top: 0;
   left: 0;
   right: 0;
+  height: 4px;
   cursor: ns-resize;
 }
 
-.resizer-left,
-.resizer-right {
-  width: 4px;
+/* bottom edge */
+.resizer-bottom {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  cursor: ns-resize;
+}
+
+/* left edge */
+.resizer-left {
+  left: 0;
   top: 0;
   bottom: 0;
+  width: 4px;
   cursor: ew-resize;
 }
 
+/* right edge */
+.resizer-right {
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  cursor: ew-resize;
+}
+
+/* corner handles */
 .resizer-top-left,
 .resizer-top-right,
 .resizer-bottom-left,

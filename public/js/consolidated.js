@@ -660,6 +660,7 @@ function onSelectEnd() {
   selDiv = null;
 }
 
+
 // ===== STARFIELD BACKGROUND =====
 function initStarfield() {
   const canvas = document.getElementById("background-canvas");

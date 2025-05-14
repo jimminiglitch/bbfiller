@@ -550,7 +550,7 @@
   </div>
   
   <!-- Background & Visualizers -->
-  <canvas id="background-canvas"></canvas>
+<canvas id="background-canvas" class="persistent"></canvas>
   <canvas id="audio-visualizer"></canvas>
 
   <!-- Taskbar & Clock -->
@@ -574,6 +574,18 @@
     <a href="javascript:void(0)" onclick="openWindow('birdbrian')">BrianBirds</a>
     <a href="javascript:void(0)" onclick="openWindow('clydecup')">ClydeCup</a>
   </div>
+
+<div class="window" id="window1">
+  <div class="content">Window Content</div>
+  <div class="resizer top"></div>
+  <div class="resizer right"></div>
+  <div class="resizer bottom"></div>
+  <div class="resizer left"></div>
+  <div class="resizer top-left"></div>
+  <div class="resizer top-right"></div>
+  <div class="resizer bottom-left"></div>
+  <div class="resizer bottom-right"></div>
+</div>
 
   <!-- Scripts -->
   <script src="/js/desktop.js" defer></script></script>
