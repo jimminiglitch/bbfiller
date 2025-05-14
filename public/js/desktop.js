@@ -1,32 +1,24 @@
-// Add DOS Games icon to desktop
-function addDosGamesIcon() {
-  const desktopIcons = document.getElementById('desktop-icons');
-  
-  const iconDiv = document.createElement('div');
-  iconDiv.className = 'desktop-icon';
-  iconDiv.id = 'icon-dos-games';
-  
-  iconDiv.innerHTML = `
-    <img src="/assets/images/icons/dos-games.png" alt="DOS Games">
-    <span>DOS Games</span>
-  `;
-  
-  iconDiv.addEventListener('click', () => {
-    // Open DOS Games page or launch the DOS Games app
-    if (window.dosGameLauncher) {
-      window.dosGameLauncher.init('game-container');
-    } else {
-      window.location.href = '/pages/games.html';
-    }
-  });
-  
-  desktopIcons.appendChild(iconDiv);
-}
 
-// Call this function when initializing the desktop
-document.addEventListener('DOMContentLoaded', () => {
-  // Your existing initialization code
-  
-  // Add DOS Games icon
-  addDosGamesIcon();
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("🚀 Vaporwave cursor initializing...");
+
+  const cursor = document.createElement('div');
+  cursor.className = 'custom-cursor';
+  const dot = document.createElement('div');
+  dot.className = 'cursor-dot';
+  cursor.appendChild(dot);
+  document.body.appendChild(cursor);
+
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = `${e.clientX}px`;
+    cursor.style.top = `${e.clientY}px`;
+    cursor.style.transform = 'translate(-50%, -50%)';
+  });
+
+  document.addEventListener('click', () => {
+    dot.classList.add('cursor-click');
+    setTimeout(() => dot.classList.remove('cursor-click'), 300);
+  });
+
+  console.log("✨ Vaporwave cursor ready!");
 });

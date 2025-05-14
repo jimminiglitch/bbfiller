@@ -1,3 +1,1648 @@
+
+.container {
+  width: 100%;
+  height: calc(100vh - 36px); /* leave room for taskbar */
+  position: relative;
+}
+
+#desktop-icons {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.desktop-icon {
+  position: absolute;
+  width: 64px;
+  cursor: pointer;
+  user-select: none;
+  text-align: center;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  background: rgba(0, 0, 0, 0.4);
+  border: none;
+  border-radius: 4px;
+}
+
+.desktop-icon img {
+  width: 64px;
+  height: 64px;
+  display: block;
+  margin: 0 auto;
+}
+
+.desktop-icon:hover {
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+  border: 1px solid cyan;
+}
+
+.desktop-icon span {
+  display: block;
+  margin-top: 4px;
+  font-size: var(--font-size-sm);
+  color: white;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
+}
+
+/* Initial icon positions */
+#icon-about { top: 100px; left: 40px; }
+#icon-resume { top: 100px; left: 140px; }
+#icon-contact { top: 100px; left: 240px; }
+#icon-tigerrr { top: 100px; left: 340px; }
+#icon-nature { top: 200px; left: 40px; }
+#icon-Joyful { top: 200px; left: 140px; }
+#icon-Papaz { top: 200px; left: 240px; }
+#icon-Abstract { top: 200px; left: 340px; }
+#icon-music { top: 300px; left: 40px; }
+#icon-octavia { top: 300px; left: 140px; }
+#icon-toader { top: 300px; left: 240px; }
+#icon-MILES { top: 300px; left: 340px; }
+#icon-SPACEWORM { top: 400px; left: 40px; }
+#icon-r3d3ch0 { top: 400px; left: 140px; }
+#icon-weight { top: 400px; left: 240px; }
+#icon-birdbrian { top: 400px; left: 340px; }
+#icon-clydecup { top: 100px; left: 440px; }
+#icon-gta1 { top: 100px; left: 540px; }
+#icon-cyberia { top: 200px; left: 540px; }
+#icon-3drave { top: 200px; left: 440px; }
+
+
+
+
+
+
+
+
+
+.desktop-icon img {
+  width: 64px;
+  height: 64px;
+  display: block;
+  margin: 0 auto;
+}
+
+
+
+
+
+
+
+
+.popup-window {
+  position: absolute;
+  top: 120px;
+  left: 120px;
+  width: 750px;
+  height: 60vh;
+  max-width: 90vw;
+  max-height: 90vh;
+  background: rgba(0, 0, 0, 0);
+  border: 2px solid var(--neon-purple);
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px var(--neon-pink);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: var(--z-window);
+  will-change: transform, opacity;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+
+.window-content {
+  flex: 1;
+  overflow: auto;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0);
+  position: relative;
+  z-index: 1;
+}
+
+
+
+/* ==== Begin boot-screen.css ==== */
+// ULTRA TRIPPY BOOT SEQUENCE - Psychedelic Cyberpunk Edition
+document.addEventListener("DOMContentLoaded", function() {
+  console.log("🌀 Initiating psychedelic boot sequence");
+  
+  const bootScreen = document.getElementById("bootScreen");
+  const bootLog = document.getElementById("boot-log");
+  const progressBar = document.getElementById("progress-bar");
+  const container = document.querySelector(".container");
+  
+  // Hide desktop initially
+  container.style.display = "none";
+  
+  // ——— PSYCHEDELIC CONTROLS ———
+  const MIN_DELAY = 80;     // Faster for more intensity
+  const MAX_DELAY = 300;    // Shorter max delay for better pacing
+  function getNextDelay() {
+    return Math.random() * (MAX_DELAY - MIN_DELAY) + MIN_DELAY;
+  }
+
+  // ——— ENHANCED AUDIO SYSTEM ———
+  // Main glitch sound
+  const glitchSfx = new Audio('https://cdn.glitch.global/25331b85-e206-4347-93a8-666983818ff8/boot.mp3?v=1746845093718');
+  glitchSfx.volume = 0.3;
+  
+  // Additional sound effects
+  const glitchSounds = [
+    { audio: new Audio('https://cdn.glitch.global/25331b85-e206-4347-93a8-666983818ff8/glitch1.mp3?v=1746845093718'), volume: 0.2 },
+    { audio: new Audio('https://cdn.glitch.global/25331b85-e206-4347-93a8-666983818ff8/glitch2.mp3?v=1746845093718'), volume: 0.15 },
+    { audio: new Audio('https://cdn.glitch.global/25331b85-e206-4347-93a8-666983818ff8/glitch3.mp3?v=1746845093718'), volume: 0.25 }
+  ];
+  
+  // Low frequency drone for ambience
+  const droneSfx = new Audio('https://cdn.glitch.global/25331b85-e206-4347-93a8-666983818ff8/psychtoad.mp3?v=1746846223194');
+  droneSfx.volume = 0.1;
+  droneSfx.loop = true;
+  
+  // Play a random glitch sound
+  function playRandomGlitch() {
+    if (Math.random() < 0.4) { // Increased probability
+      const soundIndex = Math.floor(Math.random() * glitchSounds.length);
+      try {
+        glitchSounds[soundIndex].audio.currentTime = 0;
+        glitchSounds[soundIndex].audio.play().catch(e => console.log("Audio play prevented by browser"));
+      } catch (e) {
+        console.log("Audio error:", e);
+      }
+    }
+  }
+  
+  // Start ambient drone
+  try {
+    droneSfx.play().catch(e => console.log("Ambient audio play prevented by browser"));
+  } catch (e) {
+    console.log("Ambient audio error:", e);
+  }
+  
+  // ——— ENHANCED VISUAL EFFECTS ———
+  // Create a canvas for particle effects
+  const particleCanvas = document.createElement("canvas");
+  particleCanvas.classList.add("particle-canvas");
+  particleCanvas.style.position = "absolute";
+  particleCanvas.style.top = "0";
+  particleCanvas.style.left = "0";
+  particleCanvas.style.width = "100%";
+  particleCanvas.style.height = "100%";
+  particleCanvas.style.pointerEvents = "none";
+  particleCanvas.style.zIndex = "9998";
+  bootScreen.appendChild(particleCanvas);
+  
+  // Initialize particle system
+  const particles = [];
+  const ctx = particleCanvas.getContext("2d");
+  
+  function resizeCanvas() {
+    particleCanvas.width = window.innerWidth;
+    particleCanvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas);
+  
+  // Create particles
+  function createParticles(count) {
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * particleCanvas.width,
+        y: Math.random() * particleCanvas.height,
+        size: Math.random() * 3 + 1,
+        speedX: (Math.random() - 0.5) * 3,
+        speedY: (Math.random() - 0.5) * 3,
+        color: `hsl(${Math.random() * 60 + 160}, 100%, 50%)`, // Cyan to blue hues
+        alpha: Math.random() * 0.7 + 0.3
+      });
+    }
+  }
+  
+  // Animate particles
+  function animateParticles() {
+    ctx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+    
+    // Update and draw particles
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      
+      // Update position
+      p.x += p.speedX;
+      p.y += p.speedY;
+      
+      // Wrap around edges
+      if (p.x < 0) p.x = particleCanvas.width;
+      if (p.x > particleCanvas.width) p.x = 0;
+      if (p.y < 0) p.y = particleCanvas.height;
+      if (p.y > particleCanvas.height) p.y = 0;
+      
+      // Draw particle
+      ctx.globalAlpha = p.alpha;
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    
+    requestAnimationFrame(animateParticles);
+  }
+  
+  // Start particle system
+  createParticles(100);
+  animateParticles();
+  
+  // ——— ENHANCED JITTER EFFECTS ———
+  function jitterScreen() {
+    // More extreme jitter
+    const x = (Math.random() - 0.5) * 12;  // ±6px
+    const y = (Math.random() - 0.5) * 12;
+    
+    // Apply to both container and boot log for more chaotic effect
+    bootLog.style.transform = `translate(${x * 0.7}px, ${y * 0.7}px)`;
+    
+    // Random color shift
+    if (Math.random() < 0.3) {
+      const hueShift = Math.floor(Math.random() * 40) - 20;
+      bootLog.style.filter = `hue-rotate(${hueShift}deg)`;
+      setTimeout(() => bootLog.style.filter = '', 120);
+    }
+    
+    // Random scale jitter
+    if (Math.random() < 0.2) {
+      const scale = 1 + (Math.random() * 0.1 - 0.05);
+      bootLog.style.transform += ` scale(${scale})`;
+    }
+    
+    // Reset after short delay
+    setTimeout(() => {
+      bootLog.style.transform = '';
+    }, 100);
+  }
+  
+  // More extreme RGB split effect
+  function rgbSplitEffect() {
+    bootLog.classList.add('extreme-rgb-split');
+    setTimeout(() => bootLog.classList.remove('extreme-rgb-split'), 150);
+  }
+  
+  // Random glitch blocks effect
+  function glitchBlocksEffect() {
+    bootLog.classList.add('glitch-blocks');
+    setTimeout(() => bootLog.classList.remove('glitch-blocks'), 200);
+  }
+  
+  // Wave distortion effect
+  function waveDistortionEffect() {
+    bootLog.classList.add('wave-distortion');
+    setTimeout(() => bootLog.classList.remove('wave-distortion'), 500);
+  }
+  
+  // Apply a random visual effect
+  function applyRandomEffect() {
+    const effectRoll = Math.random();
+    
+    if (effectRoll < 0.3) {
+      rgbSplitEffect();
+    } else if (effectRoll < 0.6) {
+      glitchBlocksEffect();
+    } else if (effectRoll < 0.8) {
+      waveDistortionEffect();
+    } else {
+      // Combine multiple effects for extra trippy moments
+      rgbSplitEffect();
+      setTimeout(glitchBlocksEffect, 100);
+    }
+    
+    // Always jitter for tactile feedback
+    jitterScreen();
+  }
+  
+  // Create image element for profile picture with enhanced effects
+  const profileContainer = document.createElement("div");
+  profileContainer.style.textAlign = "center";
+  profileContainer.style.marginBottom = "20px";
+  profileContainer.style.position = "flex";
+  
+  
+  
+  // Add glow effect container behind the image
+  const glowEffect = document.createElement("div");
+  glowEffect.classList.add("image-glow-effect");
+  glowEffect.style.position = "absolute";
+  glowEffect.style.top = "0";
+  glowEffect.style.left = "50%";
+  glowEffect.style.transform = "translateX(-50%)";
+  glowEffect.style.width = "150px";
+  glowEffect.style.height = "150px";
+  glowEffect.style.borderRadius = "50%";
+  glowEffect.style.zIndex = "1";
+  
+  // Add image and glow to container
+  profileContainer.appendChild(glowEffect);
+  profileContainer.appendChild(profileImage);
+  
+  // Add image to boot screen BEFORE the boot log
+  bootLog.parentNode.insertBefore(profileContainer, bootLog);
+  
+  // Trippy boot messages
+  const bootMessages = [
+    "Initializing neural interface...",
+    "Bypassing reality filters...",
+    "Injecting perception modifiers...",
+    "Recalibrating sensory inputs...",
+    "Dissolving cognitive boundaries...",
+    "Fragmenting linear time constructs...",
+    "Synthesizing quantum consciousness...",
+    "Activating psychedelic protocols...",
+    "Transcending dimensional limits...",
+    "REALITY OVERRIDE COMPLETE"
+  ];
+  
+  let currentLine = 0;
+  let currentChar = 0;
+  let bootInterval;
+  
+  // Faster typing for more intensity
+  const charDelay = 8; 
+  const lineDelay = 150;
+  const bootCompleteDelay = 800; // Longer for dramatic effect
+  
+  // Start the boot sequence
+  startBoot();
+  
+  function startBoot() {
+    bootInterval = setInterval(typeBootMessage, charDelay);
+    updateProgressBar(0);
+    
+    // Show profile image after a short delay with glitch effect
+    setTimeout(() => {
+      profileImage.style.opacity = "1";
+      
+      // Start pulsing glow effect
+      glowEffect.classList.add('pulsing-glow');
+      
+      // Add periodic glitch to the image
+      setInterval(() => {
+        if (Math.random() < 0.3 && bootScreen.style.display !== "none") {
+          profileImage.classList.add('glitch-img');
+          setTimeout(() => profileImage.classList.remove('glitch-img'), 200);
+        }
+      }, 2000);
+    }, 800);
+  }
+  
+  function typeBootMessage() {
+    if (currentLine < bootMessages.length) {
+      const message = bootMessages[currentLine];
+      
+      if (currentChar < message.length) {
+        // Type one more character
+        bootLog.innerHTML += message.charAt(currentChar);
+        
+        // Apply random effects with higher probability for more intensity
+        if (Math.random() < 0.15) {
+          applyRandomEffect();
+          playRandomGlitch();
+        }
+        
+        // Advance char index and progress bar
+        currentChar++;
+        updateProgressBar(
+          (currentLine / bootMessages.length) * 70 +
+          (currentChar / message.length) * (30 / bootMessages.length)
+        );
+      } else {
+        bootLog.innerHTML += "<br>";
+        currentLine++;
+        currentChar = 0;
+        clearInterval(bootInterval);
+        
+        // Special handling for the last message
+        if (currentLine === bootMessages.length - 1) {
+          // Make the last message stand out with extreme effects
+          setTimeout(() => {
+            // Major glitch effect before final message
+            applyRandomEffect();
+            playRandomGlitch();
+            
+            setTimeout(() => {
+              // Final message with intense styling
+              bootLog.innerHTML += `<span class="final-message">${bootMessages[currentLine]}</span>`;
+              
+              // Trigger multiple effects in sequence
+              rgbSplitEffect();
+              setTimeout(glitchBlocksEffect, 200);
+              setTimeout(waveDistortionEffect, 400);
+              
+              // Shake the screen violently
+              jitterScreen();
+              setTimeout(jitterScreen, 100);
+              setTimeout(jitterScreen, 200);
+              
+              // Play multiple glitch sounds
+              glitchSfx.play().catch(e => console.log("Audio play prevented"));
+              setTimeout(() => playRandomGlitch(), 100);
+              setTimeout(() => playRandomGlitch(), 300);
+              
+              // Complete the boot sequence
+              updateProgressBar(100);
+              setTimeout(completeBootSequence, bootCompleteDelay);
+            }, 300);
+          }, lineDelay * 2);
+        } else if (currentLine < bootMessages.length) {
+          // Apply effect between lines
+          applyRandomEffect();
+          playRandomGlitch();
+          
+          setTimeout(() => {
+            bootInterval = setInterval(typeBootMessage, charDelay);
+          }, lineDelay);
+        }
+      }
+    }
+  }
+  
+  // Enhanced progress bar with more visual effects
+  function updateProgressBar(percentage) {
+    progressBar.style.width = percentage + "%";
+    
+    // Enhanced glow effect as progress increases
+    const glowIntensity = Math.min(15, percentage / 7);
+    const glowColor = `rgba(0, ${200 + Math.sin(percentage/10) * 55}, ${255 - Math.cos(percentage/15) * 55}, 0.8)`;
+    progressBar.style.boxShadow = `0 0 ${glowIntensity}px ${glowColor}`;
+    
+    // Occasionally add color shift to progress bar
+    if (Math.random() < 0.1) {
+      const hue = 180 + Math.sin(percentage/10) * 30; // Cycle around cyan
+      progressBar.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
+      setTimeout(() => {
+        progressBar.style.backgroundColor = "#00ffff";
+      }, 300);
+    }
+    
+    // Add glitch to progress bar occasionally
+    if (Math.random() < 0.05) {
+      progressBar.classList.add("progress-glitch");
+      setTimeout(() => {
+        progressBar.classList.remove("progress-glitch");
+      }, 200);
+    }
+  }
+  
+  // Final boot sequence with enhanced transition effects
+  function completeBootSequence() {
+    // Create a flash effect
+    const flashOverlay = document.createElement("div");
+    flashOverlay.style.position = "fixed";
+    flashOverlay.style.top = "0";
+    flashOverlay.style.left = "0";
+    flashOverlay.style.width = "100%";
+    flashOverlay.style.height = "100%";
+    flashOverlay.style.backgroundColor = "#00ffff";
+    flashOverlay.style.opacity = "0";
+    flashOverlay.style.zIndex = "10000";
+    flashOverlay.style.transition = "opacity 0.1s ease";
+    document.body.appendChild(flashOverlay);
+    
+    // Flash effect
+    flashOverlay.style.opacity = "0.7";
+    setTimeout(() => {
+      flashOverlay.style.opacity = "0";
+      
+      // Major glitch effect
+      applyRandomEffect();
+      applyRandomEffect();
+      
+      // Fade out boot screen with glitch transition
+      bootScreen.classList.add("glitch-transition-out");
+      bootScreen.style.transition = "opacity 0.5s ease";
+      bootScreen.style.opacity = "0";
+      
+      // Play transition sounds
+      glitchSfx.play().catch(e => console.log("Audio play prevented"));
+      setTimeout(() => playRandomGlitch(), 100);
+      
+      setTimeout(() => {
+        bootScreen.style.display = "none";
+        container.style.display = "block";
+        
+        // Fade out ambient sound
+        if (droneSfx) {
+          const fadeInterval = setInterval(() => {
+            if (droneSfx.volume > 0.01) {
+              droneSfx.volume -= 0.01;
+            } else {
+              droneSfx.pause();
+              clearInterval(fadeInterval);
+            }
+          }, 100);
+        }
+        
+        // Remove flash overlay
+        document.body.removeChild(flashOverlay);
+        
+        // Initialize desktop components
+        if (typeof initDesktop === 'function') {
+          initDesktop();
+        }
+      }, 500);
+    }, 150);
+    
+    console.log("🌀 Psychedelic boot sequence complete");
+  }
+});
+/* ==== End boot-screen.css ==== */
+
+
+/* ==== Begin glitch-effects.css ==== */
+/* ULTRA TRIPPY GLITCH EFFECTS - Psychedelic Edition */
+
+/* Base boot screen enhancements */
+.boot-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 1s ease-out;
+  overflow: hidden;
+  background: radial-gradient(circle at center, #000022, #000000);
+}
+
+/* Add a subtle animated background pattern */
+.boot-screen::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.15),
+      rgba(0, 0, 0, 0.15) 1px,
+      transparent 1px,
+      transparent 2px
+    );
+  opacity: 0.3;
+  z-index: -1;
+  animation: scanlines 10s linear infinite;
+  pointer-events: none;
+}
+
+.boot-log {
+  font-family: 'VT323', monospace;
+  color: #00ffff;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  border-radius: 5px;
+  width: 80%;
+  max-width: 600px;
+  height: 300px;
+  overflow: auto;
+  margin-bottom: 20px;
+  white-space: pre-wrap;
+  text-shadow: 0 0 5px #00ffff;
+  border: 1px solid #00ffff;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+  position: relative;
+  text-align: left !important;
+  will-change: transform, filter;
+  transition: transform 0.1s ease, filter 0.1s ease;
+}
+
+/* Add a subtle CRT flicker */
+.boot-log::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(0, 255, 255, 0.03), rgba(0, 255, 255, 0.03));
+  opacity: 0;
+  pointer-events: none;
+  animation: flicker 0.3s infinite alternate-reverse;
+}
+
+.progress-container {
+  width: 80%;
+  max-width: 600px;
+  height: 20px;
+  background-color: #111;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #00ffff;
+  position: relative;
+  will-change: transform;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3) inset;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background-color: #00ffff;
+  transition: width 0.3s ease-out;
+  will-change: transform, width, background-color;
+  position: relative;
+  background: linear-gradient(90deg, 
+    rgba(0, 255, 255, 0.8), 
+    rgba(0, 255, 255, 1), 
+    rgba(0, 255, 255, 0.8)
+  );
+}
+
+/* Add a moving highlight to progress bar */
+.progress-bar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.4), 
+    transparent
+  );
+  animation: progressHighlight 2s ease-in-out infinite;
+}
+
+/* Enhanced profile image effects */
+.profile-image {
+  position: relative;
+  z-index: 2;
+  transform-origin: center;
+  will-change: transform, filter;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.profile-image.glitch-img {
+  animation: profileGlitch 0.3s steps(1) forwards;
+}
+
+.image-glow-effect {
+  background: radial-gradient(circle, rgba(0, 255, 255, 0.7) 0%, rgba(0, 255, 255, 0) 70%);
+  opacity: 0.7;
+  will-change: transform, opacity;
+}
+
+.image-glow-effect.pulsing-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+/* Final message styling */
+.final-message {
+  color: #00ffff;
+  font-size: 1.5em;
+  text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+  font-weight: bold;
+  letter-spacing: 2px;
+  animation: finalMessagePulse 2s ease-in-out infinite;
+}
+
+/* Extreme RGB split effect */
+.extreme-rgb-split {
+  position: relative;
+  text-shadow: 
+    -3px 0 rgba(255, 0, 0, 0.7),
+    3px 0 rgba(0, 255, 255, 0.7),
+    0 0 5px rgba(255, 255, 255, 0.5) !important;
+  filter: contrast(1.5);
+}
+
+/* Glitch blocks effect */
+.glitch-blocks {
+  animation: glitchBlocks 0.2s steps(1) forwards;
+}
+
+/* Wave distortion effect */
+.wave-distortion {
+  animation: waveDistort 0.5s ease-in-out;
+}
+
+/* Progress bar glitch */
+.progress-glitch {
+  animation: progressGlitch 0.2s steps(1) forwards;
+}
+
+/* Glitch transition out effect */
+.glitch-transition-out {
+  animation: glitchTransitionOut 0.5s ease-in-out forwards;
+}
+
+/* ANIMATIONS */
+
+@keyframes scanlines {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100%;
+  }
+}
+
+@keyframes flicker {
+  0%, 95% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.03;
+  }
+}
+
+@keyframes progressHighlight {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes profileGlitch {
+  0% {
+    transform: translate(0);
+    filter: none;
+  }
+  10% {
+    transform: translate(-5px, 2px);
+    filter: hue-rotate(-30deg) saturate(2);
+  }
+  20% {
+    transform: translate(5px, -2px);
+    filter: hue-rotate(30deg) saturate(1.5);
+  }
+  30% {
+    transform: translate(3px, 3px);
+    filter: invert(0.3);
+  }
+  40% {
+    transform: translate(-3px, -3px);
+    filter: brightness(1.5) contrast(1.5);
+  }
+  50% {
+    transform: translate(0);
+    filter: none;
+  }
+  60% {
+    transform: translate(4px, -2px) scale(1.05);
+    filter: saturate(2) brightness(0.9);
+  }
+  70% {
+    transform: translate(-4px, 2px) scale(0.95);
+    filter: hue-rotate(-45deg);
+  }
+  80% {
+    transform: translate(2px, 2px);
+    filter: invert(0.1) brightness(1.2);
+  }
+  90% {
+    transform: translate(-2px, -2px);
+    filter: hue-rotate(45deg) saturate(1.5);
+  }
+  100% {
+    transform: translate(0);
+    filter: none;
+  }
+}
+
+@keyframes pulseGlow {
+  0% {
+    opacity: 0.5;
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateX(-50%) scale(1.2);
+  }
+  100% {
+    opacity: 0.5;
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+@keyframes finalMessagePulse {
+  0% {
+    text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+  }
+  50% {
+    text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff, 0 0 40px #00ffff;
+  }
+  100% {
+    text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+  }
+}
+
+@keyframes glitchBlocks {
+  0% {
+    clip-path: inset(0 0 0 0);
+  }
+  10% {
+    clip-path: inset(20% 0 20% 0);
+  }
+  20% {
+    clip-path: inset(40% 0 40% 0);
+  }
+  30% {
+    clip-path: inset(60% 0 10% 0);
+  }
+  40% {
+    clip-path: inset(10% 0 50% 0);
+  }
+  50% {
+    clip-path: inset(30% 0 30% 0);
+  }
+  60% {
+    clip-path: inset(70% 0 10% 0);
+  }
+  70% {
+    clip-path: inset(10% 0 70% 0);
+  }
+  80% {
+    clip-path: inset(50% 0 30% 0);
+  }
+  90% {
+    clip-path: inset(20% 0 60% 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes waveDistort {
+  0% {
+    transform: skew(0deg, 0deg);
+    filter: none;
+  }
+  25% {
+    transform: skew(3deg, 1deg);
+    filter: hue-rotate(30deg) saturate(1.5);
+  }
+  50% {
+    transform: skew(-3deg, -1deg);
+    filter: hue-rotate(-30deg) saturate(2);
+  }
+  75% {
+    transform: skew(3deg, 1deg);
+    filter: hue-rotate(30deg) saturate(1.5);
+  }
+  100% {
+    transform: skew(0deg, 0deg);
+    filter: none;
+  }
+}
+
+@keyframes progressGlitch {
+  0% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  25% {
+    transform: scaleX(1.1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scaleX(0.95);
+    opacity: 1;
+  }
+  75% {
+    transform: scaleX(1.05);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+@keyframes glitchTransitionOut {
+  0% {
+    transform: scale(1);
+    filter: none;
+    opacity: 1;
+  }
+  10% {
+    transform: scale(1.02) skew(2deg, 1deg);
+    filter: hue-rotate(90deg) saturate(2);
+    opacity: 0.9;
+  }
+  20% {
+    transform: scale(0.98) skew(-2deg, -1deg);
+    filter: hue-rotate(-90deg) saturate(1.5);
+    opacity: 0.8;
+  }
+  30% {
+    transform: scale(1.03) skew(-3deg, 2deg);
+    filter: invert(0.3) brightness(1.5);
+    opacity: 0.7;
+  }
+  40% {
+    transform: scale(0.97) skew(3deg, -2deg);
+    filter: hue-rotate(180deg) saturate(2);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.02) skew(1deg, 1deg);
+    filter: contrast(1.5) brightness(1.2);
+    opacity: 0.5;
+  }
+  60% {
+    transform: scale(0.98) skew(-1deg, -1deg);
+    filter: hue-rotate(-180deg) invert(0.2);
+    opacity: 0.4;
+  }
+  70% {
+    transform: scale(1.01) skew(2deg, -2deg);
+    filter: saturate(2) brightness(0.8);
+    opacity: 0.3;
+  }
+  80% {
+    transform: scale(0.99) skew(-2deg, 2deg);
+    filter: hue-rotate(90deg) contrast(1.3);
+    opacity: 0.2;
+  }
+  90% {
+    transform: scale(1.03) skew(0deg, 0deg);
+    filter: invert(0.1) brightness(1.5);
+    opacity: 0.1;
+  }
+  100% {
+    transform: scale(1) skew(0deg, 0deg);
+    filter: none;
+    opacity: 0;
+  }
+}
+
+/* Additional trippy animations */
+@keyframes rgbShift {
+  0% {
+    text-shadow: 
+      0.05em 0 0 rgba(255, 0, 0, 0.75),
+      -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+      0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+  14% {
+    text-shadow: 
+      0.05em 0 0 rgba(255, 0, 0, 0.75),
+      -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+      0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+  15% {
+    text-shadow: 
+      -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
+      0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
+      -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+  49% {
+    text-shadow: 
+      -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
+      0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
+      -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+  50% {
+    text-shadow: 
+      0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
+      0.05em 0 0 rgba(0, 255, 0, 0.75),
+      0 -0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+  99% {
+    text-shadow: 
+      0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
+      0.05em 0 0 rgba(0, 255, 0, 0.75),
+      0 -0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+  100% {
+    text-shadow: 
+      -0.025em 0 0 rgba(255, 0, 0, 0.75),
+      -0.025em -0.025em 0 rgba(0, 255, 0, 0.75),
+      -0.025em -0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+}
+
+/* Particle canvas styling */
+.particle-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.7;
+}
+/* ==== End glitch-effects.css ==== */
+
+
+/* ==== Begin music.css ==== */
+/* music.css – styles for MUSIC.EXE */
+
+body {
+  background-color: black;
+  color: #00ffff;
+  font-family: 'VT323', monospace;
+  font-size: 1.2rem;
+  padding: 2rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+h1, h2 {
+  color: #00ff00;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+#now-playing {
+  font-size: 1.3rem;
+  text-align: center;
+  margin: 1rem 0;
+  color: #00ff00;
+}
+
+.music-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.music-controls button {
+  font-family: 'VT323', monospace;
+  background-color: #00ffff;
+  color: black;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.music-controls button:hover {
+  background-color: #00cccc;
+}
+
+#playlist {
+  list-style: none;
+  padding-left: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #00ffff;
+  padding: 0.5rem;
+}
+
+#playlist li {
+  padding: 0.3rem 0.5rem;
+  border-bottom: 1px dashed #00ffff;
+  cursor: pointer;
+}
+
+#playlist li:hover {
+  background-color: #003333;
+}
+
+audio {
+  display: none;
+}
+
+/*────────────────────────────────────────
+  Responsive Design
+────────────────────────────────────────*/
+
+
+/* ==== End music.css ==== */
+
+
+/* ==== Begin profile-glitch.css ==== */
+/* ULTRA TRIPPY PROFILE IMAGE EFFECTS */
+
+/* Base profile image styling */
+.profile-image {
+  position: relative;
+  z-index: 10;
+  transform-origin: center;
+  will-change: transform, filter;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  border-radius: 50%;
+  border: 3px solid #00ffff;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+}
+
+/* Extreme glitch effect for profile image */
+.profile-image.extreme-glitch {
+  animation: extremeProfileGlitch 0.5s steps(2) infinite;
+}
+
+/* Glitch layers */
+.profile-glitch-layer {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  opacity: 0.7;
+  mix-blend-mode: normal;
+  pointer-events: none;
+  will-change: transform, filter, opacity;
+  transition: transform 0.2s ease, filter 0.2s ease, opacity 0.2s ease;
+}
+
+.layer-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.layer-glitching {
+  animation: layerGlitch 0.5s steps(2) forwards;
+}
+
+/* Fractal overlay */
+.fractal-overlay {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: 
+    radial-gradient(circle at 30% 30%, rgba(0, 255, 255, 0.8) 0%, rgba(0, 255, 255, 0) 50%),
+    radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8) 0%, rgba(255, 0, 255, 0) 50%);
+  mix-blend-mode: screen;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 15;
+  transition: opacity 0.3s ease;
+}
+
+.fractal-active {
+  opacity: 0.8;
+  animation: fractalPulse 0.5s ease infinite alternate;
+}
+
+/* Pixel manipulation canvas */
+.pixel-manipulation-canvas {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  opacity: 0.7;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 12;
+}
+
+/* Geometric shapes overlay */
+.geometric-shapes {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 14;
+  mix-blend-mode: screen;
+}
+
+.geo-shape {
+  position: absolute;
+  background-color: rgba(0, 255, 255, 0.5);
+  mix-blend-mode: screen;
+  animation: floatShape 10s linear infinite;
+}
+
+.geo-circle {
+  border-radius: 50%;
+}
+
+.geo-triangle {
+  width: 0 !important;
+  height: 0 !important;
+  background-color: transparent !important;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 17px solid rgba(0, 255, 255, 0.5);
+}
+
+.geo-square {
+  border-radius: 2px;
+}
+
+/* Enhanced glow effect */
+.image-glow-effect {
+  background: 
+    radial-gradient(circle, rgba(0, 255, 255, 0.7) 0%, rgba(0, 255, 255, 0) 70%),
+    radial-gradient(circle at 30% 30%, rgba(255, 0, 255, 0.5) 0%, rgba(255, 0, 255, 0) 60%),
+    radial-gradient(circle at 70% 70%, rgba(0, 255, 255, 0.5) 0%, rgba(0, 255, 255, 0) 60%);
+  opacity: 0.8;
+  will-change: transform, opacity, filter;
+  animation: multicolorGlow 8s ease-in-out infinite alternate;
+}
+
+/* ANIMATIONS */
+
+@keyframes extremeProfileGlitch {
+  0% {
+    transform: translate(0) scale(1);
+    filter: none;
+  }
+  10% {
+    transform: translate(-10px, 5px) scale(1.05);
+    filter: hue-rotate(-90deg) saturate(3) contrast(1.5);
+  }
+  20% {
+    transform: translate(10px, -5px) scale(0.95);
+    filter: hue-rotate(90deg) saturate(2) brightness(1.2);
+  }
+  30% {
+    transform: translate(5px, 10px) scale(1.02);
+    filter: invert(0.5) hue-rotate(180deg);
+  }
+  40% {
+    transform: translate(-5px, -10px) scale(0.98);
+    filter: blur(2px) brightness(1.5);
+  }
+  50% {
+    transform: translate(-8px, 8px) skew(10deg, 5deg);
+    filter: contrast(2) saturate(2);
+  }
+  60% {
+    transform: translate(8px, -8px) skew(-10deg, -5deg);
+    filter: hue-rotate(-120deg) invert(0.3);
+  }
+  70% {
+    transform: translate(12px, 0) scale(1.1) rotate(5deg);
+    filter: brightness(0.8) contrast(1.5) saturate(3);
+  }
+  80% {
+    transform: translate(-12px, 0) scale(0.9) rotate(-5deg);
+    filter: hue-rotate(60deg) brightness(1.3);
+  }
+  90% {
+    transform: translate(0, 15px) skew(-5deg, 10deg);
+    filter: invert(0.2) saturate(2) contrast(1.3);
+  }
+  100% {
+    transform: translate(0, -15px) skew(5deg, -10deg);
+    filter: hue-rotate(-60deg) brightness(1.1) blur(1px);
+  }
+}
+
+@keyframes layerGlitch {
+  0% {
+    clip-path: inset(0 0 0 0);
+  }
+  10% {
+    clip-path: inset(20% 0 20% 0);
+  }
+  20% {
+    clip-path: inset(40% 0 40% 0);
+  }
+  30% {
+    clip-path: inset(60% 0 10% 0);
+  }
+  40% {
+    clip-path: inset(10% 0 50% 0);
+  }
+  50% {
+    clip-path: inset(30% 0 30% 0);
+  }
+  60% {
+    clip-path: inset(70% 0 10% 0);
+  }
+  70% {
+    clip-path: inset(10% 0 70% 0);
+  }
+  80% {
+    clip-path: inset(50% 0 30% 0);
+  }
+  90% {
+    clip-path: inset(20% 0 60% 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes fractalPulse {
+  0% {
+    transform: translateX(-50%) scale(1);
+    background-position: 0% 0%;
+  }
+  100% {
+    transform: translateX(-50%) scale(1.2);
+    background-position: 100% 100%;
+  }
+}
+
+@keyframes floatShape {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(20px, 20px) rotate(90deg);
+  }
+  50% {
+    transform: translate(0, 40px) rotate(180deg);
+  }
+  75% {
+    transform: translate(-20px, 20px) rotate(270deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(360deg);
+  }
+}
+
+@keyframes multicolorGlow {
+  0% {
+    opacity: 0.7;
+    transform: translateX(-50%) scale(1);
+    filter: hue-rotate(0deg);
+    background: 
+      radial-gradient(circle, rgba(0, 255, 255, 0.7) 0%, rgba(0, 255, 255, 0) 70%),
+      radial-gradient(circle at 30% 30%, rgba(255, 0, 255, 0.5) 0%, rgba(255, 0, 255, 0) 60%);
+  }
+  25% {
+    opacity: 0.9;
+    transform: translateX(-50%) scale(1.2);
+    filter: hue-rotate(90deg);
+    background: 
+      radial-gradient(circle, rgba(0, 255, 255, 0.7) 0%, rgba(0, 255, 255, 0) 70%),
+      radial-gradient(circle at 70% 30%, rgba(255, 255, 0, 0.5) 0%, rgba(255, 255, 0, 0) 60%);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateX(-50%) scale(1.1);
+    filter: hue-rotate(180deg);
+    background: 
+      radial-gradient(circle, rgba(255, 0, 255, 0.7) 0%, rgba(255, 0, 255, 0) 70%),
+      radial-gradient(circle at 30% 70%, rgba(0, 255, 255, 0.5) 0%, rgba(0, 255, 255, 0) 60%);
+  }
+  75% {
+    opacity: 0.9;
+    transform: translateX(-50%) scale(1.3);
+    filter: hue-rotate(270deg);
+    background: 
+      radial-gradient(circle, rgba(255, 255, 0, 0.7) 0%, rgba(255, 255, 0, 0) 70%),
+      radial-gradient(circle at 70% 70%, rgba(0, 255, 255, 0.5) 0%, rgba(0, 255, 255, 0) 60%);
+  }
+  100% {
+    opacity: 0.7;
+    transform: translateX(-50%) scale(1);
+    filter: hue-rotate(360deg);
+    background: 
+      radial-gradient(circle, rgba(0, 255, 255, 0.7) 0%, rgba(0, 255, 255, 0) 70%),
+      radial-gradient(circle at 30% 30%, rgba(255, 0, 255, 0.5) 0%, rgba(255, 0, 255, 0) 60%);
+  }
+}
+
+/* Additional trippy animations for the profile image */
+@keyframes dataCorruption {
+  0% {
+    background-position: 0 0;
+    background-size: 100% 100%;
+  }
+  25% {
+    background-position: 10px -5px;
+    background-size: 110% 90%;
+  }
+  50% {
+    background-position: -10px 5px;
+    background-size: 90% 110%;
+  }
+  75% {
+    background-position: 5px 10px;
+    background-size: 105% 95%;
+  }
+  100% {
+    background-position: 0 0;
+    background-size: 100% 100%;
+  }
+}
+
+/* Holographic effect */
+.holographic-effect {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 0, 255, 0.5) 0%,
+    rgba(0, 255, 255, 0.5) 25%,
+    rgba(255, 255, 0, 0.5) 50%,
+    rgba(0, 255, 255, 0.5) 75%,
+    rgba(255, 0, 255, 0.5) 100%
+  );
+  background-size: 400% 400%;
+  mix-blend-mode: screen;
+  opacity: 0.5;
+  z-index: 13;
+  animation: holographicShift 5s ease infinite;
+}
+
+@keyframes holographicShift {
+  0% {
+    background-position: 0% 0%;
+    opacity: 0.3;
+  }
+  50% {
+    background-position: 100% 100%;
+    opacity: 0.7;
+  }
+  100% {
+    background-position: 0% 0%;
+    opacity: 0.3;
+  }
+}
+/* ==== End profile-glitch.css ==== */
+
+
+/* ==== Begin responsive.css ==== */
+/* Mobile Responsiveness */
+@media (max-width: 1024px) {
+  
+  
+  
+}
+
+@media (max-width: 768px) {
+  
+  
+  
+  
+  h1.glitch {
+    font-size: 2.2rem;
+  }
+  
+  
+  
+  
+  
+  #start-bar {
+    height: 40px;
+  }
+  
+  #start-button {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+  }
+  
+  #clock {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  
+  
+  h1.glitch {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+  }
+  
+  
+  
+  .window-header {
+    padding: 5px 8px;
+  }
+  
+  .window-header button {
+    width: 20px;
+    height: 20px;
+    font-size: 0.7rem;
+  }
+  
+  #start-menu {
+    width: 200px;
+  }
+  
+  #start-menu a {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+}
+/* Direct CSS fixes */
+
+/* Fix boot log text alignment */
+#boot-log,
+.boot-log,
+#bootScreen * {
+  text-align: left !important;
+  margin: 0 !important;
+  padding: 10px !important;
+  font-family: "VT323", monospace !important;
+}
+
+/* Prevent any hover effects on desktop icons that might trigger sounds */
+
+
+/* Add a subtle visual hover effect instead */
+
+/* Resize Handle Fixes */
+
+/* Make resize handles more reliable */
+.resize-handle {
+  position: absolute !important;
+  z-index: 1000 !important;
+  background-color: transparent !important;
+  transition: background-color 0.2s ease !important;
+}
+
+.resize-handle:hover {
+  background-color: rgba(0, 255, 255, 0.2) !important;
+}
+
+/* Ensure handles are properly positioned */
+.resize-n {
+  top: 0 !important;
+  left: 10px !important;
+  right: 10px !important;
+  height: 10px !important;
+  cursor: ns-resize !important;
+}
+
+.resize-e {
+  top: 10px !important;
+  right: 0 !important;
+  bottom: 10px !important;
+  width: 10px !important;
+  cursor: ew-resize !important;
+}
+
+.resize-s {
+  bottom: 0 !important;
+  left: 10px !important;
+  right: 10px !important;
+  height: 10px !important;
+  cursor: ns-resize !important;
+}
+
+.resize-w {
+  top: 10px !important;
+  left: 0 !important;
+  bottom: 10px !important;
+  width: 10px !important;
+  cursor: ew-resize !important;
+}
+
+.resize-ne {
+  top: 0 !important;
+  right: 0 !important;
+  width: 15px !important;
+  height: 15px !important;
+  cursor: ne-resize !important;
+}
+
+.resize-se {
+  bottom: 0 !important;
+  right: 0 !important;
+  width: 15px !important;
+  height: 15px !important;
+  cursor: se-resize !important;
+}
+
+.resize-sw {
+  bottom: 0 !important;
+  left: 0 !important;
+  width: 15px !important;
+  height: 15px !important;
+  cursor: sw-resize !important;
+}
+
+.resize-nw {
+  top: 0 !important;
+  left: 0 !important;
+  width: 15px !important;
+  height: 15px !important;
+  cursor: nw-resize !important;
+}
+
+/* Ensure window content doesn't interfere with resize handles */
+
+
+
+/* ==== End responsive.css ==== */
+
+
+/* ==== Begin style.css ==== */
 /*───────────────────────────  ─────────────────────────────────────────────────
   GLOBAL VARIABLES & RESET - ULTIMATE CYBERPUNK UPGRADE
 ─────────────────────────────────────────────────────────────────────────────*/
@@ -54,9 +1699,7 @@ body {
   position: relative;
 }
 
-.desktop-icon img {
-  filter: drop-shadow(0 0 4px rgba(255, 141, 161, 0.3));
-}
+
 
 /*─────────────────────────────────────────────────────────────────────────────
   SCANLINES OVERLAY
@@ -244,51 +1887,20 @@ body {
   position: relative;
 }
 
-#desktop-icons {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
+
 
 /* Base icon style */
-.desktop-icon {
-  position: absolute;
-  width: 80px;
-  cursor: pointer;
-  user-select: none;
-  text-align: center;
-  transition: transform 0.2s ease, filter 0.2s ease;
-}
 
-.desktop-icon img {
-  width: 64px;
-  height: 64px;
-  display: block;
-  margin: 0 auto;
-  will-change: transform; /* Optimize for animations */
-  transition: transform 0.2s ease;
-}
 
-.desktop-icon span {
-  display: block;
-  margin-top: 4px;
-  font-size: var(--font-size-sm);
-  color: white;
-  text-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
-}
+
+
+
 
 /* Icon hover effect */
-.desktop-icon.icon-hover img {
-  transform: scale(1.1);
-  filter: drop-shadow(0 0 8px var(--neon-cyan));
-}
+
 
 /* Selected state */
-.desktop-icon.selected {
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px solid var(--neon-cyan);
-  border-radius: 4px;
-}
+
 
 /* Multi-select rectangle */
 #selection-rect {
@@ -311,23 +1923,7 @@ body {
 /*─────────────────────────────────────────────────────────────────────────────
   POPUP WINDOW CHROME
 ─────────────────────────────────────────────────────────────────────────────*/
-.popup-window {
-  position: absolute;
-  top: 120px;
-  left: 120px;
-  width: 750px;
-  height: 60vh;
-  background: rgba(0, 0, 0, 0);
-  border: 2px solid var(--neon-purple);
-  border-radius: 0.5rem;
-  box-shadow: 0 0 10px var(--neon-pink);
-  display: none;
-  flex-direction: column;
-  overflow: hidden;
-  z-index: var(--z-window);
-  will-change: transform, opacity; /* Optimize for animations */
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
+
 
 .popup-window.active {
   display: flex;
@@ -467,12 +2063,7 @@ body {
 }
 
 /* Content area */
-.popup-window .window-content {
-  flex: 1;
-  padding: 1rem;
-  overflow: auto;
-  background: rgba(0, 0, 0, 0);
-}
+.popup-window 
 
 /* Dragging and resizing states */
 .popup-window.dragging {
@@ -747,13 +2338,7 @@ body {
 /*─────────────────────────────────────────────────────────────────────────────
   IFRAME CONTAINERS - Consolidated styling for all embedded content
 ─────────────────────────────────────────────────────────────────────────────*/
-.popup-window {
-  /* ensure positioning context */
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
+
 
 /* Header stays its normal height */
 .popup-window .window-header {
@@ -761,16 +2346,7 @@ body {
 }
 
 /* Content area fills the rest of the window */
-.popup-window .window-content {
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 0; /* remove any default padding */
-  overflow: hidden; /* hide scrollbars on the container */
-  height: calc(100% - 2.2rem); /* header is ~2.2rem high */
-}
+.popup-window 
 
 /* Make iframes fill their containers */
 .popup-window .window-content iframe {
@@ -782,9 +2358,7 @@ body {
 }
 
 /* Special case for windows that need padding */
-.popup-window:not(#resume):not(#contact):not(#nature):not(#r3d3ch0):not([id^="video"]):not([id="snake"]) .window-content {
-  padding: 1rem;
-}
+.popup-window:not(#resume):not(#contact):not(#nature):not(#r3d3ch0):not([id^="video"]):not([id="snake"]) 
 
 /*─────────────────────────────────────────────────────────────────────────────
   GALLERY STYLING - Consolidated for all gallery types
@@ -833,9 +2407,7 @@ body {
 }
 
 /* Nature gallery specific */
-#nature .window-content {
-  position: relative;
-}
+#nature 
 
 #nature .window-content img {
   position: absolute;
@@ -932,13 +2504,7 @@ body {
 }
 
 /* Game windows styling */
-.game-window .window-content {
-  background: #000;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
+.game-window 
 
 .game-window canvas {
   background: #000;
@@ -1183,13 +2749,7 @@ body {
   justify-content: center;
 }
 /* Base styles for .window-content */
-.window-content {
-  position: relative;
-  width: 100%;
-  padding-top: 56.25%; /* 16:9 Aspect Ratio */
-  background-color: black;
-  overflow: hidden;
-}
+
 
 /* Styles for video and iframe within .window-content */
 .window-content video,
@@ -1230,3 +2790,168 @@ body {
 #bootScreen .profile-container img:nth-of-type(2) {
   display: none !important;
 }
+/* ==== End style.css ==== */
+
+
+/* ==== Begin video.css ==== */
+/* video.css – shared styles for video popup windows */
+
+body {
+  background-color: black;
+  color: #00ffff;
+  font-family: 'VT323', monospace;
+  margin: 0;
+  padding: 1rem;
+  text-align: center;
+}
+
+h1, h2 {
+  color: #00ff00;
+  margin-bottom: 1rem;
+}
+
+video {
+  width: 100%;
+  max-width: 960px;
+  height: auto;
+  border: 2px solid #00ffff;
+  border-radius: 8px;
+  margin: 0 auto;
+  display: block;
+  background-color: black;
+}
+
+#video1-player,
+#video2-player,
+#video3-player {
+  outline: none;
+}
+
+::-webkit-media-controls {
+  color-scheme: dark;
+}
+
+/*────────────────────────────────────────
+  Responsive Adjustments
+────────────────────────────────────────*/
+/* ────────────────────────────────────────────────────────────────
+   GLOBAL VIDEO/IFRAME ASPECT-RATIO FIX
+   Ensures all videos & iframes in .window-content fill width,
+   but never get “smooshed” — they’ll letterbox to 16:9.
+──────────────────────────────────────────────────────────────── */
+.window-content video,
+.window-content iframe {
+  display: block;         /* remove inline gaps */
+  width: 100%;            /* fill the window’s width */
+  height: auto;           /* let height follow width */
+  aspect-ratio: 16 / 9;   /* lock to widescreen ratio */
+  object-fit: contain;    /* letterbox rather than crop or stretch */
+}
+/*──────────────────────────────────────────────────────────────
+  GLOBAL VIDEO/IFRAME ASPECT-RATIO (NORMAL MODE)
+──────────────────────────────────────────────────────────────*/
+.window-content video,
+.window-content iframe {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+}
+
+/*──────────────────────────────────────────────────────────────
+  FIXED: Fullscreen mode still letterboxes with object-fit
+──────────────────────────────────────────────────────────────*/
+video:fullscreen,
+video:-webkit-full-screen,
+video:-moz-full-screen,
+video:-ms-fullscreen {
+  /* make the video fill the screen but preserve its aspect */
+  width: 100vw !important;
+  height: 100vh !important;
+  object-fit: contain !important;
+  background-color: black; /* letterbox bars */
+}
+
+/* If you’re full-screening the wrapper instead of the <video> element: */
+.video-wrapper:fullscreen {
+  padding-top: 0 !important;
+}
+.video-wrapper:fullscreen video {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain !important;
+  background-color: black;
+}
+
+.window-content video,
+.window-content iframe {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+  object-fit: contain;
+  background-color: black;
+}
+
+.window-content video:fullscreen,
+.window-content iframe:fullscreen,
+.window-content .video-wrapper:fullscreen,
+.window-content video:-webkit-full-screen,
+.window-content iframe:-webkit-full-screen,
+.window-content .video-wrapper:-webkit-full-screen,
+.window-content video:-moz-full-screen,
+.window-content iframe:-moz-full-screen,
+.window-content .video-wrapper:-moz-full-screen,
+.window-content video:-ms-fullscreen,
+.window-content iframe:-ms-fullscreen,
+.window-content .video-wrapper:-ms-fullscreen {
+  width: 100vw !important;
+  height: 100vh !important;
+  object-fit: contain !important;
+  background-color: black !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Base styles for .window-content */
+
+
+/* Styles for video and iframe within .window-content */
+.window-content video,
+.window-content iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background-color: black;
+}
+
+/* Fullscreen styles */
+.window-content:fullscreen,
+.window-content:-webkit-full-screen,
+.window-content:-moz-full-screen,
+.window-content:-ms-fullscreen {
+  width: 100vw !important;
+  height: 100vh !important;
+  padding: 0 !important;
+}
+
+.window-content:fullscreen video,
+.window-content:fullscreen iframe,
+.window-content:-webkit-full-screen video,
+.window-content:-webkit-full-screen iframe,
+.window-content:-moz-full-screen video,
+.window-content:-moz-full-screen iframe,
+.window-content:-ms-fullscreen video,
+.window-content:-ms-fullscreen iframe {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  background-color: black !important;
+}
+
+/* ==== End video.css ==== */
