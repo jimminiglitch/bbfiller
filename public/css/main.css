@@ -2033,6 +2033,10 @@ body {
   top: 200px;
   left: 640px;
 }
+#icon-videofolder {
+  top: 300px;
+  left: 640px;
+}
 
 
 /* Selected state */
@@ -3372,3 +3376,4 @@ button.desktop-icon {
   border: none;
   padding: 0;
 }
+

@@ -91,13 +91,6 @@
       animation: rainbow 2s infinite linear;
     }
 
-    .progress-glitch {
-      position: absolute;
-      top: 0;
-      height: 100%;
-      background-color: rgba(255, 255, 255, 0.7);
-    }
-
     .progress-text {
       color: #22d3ee;
       font-family: monospace;
@@ -124,6 +117,24 @@
       width: 256px;
       height: 80px;
       display: none;
+    }
+
+    /* Track info */
+    #track-info {
+      position: absolute;
+      bottom: 104px;
+      left: 16px;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: #00ffff;
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-size: 0.875rem;
+      z-index: 50;
+      display: none;
+      max-width: 256px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     /* Audio status */
@@ -179,6 +190,51 @@
       box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
     }
 
+    /* Track selector */
+    #track-selector {
+      position: absolute;
+      bottom: 16px;
+      left: 280px;
+      background-color: rgba(0, 0, 0, 0.7);
+      border: 1px solid #ff00ff;
+      border-radius: 8px;
+      padding: 8px;
+      color: #00ffff;
+      z-index: 100;
+      display: none;
+      max-width: 300px;
+      max-height: 300px;
+      overflow-y: auto;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+    }
+
+    #track-selector h3 {
+      margin: 0 0 8px 0;
+      color: #ff00ff;
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    .track-option {
+      padding: 6px 10px;
+      margin-bottom: 4px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .track-option:hover {
+      background-color: rgba(255, 0, 255, 0.3);
+    }
+
+    .track-option.active {
+      background-color: rgba(0, 255, 255, 0.3);
+    }
+
     /* Theme indicator */
     #theme-indicator {
       position: absolute;
@@ -197,6 +253,24 @@
       box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
       opacity: 0;
       transition: opacity 0.5s ease;
+    }
+
+    /* Error message */
+    #error-message {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.8);
+      border: 1px solid #ff0000;
+      border-radius: 8px;
+      padding: 16px;
+      color: #ff0000;
+      font-size: 1rem;
+      z-index: 2000;
+      text-align: center;
+      max-width: 80%;
+      display: none;
     }
 
     /* Mobile controls */
@@ -304,6 +378,127 @@
       text-align: center;
     }
 
+    /* Performance indicator */
+    #performance-indicator {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 4px;
+      padding: 4px 8px;
+      color: #00ffff;
+      font-size: 0.75rem;
+      z-index: 50;
+      display: none;
+    }
+
+    /* Settings panel */
+    #settings-panel {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.8);
+      border: 1px solid #ff00ff;
+      border-radius: 8px;
+      padding: 16px;
+      color: #fff;
+      font-size: 0.9rem;
+      z-index: 1000;
+      width: 300px;
+      max-width: 90%;
+      display: none;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    #settings-panel h3 {
+      margin: 0 0 16px 0;
+      color: #ff00ff;
+      font-size: 1.2rem;
+      text-align: center;
+    }
+
+    .settings-group {
+      margin-bottom: 16px;
+    }
+
+    .settings-group h4 {
+      margin: 0 0 8px 0;
+      color: #00ffff;
+      font-size: 1rem;
+      border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+      padding-bottom: 4px;
+    }
+
+    .setting-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .setting-label {
+      flex: 1;
+    }
+
+    .setting-control {
+      flex: 1;
+      text-align: right;
+    }
+
+    .setting-control input[type="range"] {
+      width: 100%;
+      background: #1f2937;
+      height: 6px;
+      border-radius: 3px;
+      -webkit-appearance: none;
+    }
+
+    .setting-control input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #ff00ff;
+      cursor: pointer;
+    }
+
+    .setting-control input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    .setting-control select {
+      background-color: #1f2937;
+      color: #fff;
+      border: 1px solid #ff00ff;
+      border-radius: 4px;
+      padding: 4px 8px;
+      cursor: pointer;
+    }
+
+    .settings-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 16px;
+    }
+
+    .settings-button {
+      background-color: rgba(255, 0, 255, 0.3);
+      border: 1px solid #ff00ff;
+      border-radius: 4px;
+      padding: 6px 12px;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .settings-button:hover {
+      background-color: rgba(255, 0, 255, 0.5);
+    }
+
     /* Animations */
     @keyframes glitch {
       0% {
@@ -355,13 +550,6 @@
       animation: pulse 1.5s infinite ease-in-out;
     }
 
-    /* Beat animation for dancers */
-    @keyframes beat {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
-    }
-
     /* Fade in/out animation */
     @keyframes fadeIn {
       from { opacity: 0; }
@@ -385,15 +573,26 @@
 <body>
   <!-- Main Canvas (Three.js will use this) -->
   <canvas id="scene-canvas"></canvas>
-  
+
   <!-- Audio Visualizer -->
   <canvas id="audio-visualizer" width="256" height="80"></canvas>
-  
+
+  <!-- Track Info -->
+  <div id="track-info">
+    Now Playing: Melodic Techno
+  </div>
+
   <!-- Audio Status -->
   <div id="audio-status" class="pulse">
     Loading audio...
   </div>
-  
+
+  <!-- Error Message -->
+  <div id="error-message"></div>
+
+  <!-- Performance Indicator -->
+  <div id="performance-indicator">FPS: 60</div>
+
   <!-- Loading Screen -->
   <div id="loading-screen">
     <div class="loading-container">
@@ -402,7 +601,6 @@
       
       <div class="progress-bar">
         <div id="progress-fill" class="progress-fill" style="width: 0%; background-size: 200% auto;"></div>
-        <!-- Glitch effects will be added dynamically -->
       </div>
       
       <div class="progress-text">
@@ -415,12 +613,99 @@
       </div>
     </div>
   </div>
-  
+
   <!-- Theme Indicator -->
   <div id="theme-indicator">
     RAVE MADNESS
   </div>
-  
+
+  <!-- Track Selector -->
+  <div id="track-selector">
+    <h3>SELECT TRACK</h3>
+    <!-- Track options will be added dynamically -->
+  </div>
+
+  <!-- Settings Panel -->
+  <div id="settings-panel">
+    <h3>SETTINGS</h3>
+    
+    <div class="settings-group">
+      <h4>Performance</h4>
+      <div class="setting-item">
+        <div class="setting-label">Quality</div>
+        <div class="setting-control">
+          <select id="quality-setting">
+            <option value="low">Low</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High</option>
+            <option value="ultra">Ultra</option>
+          </select>
+        </div>
+      </div>
+      <div class="setting-item">
+        <div class="setting-label">Particle Density</div>
+        <div class="setting-control">
+          <input type="range" id="density-setting" min="10" max="100" value="40">
+        </div>
+      </div>
+      <div class="setting-item">
+        <div class="setting-label">Show FPS</div>
+        <div class="setting-control">
+          <input type="checkbox" id="fps-setting">
+        </div>
+      </div>
+    </div>
+    
+    <div class="settings-group">
+      <h4>Visual Effects</h4>
+      <div class="setting-item">
+        <div class="setting-label">Bloom Intensity</div>
+        <div class="setting-control">
+          <input type="range" id="bloom-setting" min="0" max="2" step="0.1" value="1">
+        </div>
+      </div>
+      <div class="setting-item">
+        <div class="setting-label">Glitch Effect</div>
+        <div class="setting-control">
+          <input type="range" id="glitch-setting" min="0" max="1" step="0.05" value="0.15">
+        </div>
+      </div>
+      <div class="setting-item">
+        <div class="setting-label">Color Shift Speed</div>
+        <div class="setting-control">
+          <input type="range" id="color-shift-setting" min="0" max="2" step="0.1" value="1">
+        </div>
+      </div>
+    </div>
+    
+    <div class="settings-group">
+      <h4>Audio</h4>
+      <div class="setting-item">
+        <div class="setting-label">Volume</div>
+        <div class="setting-control">
+          <input type="range" id="volume-setting" min="0" max="1" step="0.05" value="0.7">
+        </div>
+      </div>
+      <div class="setting-item">
+        <div class="setting-label">Bass Impact</div>
+        <div class="setting-control">
+          <input type="range" id="bass-setting" min="0" max="3" step="0.1" value="1.5">
+        </div>
+      </div>
+      <div class="setting-item">
+        <div class="setting-label">Ambient Sound</div>
+        <div class="setting-control">
+          <input type="checkbox" id="ambient-setting" checked>
+        </div>
+      </div>
+    </div>
+    
+    <div class="settings-buttons">
+      <button class="settings-button" id="settings-apply">Apply</button>
+      <button class="settings-button" id="settings-close">Close</button>
+    </div>
+  </div>
+
   <!-- Control Buttons -->
   <div class="control-buttons">
     <button id="fullscreen-button" class="control-button" title="Toggle Fullscreen">
@@ -432,9 +717,24 @@
       </svg>
     </button>
     
+    <button id="settings-button" class="control-button" title="Settings">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+      </svg>
+    </button>
+    
     <button id="theme-button" class="control-button" title="Change Theme">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+      </svg>
+    </button>
+    
+    <button id="track-button" class="control-button" title="Change Track">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="5.5" cy="17.5" r="2.5"></circle>
+        <circle cx="17.5" cy="15.5" r="2.5"></circle>
+        <path d="M8 17V5l12-2v12"></path>
       </svg>
     </button>
     
@@ -448,11 +748,11 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="12" r="10"></circle>
         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-        <line x1="12" y1="17" x2="12.01" y2="17"></line>
-      </svg>
-    </button>
-  </div>
-  
+      <line x1="12" y1="17" x2="12.01" y2="17"></line>
+    </svg>
+  </button>
+</div>
+
   <!-- Mobile Controls -->
   <div class="mobile-controls">
     <div class="mobile-control mobile-up" id="mobile-up">
@@ -489,1678 +789,604 @@
       <li><span class="key">F</span> Fullscreen</li>
       <li><span class="key">Space</span> Toggle audio</li>
       <li><span class="key">C</span> Change theme</li>
+      <li><span class="key">T</span> Change track</li>
       <li><span class="key">H</span> Toggle this help</li>
+      <li><span class="key">P</span> Settings</li>
     </ul>
   </div>
 
   <!-- Load Three.js from CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/RGBShiftShader.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/DigitalGlitch.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/GlitchPass.min.js"></script>
-
   <script>
-    // Configuration and state
-    const config = {
-      density: 40,
-      cameraSpeed: 1.0,
-      visualTheme: 'rave',
-      audioReactive: true,
-      volume: 0.7,
-      bassImpact: 1.5,
-      audioTrack: 'song1',
-      trippyLevel: 1.5, // Reduced from 2.0 to reduce glitches
-      glitchIntensity: 0.3, // Reduced from 0.7 to reduce glitches
-      colorShiftSpeed: 1.0,
-      bloomEnabled: true,
-      autoCamera: true,
-      showDancers: true,
-      dancerCount: 20,
-      showBuildings: true,
-      showSkyObjects: true,
-      skyObjectCount: 100,
-      showLasers: true,
-      isMobile: false,
-      minCameraHeight: 1.0 // Prevent going through floor
-    };
-
-    // Visual themes
-    const visualThemes = {
-      rave: {
-        name: "RAVE MADNESS",
-        fogColor: 0x000022,
-        particleColor1: 0xff00ff,
-        particleColor2: 0x00ffff,
-        gridColor: 0xffff00,
-        buildingColor1: 0xff00ff,
-        buildingColor2: 0x00ffff,
-        skyColor: 0x000033,
-        bloomStrength: 1.5, // Reduced from 2.0
-        bloomRadius: 0.8,
-        bloomThreshold: 0.1
+    // Tripscape Application
+    const Tripscape = {
+      // Libraries
+      libs: {
+        three: null,
+        loaded: false,
+        dependencies: [
+          { name: 'three', url: 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js' },
+          { name: 'OrbitControls', url: 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js' },
+          { name: 'EffectComposer', url: 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.min.js' },
+          { name: 'RenderPass', url: 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.min.js' },
+          { name: 'UnrealBloomPass', url: 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.min.js' },
+          { name: 'ShaderPass', url: 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.min.js' },
+          { name: 'CopyShader', url: 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.min.js' },
+          { name: 'LuminosityHighPassShader', url: 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.min.js' },
+          { name: 'RGBShiftShader', url: 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/RGBShiftShader.min.js' },
+          { name: 'DigitalGlitch', url: 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/DigitalGlitch.min.js' },
+          { name: 'GlitchPass', url: 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/GlitchPass.min.js' }
+        ]
       },
-      hyperspace: {
-        name: "HYPERSPACE",
-        fogColor: 0x000033,
-        particleColor1: 0xff00ff,
-        particleColor2: 0x00ffff,
-        gridColor: 0xffff00,
-        buildingColor1: 0x8800ff,
-        buildingColor2: 0x0088ff,
-        skyColor: 0x000066,
-        bloomStrength: 1.2, // Reduced from 1.5
-        bloomRadius: 0.75,
-        bloomThreshold: 0.2
+
+      // Configuration and state
+      config: {
+        density: 40,
+        cameraSpeed: 1.0,
+        visualTheme: 'rave',
+        audioReactive: true,
+        volume: 0.7,
+        bassImpact: 1.5,
+        audioTrack: 'melodic-techno',
+        trippyLevel: 1.0,
+        glitchIntensity: 0.15,
+        colorShiftSpeed: 1.0,
+        bloomEnabled: true,
+        autoCamera: false,
+        showDancers: true,
+        dancerCount: 30,
+        regularPeopleCount: 20,
+        showBuildings: true,
+        showSkyObjects: true,
+        skyObjectCount: 50,
+        showLasers: true,
+        showSmoke: true,
+        smokeCount: 4,
+        isMobile: false,
+        minCameraHeight: 0.5,
+        showAmbientSound: true,
+        showFps: false,
+        quality: 'medium'
       },
-      vaporwave: {
-        name: "VAPORWAVE",
-        fogColor: 0x551a8b,
-        particleColor1: 0xff71ce,
-        particleColor2: 0x01cdfe,
-        gridColor: 0x05ffa1,
-        buildingColor1: 0xff71ce,
-        buildingColor2: 0x05ffa1,
-        skyColor: 0x2d1b4e,
-        bloomStrength: 1.0, // Reduced from 1.2
-        bloomRadius: 0.5,
-        bloomThreshold: 0.3
-      },
-      cyberdelic: {
-        name: "CYBERDELIC",
-        fogColor: 0x000000,
-        particleColor1: 0xff3300,
-        particleColor2: 0x33ff00,
-        gridColor: 0x0033ff,
-        buildingColor1: 0xff3300,
-        buildingColor2: 0x0033ff,
-        skyColor: 0x000000,
-        bloomStrength: 1.4, // Reduced from 1.8
-        bloomRadius: 0.8,
-        bloomThreshold: 0.1
-      },
-      neon: {
-        name: "NEON DREAMS",
-        fogColor: 0x000000,
-        particleColor1: 0xff0066,
-        particleColor2: 0x00ff66,
-        gridColor: 0x6600ff,
-        buildingColor1: 0xff0066,
-        buildingColor2: 0x6600ff,
-        skyColor: 0x000000,
-        bloomStrength: 1.8, // Reduced from 2.2
-        bloomRadius: 0.6,
-        bloomThreshold: 0.1
-      }
-    };
 
-    // Audio tracks
-    const audioTracks = {
-      song1: "https://cdn.glitch.global/25331b85-e206-4347-93a8-666983818ff8/melodic-techno-03-extended-version-moogify-9867.mp3?v=1747323781216",
-    };
-
-    // DOM Elements
-    const loadingScreen = document.getElementById('loading-screen');
-    const loadingText = document.getElementById('loading-text');
-    const progressFill = document.getElementById('progress-fill');
-    const progressPercent = document.getElementById('progress-percent');
-    const sceneCanvas = document.getElementById('scene-canvas');
-    const audioVisualizer = document.getElementById('audio-visualizer');
-    const audioStatus = document.getElementById('audio-status');
-    const keyboardControls = document.getElementById('keyboard-controls');
-    const themeIndicator = document.getElementById('theme-indicator');
-    const themeButton = document.getElementById('theme-button');
-    const audioButton = document.getElementById('audio-button');
-    const fullscreenButton = document.getElementById('fullscreen-button');
-    const helpButton = document.getElementById('help-button');
-    const mobileControls = document.querySelector('.mobile-controls');
-    const mobileUp = document.getElementById('mobile-up');
-    const mobileDown = document.getElementById('mobile-down');
-    const mobileLeft = document.getElementById('mobile-left');
-    const mobileRight = document.getElementById('mobile-right');
-
-    // Canvas contexts
-    const visualizerCtx = audioVisualizer.getContext('2d');
-
-    // Mouse/touch tracking
-    const mouse = {
-      x: 0,
-      y: 0,
-      active: false
-    };
-
-    // Keyboard state
-    const keys = {};
-
-    // Animation state
-    let animationFrameId;
-    let time = 0;
-
-    // Audio state
-    let audioContext = null;
-    let audioSource = null;
-    let audioAnalyser = null;
-    let audioData = null;
-    let frequencyData = null;
-    let audioElement = null;
-    let isPlaying = false;
-    let audioLoaded = false;
-
-    // Three.js variables
-    let scene, camera, renderer, composer;
-    let controls, clock;
-    let particles, grid, cubes = [];
-    let bloomPass, glitchPass, rgbShiftPass;
-    let dancers = [], buildings = [], skyObjects = [], lasers = [];
-    let floorMesh, skyMesh;
-    
-    // Check if device is mobile
-    function checkMobile() {
-      config.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-      if (config.isMobile) {
-        mobileControls.style.display = 'block';
-      }
-    }
-    
-    // ===== Loading Screen =====
-    function initLoadingScreen() {
-      // Create glitch effects on progress bar
-      for (let i = 0; i < 5; i++) {
-        const glitch = document.createElement('div');
-        glitch.className = 'progress-glitch';
-        glitch.style.left = `${Math.random() * 100}%`;
-        glitch.style.width = `${Math.random() * 10}px`;
-        glitch.style.opacity = Math.random() * 0.5;
-        document.querySelector('.progress-bar').appendChild(glitch);
-      }
-
-      // Simulate loading progress
-      let progress = 0;
-      const interval = setInterval(() => {
-        progress += Math.random() * 10;
-        if (progress >= 100) {
-          progress = 100;
-          clearInterval(interval);
-          setTimeout(() => {
-            loadingScreen.style.opacity = '0';
-            setTimeout(() => {
-              loadingScreen.style.display = 'none';
-              // Show keyboard controls after loading
-              keyboardControls.style.display = 'block';
-              setTimeout(() => {
-                keyboardControls.style.display = 'none';
-              }, 5000);
-            }, 500);
-          }, 500);
-        }
-        progressFill.style.width = `${progress}%`;
-        progressPercent.textContent = `${Math.round(progress)}%`;
-      }, 150);
-
-      // Glitch text effect
-      setInterval(() => {
-        if (Math.random() > 0.6) {
-          const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+{}|:<>?";
-          let glitched = "";
-          const originalText = "INITIALIZING NEURAL INTERFACE";
-
-          for (let i = 0; i < originalText.length; i++) {
-            if (Math.random() > 0.7) {
-              glitched += characters.charAt(Math.floor(Math.random() * characters.length));
-            } else {
-              glitched += originalText[i];
-            }
-          }
-
-          loadingText.textContent = glitched;
-        } else {
-          loadingText.textContent = "INITIALIZING NEURAL INTERFACE";
-        }
-      }, 80);
-    }
-
-    // ===== Three.js Scene Setup =====
-    function initScene() {
-      // Create scene
-      scene = new THREE.Scene();
-      
-      // Add fog for depth
-      const theme = visualThemes[config.visualTheme];
-      scene.fog = new THREE.FogExp2(theme.fogColor, 0.015);
-      
-      // Create camera
-      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      camera.position.set(0, 5, 20);
-      camera.lookAt(0, 0, 0);
-      
-      // Create renderer
-      renderer = new THREE.WebGLRenderer({ 
-        canvas: sceneCanvas,
-        antialias: true,
-        alpha: true
-      });
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      
-      // Create clock for animation
-      clock = new THREE.Clock();
-      
-      // Create orbit controls
-      controls = new THREE.OrbitControls(camera, renderer.domElement);
-      controls.enableDamping = true;
-      controls.dampingFactor = 0.05;
-      controls.autoRotate = config.autoCamera;
-      controls.autoRotateSpeed = 0.5;
-      controls.maxPolarAngle = Math.PI / 2 - 0.1; // Prevent going below the floor
-      controls.minDistance = 5; // Prevent getting too close to objects
-      controls.maxDistance = 100; // Prevent getting too far
-      
-      // Set up post-processing
-      setupPostProcessing();
-      
-      // Create scene objects
-      createSceneObjects();
-      
-      // Handle window resize
-      window.addEventListener('resize', onWindowResize);
-      
-      // Mouse/touch event handlers
-      window.addEventListener('mousemove', handleMouseMove);
-      window.addEventListener('touchmove', handleTouchMove);
-      
-      // Keyboard event handlers
-      window.addEventListener('keydown', handleKeyDown);
-      window.addEventListener('keyup', handleKeyUp);
-    }
-    
-    function setupPostProcessing() {
-      const theme = visualThemes[config.visualTheme];
-      
-      // Create composer
-      composer = new THREE.EffectComposer(renderer);
-      
-      // Add render pass
-      const renderPass = new THREE.RenderPass(scene, camera);
-      composer.addPass(renderPass);
-      
-      // Add bloom pass
-      bloomPass = new THREE.UnrealBloomPass(
-        new THREE.Vector2(window.innerWidth, window.innerHeight),
-        theme.bloomStrength,
-        theme.bloomRadius,
-        theme.bloomThreshold
-      );
-      composer.addPass(bloomPass);
-      
-      // Add RGB shift pass
-      rgbShiftPass = new THREE.ShaderPass(THREE.RGBShiftShader);
-      rgbShiftPass.uniforms.amount.value = 0.0015;
-      rgbShiftPass.uniforms.angle.value = 0;
-      composer.addPass(rgbShiftPass);
-      
-      // Add glitch pass - reduced intensity
-      glitchPass = new THREE.GlitchPass();
-      glitchPass.goWild = false;
-      glitchPass.enabled = true;
-      composer.addPass(glitchPass);
-    }
-    
-    function createSceneObjects() {
-      const theme = visualThemes[config.visualTheme];
-      
-      // Create floor (dance floor)
-      createDanceFloor(theme);
-      
-      // Create sky dome with enhanced effects
-      createSkyDome(theme);
-      
-      // Create particle system
-      createParticles(theme);
-      
-      // Create dancers
-      createDancers(theme);
-      
-      // Create buildings
-      createBuildings(theme);
-      
-      // Create sky objects (stars, comets, satellites)
-      createSkyObjects(theme);
-      
-      // Create laser beams
-      createLasers(theme);
-    }
-    
-    function createDanceFloor(theme) {
-      // Create a grid floor for the dance floor
-      const floorSize = 100;
-      const floorSegments = 50;
-      
-      const floorGeometry = new THREE.PlaneGeometry(floorSize, floorSize, floorSegments, floorSegments);
-      const floorMaterial = new THREE.MeshBasicMaterial({
-        color: theme.gridColor,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.5
-      });
-      
-      floorMesh = new THREE.Mesh(floorGeometry, floorMaterial);
-      floorMesh.rotation.x = -Math.PI / 2;
-      floorMesh.position.y = -2;
-      scene.add(floorMesh);
-      
-      // Add a reflective surface under the wireframe
-      const reflectiveGeometry = new THREE.PlaneGeometry(floorSize, floorSize);
-      const reflectiveMaterial = new THREE.MeshBasicMaterial({
-        color: 0x000000,
-        transparent: true,
-        opacity: 0.3
-      });
-      
-      const reflectiveMesh = new THREE.Mesh(reflectiveGeometry, reflectiveMaterial);
-      reflectiveMesh.rotation.x = -Math.PI / 2;
-      reflectiveMesh.position.y = -2.1;
-      scene.add(reflectiveMesh);
-    }
-    
-    function createSkyDome(theme) {
-      // Create a large sphere for the sky
-      const skyGeometry = new THREE.SphereGeometry(400, 32, 32);
-      const skyMaterial = new THREE.MeshBasicMaterial({
-        color: theme.skyColor,
-        side: THREE.BackSide,
-        transparent: true,
-        opacity: 0.8
-      });
-      
-      skyMesh = new THREE.Mesh(skyGeometry, skyMaterial);
-      scene.add(skyMesh);
-      
-      // Add stars to the sky dome
-      const starCount = 1000;
-      const starGeometry = new THREE.BufferGeometry();
-      const starPositions = new Float32Array(starCount * 3);
-      const starSizes = new Float32Array(starCount);
-      
-      for (let i = 0; i < starCount; i++) {
-        // Create stars in a dome shape above the scene
-        const theta = Math.random() * Math.PI * 2;
-        const phi = Math.random() * Math.PI * 0.5; // Only in the upper hemisphere
-        const radius = 350 + Math.random() * 50;
-        
-        starPositions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
-        starPositions[i * 3 + 1] = radius * Math.cos(phi); // Mostly above
-        starPositions[i * 3 + 2] = radius * Math.sin(phi) * Math.sin(theta);
-        
-        starSizes[i] = Math.random() * 2 + 0.5;
-      }
-      
-      starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
-      starGeometry.setAttribute('size', new THREE.BufferAttribute(starSizes, 1));
-      
-      const starMaterial = new THREE.ShaderMaterial({
-        uniforms: {
-          time: { value: 0 },
-          color: { value: new THREE.Color(0xffffff) }
+      // Visual themes
+      visualThemes: {
+        rave: {
+          name: "RAVE MADNESS",
+          fogColor: 0x000022,
+          particleColor1: 0xff00ff,
+          particleColor2: 0x00ffff,
+          gridColor: 0xffff00,
+          buildingColor1: 0xff00ff,
+          buildingColor2: 0x00ffff,
+          skyColor: 0x000033,
+          bloomStrength: 1.2,
+          bloomRadius: 0.7,
+          bloomThreshold: 0.1
         },
-        vertexShader: `
-          uniform float time;
-          attribute float size;
-          varying vec3 vPosition;
+        hyperspace: {
+          name: "HYPERSPACE",
+          fogColor: 0x000033,
+          particleColor1: 0xff00ff,
+          particleColor2: 0x00ffff,
+          gridColor: 0xffff00,
+          buildingColor1: 0x8800ff,
+          buildingColor2: 0x0088ff,
+          skyColor: 0x000066,
+          bloomStrength: 1.0,
+          bloomRadius: 0.6,
+          bloomThreshold: 0.2
+        },
+        vaporwave: {
+          name: "VAPORWAVE",
+          fogColor: 0x551a8b,
+          particleColor1: 0xff71ce,
+          particleColor2: 0x01cdfe,
+          gridColor: 0x05ffa1,
+          buildingColor1: 0xff71ce,
+          buildingColor2: 0x05ffa1,
+          skyColor: 0x2d1b4e,
+          bloomStrength: 0.8,
+          bloomRadius: 0.4,
+          bloomThreshold: 0.3
+        }
+      },
+
+      // Audio tracks
+      audioTracks: {
+        'melodic-techno': {
+          url: "https://cdn.glitch.global/25331b85-e206-4347-93a8-666983818ff8/melodic-techno-03-extended-version-moogify-9867.mp3?v=1747323781216",
+          title: "Melodic Techno"
+        },
+        'berlin-techno': {
+          url: "https://cdn.glitch.global/25331b85-e206-4347-93a8-666983818ff8/berlin-techno-106820.mp3?v=1747327926985",
+          title: "Berlin Techno"
+        },
+        'dopetronic-echoes': {
+          url: "https://cdn.glitch.global/25331b85-e206-4347-93a8-666983818ff8/dopetronic-echoes-from-nowhere-original-mix-gift-track-321994.mp3?v=1747327850182",
+          title: "Dopetronic - Echoes From Nowhere"
+        },
+        'unknown-planet': {
+          url: "https://cdn.glitch.global/25331b85-e206-4347-93a8-666983818ff8/unknown-planet-driving-techno-music-312478.mp3?v=1747327934012",
+          title: "Unknown Planet - Driving Techno"
+        }
+      },
+
+      // DOM Elements
+      elements: {},
+
+      // Mouse/touch tracking
+      mouse: {
+        x: 0,
+        y: 0,
+        active: false
+      },
+
+      // Keyboard state
+      keys: {},
+
+      // Animation state
+      animationFrameId: null,
+      time: 0,
+      lastTime: 0,
+      fps: 0,
+      frameCount: 0,
+      lastFpsUpdate: 0,
+
+      // Audio state
+      audioContext: null,
+      audioSource: null,
+      audioAnalyser: null,
+      audioData: null,
+      frequencyData: null,
+      audioElement: null,
+      isPlaying: false,
+      audioLoaded: false,
+      ambientSound: null,
+
+      // Three.js variables
+      scene: null,
+      camera: null,
+      renderer: null,
+      composer: null,
+      controls: null,
+      clock: null,
+      particles: null,
+      floorMesh: null,
+      skyMesh: null,
+      bloomPass: null,
+      glitchPass: null,
+      rgbShiftPass: null,
+      characters: [],
+      buildings: [],
+      skyObjects: [],
+      lasers: [],
+      smokeMachines: [],
+
+      // Initialize the application
+      init: function() {
+        try {
+          // Get DOM elements
+          this.getElements();
           
-          void main() {
-            vPosition = position;
-            
-            // Twinkle effect
-            float twinkle = sin(time * 0.5 + length(position) * 0.1) * 0.5 + 0.5;
-            
-            vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-            gl_PointSize = size * (1.0 + twinkle) * (300.0 / length(mvPosition.xyz));
-            gl_Position = projectionMatrix * mvPosition;
-          }
-        `,
-        fragmentShader: `
-          uniform vec3 color;
-          uniform float time;
-          varying vec3 vPosition;
+          // Check if device is mobile
+          this.checkMobile();
           
-          void main() {
-            // Create circular point
-            float r = length(gl_PointCoord - vec2(0.5, 0.5));
-            if (r > 0.5) discard;
-            
-            // Twinkle effect
-            float twinkle = sin(time * 0.5 + length(vPosition) * 0.1) * 0.5 + 0.5;
-            
-            // Color variation based on position
-            vec3 starColor = color;
-            if (vPosition.y > 300.0) {
-              starColor = mix(color, vec3(0.8, 0.8, 1.0), 0.5); // Bluer at the top
+          // Initialize loading screen
+          this.initLoadingScreen();
+          
+          // Load dependencies
+          this.loadDependencies()
+            .then(() => {
+              // Initialize scene
+              this.initScene();
+              
+              // Initialize audio
+              this.initAudio();
+              
+              // Initialize controls
+              this.initControls();
+              
+              // Start animation loop
+              this.animate();
+            })
+            .catch(error => {
+              this.showError(`Failed to load dependencies: ${error.message}`);
+            });
+        } catch (error) {
+          this.showError(`Initialization error: ${error.message}`);
+        }
+      },
+
+      // Load Three.js and its extensions
+      loadDependencies: function() {
+        return new Promise((resolve, reject) => {
+          let loaded = 0;
+          const total = this.libs.dependencies.length;
+          
+          // Update loading progress
+          const updateProgress = () => {
+            loaded++;
+            const percent = Math.round((loaded / total) * 100);
+            this.elements.progressFill.style.width = `${percent}%`;
+            this.elements.progressPercent.textContent = `${percent}%`;
+          };
+          
+          // Load each dependency sequentially
+          const loadNext = (index) => {
+            if (index >= total) {
+              this.libs.loaded = true;
+              resolve();
+              return;
             }
             
-            gl_FragColor = vec4(starColor, 1.0) * (1.0 - r * 2.0) * (0.5 + twinkle * 0.5);
-          }
-        `,
-        transparent: true,
-        depthWrite: false,
-        blending: THREE.AdditiveBlending
-      });
-      
-      const stars = new THREE.Points(starGeometry, starMaterial);
-      scene.add(stars);
-      skyObjects.push(stars);
-      
-      // Add a subtle aurora effect in the sky
-      const auroraGeometry = new THREE.PlaneGeometry(800, 200, 20, 20);
-      const auroraTexture = new THREE.DataTexture(
-        new Uint8Array(3), 1, 1, THREE.RGBFormat
-      );
-      auroraTexture.needsUpdate = true;
-      
-      const auroraMaterial = new THREE.ShaderMaterial({
-        uniforms: {
-          time: { value: 0 },
-          color1: { value: new THREE.Color(theme.particleColor1) },
-          color2: { value: new THREE.Color(theme.particleColor2) }
-        },
-        vertexShader: `
-          uniform float time;
-          varying vec2 vUv;
+            const dependency = this.libs.dependencies[index];
+            const script = document.createElement('script');
+            script.src = dependency.url;
+            
+            script.onload = () => {
+              updateProgress();
+              
+              // Store reference to Three.js
+              if (dependency.name === 'three') {
+                this.libs.three = THREE;
+              }
+              
+              // Load next dependency
+              loadNext(index + 1);
+            };
+            
+            script.onerror = (error) => {
+              reject(new Error(`Failed to load ${dependency.name}: ${error.message}`));
+            };
+            
+            document.head.appendChild(script);
+          };
           
-          void main() {
-            vUv = uv;
-            
-            // Wave effect
-            vec3 pos = position;
-            pos.z = sin(pos.x * 0.05 + time * 0.5) * 20.0 + sin(pos.y * 0.1 + time * 0.3) * 10.0;
-            
-            gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
-          }
-        `,
-        fragmentShader: `
-          uniform float time;
-          uniform vec3 color1;
-          uniform vec3 color2;
-          varying vec2 vUv;
-          
-          void main() {
-            // Gradient and wave effect
-            float wave = sin(vUv.x * 10.0 + time * 0.5) * 0.5 + 0.5;
-            wave *= sin(vUv.y * 5.0 + time * 0.3) * 0.5 + 0.5;
-            
-            vec3 color = mix(color1, color2, wave);
-            
-            // Fade out at edges
-            float fadeY = smoothstep(0.0, 0.3, vUv.y) * smoothstep(1.0, 0.7, vUv.y);
-            float alpha = wave * fadeY * 0.3; // Subtle effect
-            
-            gl_FragColor = vec4(color, alpha);
-          }
-        `,
-        transparent: true,
-        depthWrite: false,
-        blending: THREE.AdditiveBlending,
-        side: THREE.DoubleSide
-      });
-      
-      const aurora = new THREE.Mesh(auroraGeometry, auroraMaterial);
-      aurora.position.y = 100;
-      aurora.rotation.x = Math.PI / 2;
-      scene.add(aurora);
-      skyObjects.push(aurora);
-    }
-    
-    function createParticles(theme) {
-      const particleGeometry = new THREE.BufferGeometry();
-      const particleCount = config.density * 100;
-      
-      const positions = new Float32Array(particleCount * 3);
-      const colors = new Float32Array(particleCount * 3);
-      const sizes = new Float32Array(particleCount);
-      
-      const color1 = new THREE.Color(theme.particleColor1);
-      const color2 = new THREE.Color(theme.particleColor2);
-      
-      for (let i = 0; i < particleCount; i++) {
-        // Position
-        const x = (Math.random() - 0.5) * 100;
-        const y = Math.random() * 50;
-        const z = (Math.random() - 0.5) * 100;
-        
-        positions[i * 3] = x;
-        positions[i * 3 + 1] = y;
-        positions[i * 3 + 2] = z;
-        
-        // Color
-        const mixRatio = Math.random();
-        const mixedColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
-        
-        colors[i * 3] = mixedColor.r;
-        colors[i * 3 + 1] = mixedColor.g;
-        colors[i * 3 + 2] = mixedColor.b;
-        
-        // Size
-        sizes[i] = Math.random() * 2 + 0.5;
-      }
-      
-      particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-      particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-      particleGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
-      
-      const particleMaterial = new THREE.ShaderMaterial({
-        uniforms: {
-          time: { value: 0 },
-          size: { value: 30 * renderer.getPixelRatio() }
-        },
-        vertexShader: `
-          uniform float time;
-          uniform float size;
-          attribute float size;
-          varying vec3 vColor;
-          
-          void main() {
-            vColor = color;
-            
-            // Animated position
-            vec3 pos = position;
-            float dist = length(pos);
-            
-            // Spiral motion
-            float angle = time * 0.2 * (0.1 + 0.5 / dist);
-            mat2 rotation = mat2(cos(angle), -sin(angle), sin(angle), cos(angle));
-            pos.xz = rotation * pos.xz;
-            
-            // Pulsating
-            pos *= 0.9 + 0.2 * sin(time * 0.5 + dist);
-            
-            vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-            gl_PointSize = size * size * (1.0 / -mvPosition.z);
-            gl_Position = projectionMatrix * mvPosition;
-          }
-        `,
-        fragmentShader: `
-          varying vec3 vColor;
-          
-          void main() {
-            // Create circular point
-            float r = length(gl_PointCoord - vec2(0.5, 0.5));
-            if (r > 0.5) discard;
-            
-            // Glow effect
-            float glow = 1.0 - r * 2.0;
-            glow = pow(glow, 1.5);
-            
-            gl_FragColor = vec4(vColor * glow, glow);
-          }
-        `,
-        transparent: true,
-        depthWrite: false,
-        blending: THREE.AdditiveBlending,
-        vertexColors: true
-      });
-      
-      particles = new THREE.Points(particleGeometry, particleMaterial);
-      scene.add(particles);
-    }
-    
-    function createDancers(theme) {
-      // Clear existing dancers
-      dancers.forEach(dancer => scene.remove(dancer));
-      dancers = [];
-      
-      // Create new dancers
-      for (let i = 0; i < config.dancerCount; i++) {
-        // Create dancer with vector outline style
-        const dancer = createDancer(theme);
-        
-        // Random position on the floor
-        dancer.position.x = (Math.random() - 0.5) * 60;
-        dancer.position.z = (Math.random() - 0.5) * 60;
-        dancer.position.y = -2; // On the floor
-        
-        // Random rotation
-        dancer.rotation.y = Math.random() * Math.PI * 2;
-        
-        // Random animation phase
-        dancer.userData = {
-          animPhase: Math.random() * Math.PI * 2,
-          animSpeed: 0.5 + Math.random() * 1.5,
-          rotSpeed: (Math.random() - 0.5) * 0.02
+          // Start loading
+          loadNext(0);
+        });
+      },
+
+      // Get DOM elements
+      getElements: function() {
+        this.elements = {
+          loadingScreen: document.getElementById('loading-screen'),
+          loadingText: document.getElementById('loading-text'),
+          progressFill: document.getElementById('progress-fill'),
+          progressPercent: document.getElementById('progress-percent'),
+          sceneCanvas: document.getElementById('scene-canvas'),
+          audioVisualizer: document.getElementById('audio-visualizer'),
+          trackInfo: document.getElementById('track-info'),
+          audioStatus: document.getElementById('audio-status'),
+          errorMessage: document.getElementById('error-message'),
+          keyboardControls: document.getElementById('keyboard-controls'),
+          themeIndicator: document.getElementById('theme-indicator'),
+          themeButton: document.getElementById('theme-button'),
+          trackButton: document.getElementById('track-button'),
+          trackSelector: document.getElementById('track-selector'),
+          audioButton: document.getElementById('audio-button'),
+          fullscreenButton: document.getElementById('fullscreen-button'),
+          helpButton: document.getElementById('help-button'),
+          settingsButton: document.getElementById('settings-button'),
+          settingsPanel: document.getElementById('settings-panel'),
+          settingsApply: document.getElementById('settings-apply'),
+          settingsClose: document.getElementById('settings-close'),
+          performanceIndicator: document.getElementById('performance-indicator'),
+          mobileControls: document.querySelector('.mobile-controls'),
+          mobileUp: document.getElementById('mobile-up'),
+          mobileDown: document.getElementById('mobile-down'),
+          mobileLeft: document.getElementById('mobile-left'),
+          mobileRight: document.getElementById('mobile-right')
         };
-        
-        scene.add(dancer);
-        dancers.push(dancer);
-      }
-    }
-    
-    function createDancer(theme) {
-      // Create a group for the dancer
-      const dancer = new THREE.Group();
-      
-      // Random color for this dancer
-      const color1 = new THREE.Color(theme.particleColor1);
-      const color2 = new THREE.Color(theme.particleColor2);
-      const mixRatio = Math.random();
-      const dancerColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
-      
-      // Material for the dancer - wireframe for vector outline look
-      const material = new THREE.MeshBasicMaterial({
-        color: dancerColor,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.8
-      });
-      
-      // Head
-      const headGeometry = new THREE.SphereGeometry(0.5, 8, 8);
-      const head = new THREE.Mesh(headGeometry, material);
-      head.position.y = 4.5;
-      dancer.add(head);
-      
-      // Body
-      const bodyGeometry = new THREE.CylinderGeometry(0.5, 0.7, 3, 8);
-      const body = new THREE.Mesh(bodyGeometry, material);
-      body.position.y = 2.5;
-      dancer.add(body);
-      
-      // Arms
-      const armGeometry = new THREE.CylinderGeometry(0.2, 0.2, 2, 6);
-      
-      // Left arm
-      const leftArm = new THREE.Mesh(armGeometry, material);
-      leftArm.position.set(-0.8, 3, 0);
-      leftArm.rotation.z = Math.PI / 4;
-      dancer.add(leftArm);
-      
-      // Right arm
-      const rightArm = new THREE.Mesh(armGeometry, material);
-      rightArm.position.set(0.8, 3, 0);
-      rightArm.rotation.z = -Math.PI / 4;
-      dancer.add(rightArm);
-      
-      // Legs
-      const legGeometry = new THREE.CylinderGeometry(0.25, 0.25, 2.5, 6);
-      
-      // Left leg
-      const leftLeg = new THREE.Mesh(legGeometry, material);
-      leftLeg.position.set(-0.5, 0.5, 0);
-      dancer.add(leftLeg);
-      
-      // Right leg
-      const rightLeg = new THREE.Mesh(legGeometry, material);
-      rightLeg.position.set(0.5, 0.5, 0);
-      dancer.add(rightLeg);
-      
-      // Add a "glow" effect
-      const glowGeometry = new THREE.SphereGeometry(2, 16, 16);
-      const glowMaterial = new THREE.MeshBasicMaterial({
-        color: dancerColor,
-        transparent: true,
-        opacity: 0.2,
-        side: THREE.BackSide
-      });
-      const glow = new THREE.Mesh(glowGeometry, glowMaterial);
-      glow.position.y = 2;
-      dancer.add(glow);
-      
-      // Add a small object in hand (like a glowstick or drink)
-      const objectGeometry = new THREE.BoxGeometry(0.2, 0.8, 0.2);
-      const objectMaterial = new THREE.MeshBasicMaterial({
-        color: Math.random() > 0.5 ? 0x00ffff : 0xffff00,
-        transparent: true,
-        opacity: 0.9
-      });
-      const object = new THREE.Mesh(objectGeometry, objectMaterial);
-      object.position.set(-1.5, 3.5, 0);
-      dancer.add(object);
-      
-      return dancer;
-    }
-    
-    function createBuildings(theme) {
-      // Clear existing buildings
-      buildings.forEach(building => scene.remove(building));
-      buildings = [];
-      
-      // Create city grid
-      const gridSize = 5;
-      const spacing = 25;
-      
-      for (let x = -gridSize; x <= gridSize; x++) {
-        for (let z = -gridSize; z <= gridSize; z++) {
-          // Skip center area (dance floor)
-          if (Math.abs(x) < 2 && Math.abs(z) < 2) continue;
-          
-          // Random building height
-          const height = 10 + Math.random() * 40;
-          
-          // Create building
-          const building = createBuilding(height, theme);
-          
-          // Position
-          building.position.x = x * spacing;
-          building.position.z = z * spacing;
-          building.position.y = height / 2 - 2; // Half height (origin at center) and floor offset
-          
-          scene.add(building);
-          buildings.push(building);
-        }
-      }
-    }
-    
-    function createBuilding(height, theme) {
-      // Create a group for the building
-      const building = new THREE.Group();
-      
-      // Random color for this building
-      const color1 = new THREE.Color(theme.buildingColor1);
-      const color2 = new THREE.Color(theme.buildingColor2);
-      const mixRatio = Math.random();
-      const buildingColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
-      
-      // Building base geometry
-      const width = 5 + Math.random() * 10;
-      const depth = 5 + Math.random() * 10;
-      const geometry = new THREE.BoxGeometry(width, height, depth);
-      
-      // Wireframe material for vector outline look
-      const material = new THREE.MeshBasicMaterial({
-        color: buildingColor,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.6
-      });
-      
-      const mesh = new THREE.Mesh(geometry, material);
-      building.add(mesh);
-      
-      // Add windows (points of light)
-      const windowCount = Math.floor(height / 2);
-      const windowGeometry = new THREE.PlaneGeometry(0.5, 0.5);
-      const windowMaterial = new THREE.MeshBasicMaterial({
-        color: 0xffffff,
-        transparent: true,
-        opacity: 0.9,
-        side: THREE.DoubleSide
-      });
-      
-      for (let i = 0; i < windowCount; i++) {
-        for (let j = 0; j < 4; j++) {
-          if (Math.random() > 0.7) continue; // Some windows are dark
-          
-          const window = new THREE.Mesh(windowGeometry, windowMaterial);
-          
-          // Position on building sides
-          const side = j % 4;
-          const y = -height / 2 + 1 + i * 2;
-          
-          if (side === 0) {
-            window.position.set(0, y, depth / 2 + 0.1);
-            window.position.x = (Math.random() - 0.5) * (width - 1);
-          } else if (side === 1) {
-            window.position.set(width / 2 + 0.1, y, 0);
-            window.position.z = (Math.random() - 0.5) * (depth - 1);
-            window.rotation.y = Math.PI / 2;
-          } else if (side === 2) {
-            window.position.set(0, y, -depth / 2 - 0.1);
-            window.position.x = (Math.random() - 0.5) * (width - 1);
-          } else {
-            window.position.set(-width / 2 - 0.1, y, 0);
-            window.position.z = (Math.random() - 0.5) * (depth - 1);
-            window.rotation.y = Math.PI / 2;
-          }
-          
-          building.add(window);
-        }
-      }
-      
-      // Add neon outline at the top
-      const outlineGeometry = new THREE.BoxGeometry(width + 0.2, 0.5, depth + 0.2);
-      const outlineMaterial = new THREE.MeshBasicMaterial({
-        color: buildingColor,
-        transparent: true,
-        opacity: 0.9
-      });
-      
-      const outline = new THREE.Mesh(outlineGeometry, outlineMaterial);
-      outline.position.y = height / 2 + 0.25;
-      building.add(outline);
-      
-      // Add animation data
-      building.userData = {
-        pulseSpeed: Math.random() * 2 + 1,
-        originalColor: buildingColor.clone()
-      };
-      
-      return building;
-    }
-    
-    function createSkyObjects(theme) {
-      // Clear existing sky objects
-      skyObjects.forEach(obj => scene.remove(obj));
-      skyObjects = [];
-      
-      // Create stars
-      for (let i = 0; i < config.skyObjectCount * 0.8; i++) {
-        const star = createStar(theme);
-        scene.add(star);
-        skyObjects.push(star);
-      }
-      
-      // Create comets
-      for (let i = 0; i < config.skyObjectCount * 0.1; i++) {
-        const comet = createComet(theme);
-        scene.add(comet);
-        skyObjects.push(comet);
-      }
-      
-      // Create satellites
-      for (let i = 0; i < config.skyObjectCount * 0.1; i++) {
-        const satellite = createSatellite(theme);
-        scene.add(satellite);
-        skyObjects.push(satellite);
-      }
-    }
-    
-    function createStar(theme) {
-      // Random color
-      const color1 = new THREE.Color(theme.particleColor1);
-      const color2 = new THREE.Color(theme.particleColor2);
-      const mixRatio = Math.random();
-      const starColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
-      
-      // Create a point light for the star
-      const star = new THREE.PointLight(starColor, 0.5, 0, 2);
-      
-      // Random position in the sky
-      const phi = Math.random() * Math.PI * 2;
-      const theta = Math.random() * Math.PI;
-      const radius = 300 + Math.random() * 50;
-      
-      star.position.x = radius * Math.sin(theta) * Math.cos(phi);
-      star.position.y = radius * Math.sin(theta) * Math.sin(phi);
-      star.position.z = radius * Math.cos(theta);
-      
-      // Add a small sphere to make the star visible
-      const geometry = new THREE.SphereGeometry(0.5 + Math.random() * 1.5, 8, 8);
-      const material = new THREE.MeshBasicMaterial({
-        color: starColor,
-        transparent: true,
-        opacity: 0.8
-      });
-      
-      const mesh = new THREE.Mesh(geometry, material);
-      star.add(mesh);
-      
-      // Add animation data
-      star.userData = {
-        twinkleSpeed: Math.random() * 2 + 1,
-        originalIntensity: star.intensity
-      };
-      
-      return star;
-    }
-    
-    function createComet(theme) {
-      // Create a group for the comet
-      const comet = new THREE.Group();
-      
-      // Random color
-      const color1 = new THREE.Color(theme.particleColor1);
-      const color2 = new THREE.Color(theme.particleColor2);
-      const mixRatio = Math.random();
-      const cometColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
-      
-      // Create comet head
-      const headGeometry = new THREE.SphereGeometry(1, 8, 8);
-      const headMaterial = new THREE.MeshBasicMaterial({
-        color: cometColor,
-        transparent: true,
-        opacity: 0.9
-      });
-      
-      const head = new THREE.Mesh(headGeometry, headMaterial);
-      comet.add(head);
-      
-      // Create comet tail
-      const tailGeometry = new THREE.ConeGeometry(0.5, 10, 8);
-      const tailMaterial = new THREE.MeshBasicMaterial({
-        color: cometColor,
-        transparent: true,
-        opacity: 0.5
-      });
-      
-      const tail = new THREE.Mesh(tailGeometry, tailMaterial);
-      tail.position.z = -5;
-      tail.rotation.x = Math.PI / 2;
-      comet.add(tail);
-      
-      // Random position in the sky
-      const phi = Math.random() * Math.PI * 2;
-      const theta = Math.random() * Math.PI;
-      const radius = 200 + Math.random() * 100;
-      
-      comet.position.x = radius * Math.sin(theta) * Math.cos(phi);
-      comet.position.y = radius * Math.sin(theta) * Math.sin(phi);
-      comet.position.z = radius * Math.cos(theta);
-      
-      // Random rotation
-      comet.rotation.x = Math.random() * Math.PI * 2;
-      comet.rotation.y = Math.random() * Math.PI * 2;
-      comet.rotation.z = Math.random() * Math.PI * 2;
-      
-      // Add animation data
-      comet.userData = {
-        speed: Math.random() * 0.5 + 0.1,
-        rotationAxis: new THREE.Vector3(
-          Math.random() - 0.5,
-          Math.random() - 0.5,
-          Math.random() - 0.5
-        ).normalize(),
-        rotationSpeed: Math.random() * 0.01
-      };
-      
-      return comet;
-    }
-    
-    function createSatellite(theme) {
-      // Create a group for the satellite
-      const satellite = new THREE.Group();
-      
-      // Random color
-      const color1 = new THREE.Color(theme.particleColor1);
-      const color2 = new THREE.Color(theme.particleColor2);
-      const mixRatio = Math.random();
-      const satelliteColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
-      
-      // Create satellite body
-      const bodyGeometry = new THREE.BoxGeometry(1, 1, 3);
-      const bodyMaterial = new THREE.MeshBasicMaterial({
-        color: satelliteColor,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.8
-      });
-      
-      const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
-      satellite.add(body);
-      
-      // Create satellite panels
-      const panelGeometry = new THREE.PlaneGeometry(4, 1);
-      const panelMaterial = new THREE.MeshBasicMaterial({
-        color: satelliteColor,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.7,
-        side: THREE.DoubleSide
-      });
-      
-      const leftPanel = new THREE.Mesh(panelGeometry, panelMaterial);
-      leftPanel.position.x = -2.5;
-      satellite.add(leftPanel);
-      
-      const rightPanel = new THREE.Mesh(panelGeometry, panelMaterial);
-      rightPanel.position.x = 2.5;
-      satellite.add(rightPanel);
-      
-      // Random position in the sky
-      const phi = Math.random() * Math.PI * 2;
-      const theta = Math.random() * Math.PI;
-      const radius = 150 + Math.random() * 100;
-      
-      satellite.position.x = radius * Math.sin(theta) * Math.cos(phi);
-      satellite.position.y = radius * Math.sin(theta) * Math.sin(phi);
-      satellite.position.z = radius * Math.cos(theta);
-      
-      // Random rotation
-      satellite.rotation.x = Math.random() * Math.PI * 2;
-      satellite.rotation.y = Math.random() * Math.PI * 2;
-      satellite.rotation.z = Math.random() * Math.PI * 2;
-      
-      // Add animation data
-      satellite.userData = {
-        orbitAxis: new THREE.Vector3(
-          Math.random() - 0.5,
-          Math.random() - 0.5,
-          Math.random() - 0.5
-        ).normalize(),
-        orbitSpeed: Math.random() * 0.005 + 0.001,
-        rotationSpeed: Math.random() * 0.01
-      };
-      
-      return satellite;
-    }
-    
-    function createLasers(theme) {
-      // Clear existing lasers
-      lasers.forEach(laser => scene.remove(laser));
-      lasers = [];
-      
-      if (!config.showLasers) return;
-      
-      // Create laser beams
-      const laserCount = 20;
-      
-      for (let i = 0; i < laserCount; i++) {
-        const laser = createLaser(theme);
-        scene.add(laser);
-        lasers.push(laser);
-      }
-    }
-    
-    function createLaser(theme) {
-      // Create a group for the laser
-      const laser = new THREE.Group();
-      
-      // Random color
-      const color1 = new THREE.Color(theme.particleColor1);
-      const color2 = new THREE.Color(theme.particleColor2);
-      const mixRatio = Math.random();
-      const laserColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
-      
-      // Create laser beam
-      const beamGeometry = new THREE.CylinderGeometry(0.1, 0.1, 100, 8);
-      const beamMaterial = new THREE.MeshBasicMaterial({
-        color: laserColor,
-        transparent: true,
-        opacity: 0.7
-      });
-      
-      const beam = new THREE.Mesh(beamGeometry, beamMaterial);
-      beam.position.y = 50;
-      beam.rotation.x = Math.PI / 2;
-      laser.add(beam);
-      
-      // Random position around the dance floor
-      const angle = Math.random() * Math.PI * 2;
-      const radius = 30 + Math.random() * 20;
-      
-      laser.position.x = Math.cos(angle) * radius;
-      laser.position.z = Math.sin(angle) * radius;
-      laser.position.y = -2;
-      
-      // Random rotation
-      laser.rotation.y = Math.random() * Math.PI * 2;
-      
-      // Add animation data
-      laser.userData = {
-        rotationSpeed: (Math.random() - 0.5) * 0.02,
-        pulseSpeed: Math.random() * 2 + 1
-      };
-      
-      return laser;
-    }
-    
-    function onWindowResize() {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      composer.setSize(window.innerWidth, window.innerHeight);
-    }
-    
-    function handleMouseMove(e) {
-      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-      mouse.active = true;
-    }
-    
-    function handleTouchMove(e) {
-      if (e.touches && e.touches[0]) {
-        mouse.x = (e.touches[0].clientX / window.innerWidth) * 2 - 1;
-        mouse.y = -(e.touches[0].clientY / window.innerHeight) * 2 + 1;
-        mouse.active = true;
-      }
-    }
-    
-    function handleKeyDown(e) {
-      keys[e.key.toLowerCase()] = true;
-      
-      // Toggle keyboard controls display with H key
-      if (e.key.toLowerCase() === 'h') {
-        keyboardControls.style.display = keyboardControls.style.display === 'none' ? 'block' : 'none';
-      }
-      
-      // Toggle fullscreen with F key
-      if (e.key.toLowerCase() === 'f') {
-        toggleFullscreen();
-      }
-      
-      // Toggle audio with Space key
-      if (e.key === ' ') {
-        toggleAudio();
-      }
-      
-      // Reset camera with R key
-      if (e.key.toLowerCase() === 'r') {
-        camera.position.set(0, 5, 20);
-        camera.lookAt(0, 0, 0);
-      }
-      
-      // Change visual theme with C key
-      if (e.key.toLowerCase() === 'c') {
-        cycleTheme();
-      }
-    }
-    
-    function handleKeyUp(e) {
-      keys[e.key.toLowerCase()] = false;
-    }
 
-    function updateCameraFromKeyboard() {
-      const moveSpeed = 0.5 * config.cameraSpeed;
-      
-      // Get camera direction vectors
-      const forward = new THREE.Vector3(0, 0, -1).applyQuaternion(camera.quaternion);
-      const right = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion);
-      
-      // Forward/backward
-      if (keys['w'] || keys['arrowup']) {
-        const newPosition = camera.position.clone().addScaledVector(forward, moveSpeed);
-        // Only move if we're not going below the minimum height
-        if (newPosition.y >= config.minCameraHeight) {
-          camera.position.copy(newPosition);
-        } else {
-          // Allow horizontal movement even if we can't move vertically
-          forward.y = 0;
-          forward.normalize();
-          camera.position.addScaledVector(forward, moveSpeed);
-        }
-      }
-      if (keys['s'] || keys['arrowdown']) {
-        const newPosition = camera.position.clone().addScaledVector(forward, -moveSpeed);
-        // Only move if we're not going below the minimum height
-        if (newPosition.y >= config.minCameraHeight) {
-          camera.position.copy(newPosition);
-        } else {
-          // Allow horizontal movement even if we can't move vertically
-          forward.y = 0;
-          forward.normalize();
-          camera.position.addScaledVector(forward, -moveSpeed);
-        }
-      }
-      
-      // Left/right
-      if (keys['a'] || keys['arrowleft']) {
-        camera.position.addScaledVector(right, -moveSpeed);
-      }
-      if (keys['d'] || keys['arrowright']) {
-        camera.position.addScaledVector(right, moveSpeed);
-      }
-      
-      // Enforce minimum height
-      if (camera.position.y < config.minCameraHeight) {
-        camera.position.y = config.minCameraHeight;
-      }
-    }
-    
-    // Handle mobile controls
-    function initMobileControls() {
-      // Touch events for mobile controls
-      mobileUp.addEventListener('touchstart', () => { keys['w'] = true; });
-      mobileUp.addEventListener('touchend', () => { keys['w'] = false; });
-      
-      mobileDown.addEventListener('touchstart', () => { keys['s'] = true; });
-      mobileDown.addEventListener('touchend', () => { keys['s'] = false; });
-      
-      mobileLeft.addEventListener('touchstart', () => { keys['a'] = true; });
-      mobileLeft.addEventListener('touchend', () => { keys['a'] = false; });
-      
-      mobileRight.addEventListener('touchstart', () => { keys['d'] = true; });
-      mobileRight.addEventListener('touchend', () => { keys['d'] = false; });
-    }
-    
-    function animate() {
-      animationFrameId = requestAnimationFrame(animate);
-      
-      const delta = clock.getDelta();
-      time += delta;
-      
-      // Update camera from keyboard
-      updateCameraFromKeyboard();
-      
-      // Update controls
-      controls.update();
-      
-      // Get audio reactivity factor if enabled
-      let audioFactor = 1;
-      let bassValue = 0;
-      
-      if (config.audioReactive && isPlaying && frequencyData) {
-        // Get bass frequencies (typically the first few bins)
-        bassValue = 0;
-        for (let i = 0; i < 10; i++) {
-          bassValue += frequencyData[i];
-        }
-        bassValue = bassValue / 10 / 255; // Normalize
+        // Canvas contexts
+        this.visualizerCtx = this.elements.audioVisualizer.getContext('2d');
+      },
+
+      // Check if device is mobile
+      checkMobile: function() {
+        this.config.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         
-        // Apply bass impact multiplier
-        audioFactor = 1 + bassValue * config.bassImpact;
-      }
-      
-      // Update particle system
-      if (particles) {
-        particles.material.uniforms.time.value = time;
-        
-        // Audio reactivity
-        if (audioFactor > 1) {
-          particles.material.uniforms.size.value = (30 + 20 * bassValue * config.bassImpact) * renderer.getPixelRatio();
+        if (this.config.isMobile) {
+          this.elements.mobileControls.style.display = 'block';
           
-          // Pulse the particles based on audio
-          const positions = particles.geometry.attributes.position.array;
-          for (let i = 0; i < positions.length; i += 3) {
-            const originalX = positions[i];
-            const originalY = positions[i + 1];
-            const originalZ = positions[i + 2];
-            
-            const distance = Math.sqrt(originalX * originalX + originalY * originalY + originalZ * originalZ);
-            const pulseFactor = 1 + 0.2 * bassValue * Math.sin(time * 2 + distance);
-            
-            positions[i] = originalX * pulseFactor;
-            positions[i + 1] = originalY * pulseFactor;
-            positions[i + 2] = originalZ * pulseFactor;
-          }
-          
-          particles.geometry.attributes.position.needsUpdate = true;
+          // Reduce quality for mobile
+          this.config.quality = 'low';
+          this.applyQualitySettings('low');
         }
-      }
-      
-      // Update floor
-      if (floorMesh) {
-        // Warp floor based on audio
-        if (audioFactor > 1) {
-          const positions = floorMesh.geometry.attributes.position.array;
-          const count = positions.length / 3;
-          
-          for (let i = 0; i < count; i++) {
-            const x = positions[i * 3];
-            const z = positions[i * 3 + 2];
-            
-            const distance = Math.sqrt(x * x + z * z);
-            const y = Math.sin(distance * 0.1 + time * 2) * bassValue * 2;
-            
-            positions[i * 3 + 1] = y;
-          }
-          
-          floorMesh.geometry.attributes.position.needsUpdate = true;
+      },
+
+      // Apply quality settings
+      applyQualitySettings: function(quality) {
+        switch (quality) {
+          case 'low':
+            this.config.density = 20;
+            this.config.dancerCount = 15;
+            this.config.regularPeopleCount = 10;
+            this.config.skyObjectCount = 20;
+            this.config.showSmoke = false;
+            this.config.bloomEnabled = false;
+            break;
+          case 'medium':
+            this.config.density = 40;
+            this.config.dancerCount = 30;
+            this.config.regularPeopleCount = 20;
+            this.config.skyObjectCount = 50;
+            this.config.showSmoke = true;
+            this.config.bloomEnabled = true;
+            break;
+          case 'high':
+            this.config.density = 60;
+            this.config.dancerCount = 45;
+            this.config.regularPeopleCount = 30;
+            this.config.skyObjectCount = 80;
+            this.config.showSmoke = true;
+            this.config.bloomEnabled = true;
+            break;
+          case 'ultra':
+            this.config.density = 100;
+            this.config.dancerCount = 60;
+            this.config.regularPeopleCount = 40;
+            this.config.skyObjectCount = 120;
+            this.config.showSmoke = true;
+            this.config.bloomEnabled = true;
+            break;
         }
-      }
-      
-      // Update dancers
-      if (config.showDancers) {
-        dancers.forEach(dancer => {
-          // Rotate dancer
-          dancer.rotation.y += dancer.userData.rotSpeed;
-          
-          // Animate dancer parts based on time and audio
-          const phase = time * dancer.userData.animSpeed + dancer.userData.animPhase;
-          const intensity = 1 + (audioFactor - 1) * 2;
-          
-          // Get dancer parts
-          const head = dancer.children[0];
-          const body = dancer.children[1];
-          const leftArm = dancer.children[2];
-          const rightArm = dancer.children[3];
-          const leftLeg = dancer.children[4];
-          const rightLeg = dancer.children[5];
-          const glow = dancer.children[6];
-          const object = dancer.children[7];
-          
-          // Animate head bobbing
-          head.position.y = 4.5 + Math.sin(phase) * 0.2 * intensity;
-          
-          // Animate arms
-          leftArm.rotation.z = Math.PI / 4 + Math.sin(phase) * 0.5 * intensity;
-          rightArm.rotation.z = -Math.PI / 4 + Math.sin(phase + Math.PI) * 0.5 * intensity;
-          
-          // Animate legs
-          leftLeg.rotation.x = Math.sin(phase) * 0.3 * intensity;
-          rightLeg.rotation.x = Math.sin(phase + Math.PI) * 0.3 * intensity;
-          
-          // Animate glow
-          glow.scale.setScalar(1 + bassValue * 0.5);
-          glow.material.opacity = 0.2 + bassValue * 0.3;
-          
-          // Animate object in hand
-          object.position.y = 3.5 + Math.sin(phase * 2) * 0.3 * intensity;
-          object.material.opacity = 0.7 + Math.sin(phase * 3) * 0.3;
-        });
-      }
-      
-      // Update buildings
-      if (config.showBuildings) {
-        buildings.forEach(building => {
-          // Pulse building color based on audio
-          const mesh = building.children[0];
-          const outline = building.children[building.children.length - 1];
-          
-          const pulsePhase = time * building.userData.pulseSpeed;
-          const pulseIntensity = 1 + (audioFactor - 1) * 0.5;
-          
-          const originalColor = building.userData.originalColor;
-          const pulseColor = new THREE.Color(originalColor).lerp(
-            new THREE.Color(0xffffff),
-            0.2 * Math.sin(pulsePhase) * pulseIntensity
-          );
-          
-          mesh.material.color.copy(pulseColor);
-          outline.material.color.copy(pulseColor);
-          outline.material.opacity = 0.7 + 0.3 * Math.sin(pulsePhase) * pulseIntensity;
-        });
-      }
-      
-      // Update sky objects
-      if (config.showSkyObjects) {
-        skyObjects.forEach(obj => {
-          // Different updates based on object type
-          if (obj.type === 'PointLight') {
-            // This is a star
-            const twinklePhase = time * obj.userData.twinkleSpeed;
-            obj.intensity = obj.userData.originalIntensity * (0.7 + 0.3 * Math.sin(twinklePhase));
-          } else if (obj.children && obj.children.length === 2) {
-            // This is a comet
-            // Rotate around its axis
-            obj.rotateOnAxis(obj.userData.rotationAxis, obj.userData.rotationSpeed);
-            
-            // Move along its path
-            const moveDir = new THREE.Vector3(
-              Math.sin(time * obj.userData.speed),
-              Math.cos(time * obj.userData.speed),
-              Math.sin(time * obj.userData.speed * 0.5)
-            ).normalize();
-            
-            obj.position.addScaledVector(moveDir, obj.userData.speed);
-            
-            // Keep within bounds
-            const distance = obj.position.length();
-            if (distance > 350) {
-              obj.position.multiplyScalar(350 / distance);
+      },
+
+      // Initialize loading screen
+      initLoadingScreen: function() {
+        // Glitch text effect
+        setInterval(() => {
+          if (Math.random() > 0.6) {
+            const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+{}|:<>?";
+            let glitched = "";
+            const originalText = "INITIALIZING NEURAL INTERFACE";
+
+            for (let i = 0; i < originalText.length; i++) {
+              if (Math.random() > 0.7) {
+                glitched += characters.charAt(Math.floor(Math.random() * characters.length));
+              } else {
+                glitched += originalText[i];
+              }
             }
-          } else if (obj.children && obj.children.length === 3) {
-            // This is a satellite
-            // Orbit around a point
-            const orbitCenter = new THREE.Vector3(0, 0, 0);
-            const orbitRadius = obj.position.distanceTo(orbitCenter);
-            
-            const orbitAngle = time * obj.userData.orbitSpeed;
-            const orbitX = Math.cos(orbitAngle) * orbitRadius;
-            const orbitZ = Math.sin(orbitAngle) * orbitRadius;
-            
-            obj.position.x = orbitX;
-            obj.position.z = orbitZ;
-            
-            // Rotate the satellite
-            obj.rotateOnAxis(obj.userData.orbitAxis, obj.userData.rotationSpeed);
-          } else if (obj.type === 'Points') {
-            // This is the star field
-            obj.material.uniforms.time.value = time;
-          } else if (obj.type === 'Mesh' && obj.geometry.type === 'PlaneGeometry' && obj.geometry.parameters.width === 800) {
-            // This is the aurora
-            obj.material.uniforms.time.value = time;
+
+            this.elements.loadingText.textContent = glitched;
+          } else {
+            this.elements.loadingText.textContent = "INITIALIZING NEURAL INTERFACE";
           }
-        });
-      }
-      
-      // Update lasers
-      if (config.showLasers) {
-        lasers.forEach(laser => {
-          // Rotate laser
-          laser.rotation.y += laser.userData.rotationSpeed;
+        }, 80);
+      },
+
+      // Show error message
+      showError: function(message) {
+        console.error(message);
+        this.elements.errorMessage.textContent = message;
+        this.elements.errorMessage.style.display = 'block';
+      },
+
+      // Initialize Three.js scene
+      initScene: function() {
+        try {
+          // Create scene
+          this.scene = new THREE.Scene();
           
-          // Pulse laser opacity based on audio
-          const beam = laser.children[0];
-          const pulsePhase = time * laser.userData.pulseSpeed;
-          const pulseIntensity = 1 + (audioFactor - 1) * 2;
+          // Add fog for depth
+          const theme = this.visualThemes[this.config.visualTheme];
+          this.scene.fog = new THREE.FogExp2(theme.fogColor, 0.015);
           
-          beam.material.opacity = 0.5 + 0.5 * Math.sin(pulsePhase) * pulseIntensity;
-        });
-      }
-      
-      // Update post-processing effects
-      if (rgbShiftPass) {
-        rgbShiftPass.uniforms.angle.value = time * 0.5 * config.colorShiftSpeed;
-        rgbShiftPass.uniforms.amount.value = 0.001 + 0.004 * config.trippyLevel + (audioFactor - 1) * 0.01;
-      }
-      
-      if (glitchPass) {
-        // Occasional glitches based on intensity - reduced frequency
-        if (Math.random() < 0.005 * config.glitchIntensity) {
-          glitchPass.goWild = true;
+          // Create camera
+          this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+          this.camera.position.set(0, 5, 20);
+          this.camera.lookAt(0, 0, 0);
+          
+          // Create renderer
+          this.renderer = new THREE.WebGLRenderer({ 
+            canvas: this.elements.sceneCanvas,
+            antialias: true,
+            alpha: true
+          });
+          this.renderer.setSize(window.innerWidth, window.innerHeight);
+          this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+          
+          // Create clock for animation
+          this.clock = new THREE.Clock();
+          
+          // Create orbit controls
+          this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
+          this.controls.enableDamping = true;
+          this.controls.dampingFactor = 0.05;
+          this.controls.autoRotate = this.config.autoCamera;
+          this.controls.autoRotateSpeed = 0.5;
+          this.controls.minDistance = 2;
+          this.controls.maxDistance = 200;
+          
+          // Set up post-processing
+          this.setupPostProcessing();
+          
+          // Create scene objects
+          this.createSceneObjects();
+          
+          // Handle window resize
+          window.addEventListener('resize', () => this.onWindowResize());
+          
+          // Hide loading screen
           setTimeout(() => {
-            glitchPass.goWild = false;
-          }, 50 + Math.random() * 100); // Shorter glitch duration
+            this.elements.loadingScreen.style.opacity = '0';
+            setTimeout(() => {
+              this.elements.loadingScreen.style.display = 'none';
+            }, 500);
+          }, 1000);
+        } catch (error) {
+          this.showError(`Failed to initialize 3D scene: ${error.message}`);
         }
-      }
-      
-      if (bloomPass) {
-        const theme = visualThemes[config.visualTheme];
-        bloomPass.strength = theme.bloomStrength * (1 + (audioFactor - 1) * 0.5);
-      }
-      
-      // Render scene with post-processing
-      composer.render();
-    }
+      },
 
-    // ===== Audio Handling =====
-    function initAudio() {
-      // Create audio element
-      audioElement = new Audio();
-      audioElement.crossOrigin = "anonymous";
-      audioElement.src = audioTracks[config.audioTrack];
-      
-      // Show audio status
-      audioStatus.textContent = "Loading audio...";
-      audioStatus.style.display = "block";
-      
-      // Set up audio button
-      audioButton.addEventListener('click', toggleAudio);
-      
-      // Audio loaded event
-      audioElement.addEventListener('canplaythrough', () => {
-        audioLoaded = true;
-        audioStatus.textContent = "Audio ready! Click play button to start.";
-        setTimeout(() => {
-          audioStatus.style.display = "none";
-        }, 3000);
-      });
-      
-      // Audio error event
-      audioElement.addEventListener('error', (e) => {
-        console.error("Audio error:", e);
-        audioStatus.textContent = "Audio failed to load. Try another track.";
-        audioStatus.style.color = "#ff0000";
-      });
-      
-      // Preload audio
-      audioElement.load();
-    }
-
-    function toggleAudio() {
-      if (!audioLoaded) {
-        audioStatus.textContent = "Audio still loading... Please wait.";
-        audioStatus.style.display = "block";
-        setTimeout(() => {
-          audioStatus.style.display = "none";
-        }, 3000);
-        return;
-      }
-      
-      if (isPlaying) {
-        audioElement.pause();
-        audioButton.classList.remove('active');
-        audioButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
-        audioVisualizer.style.display = 'none';
-        audioStatus.style.display = "none";
-      } else {
-        // Set up audio context if not already done
-        if (!audioContext) {
-          try {
-            const AudioContext = window.AudioContext || window.webkitAudioContext;
-            audioContext = new AudioContext();
-            
-            // Create analyzer
-            audioAnalyser = audioContext.createAnalyser();
-            audioAnalyser.fftSize = 256;
-            
-            // Connect audio element to the audio context
-            audioSource = audioContext.createMediaElementSource(audioElement);
-            audioSource.connect(audioAnalyser);
-            audioAnalyser.connect(audioContext.destination);
-            
-            // Create data arrays
-            audioData = new Float32Array(audioAnalyser.frequencyBinCount);
-            frequencyData = new Uint8Array(audioAnalyser.frequencyBinCount);
-            
-            // Start audio data update loop
-            updateAudioData();
-          } catch (e) {
-            console.error("Web Audio API error:", e);
-            audioStatus.textContent = "Audio API error. Try a different browser.";
-            audioStatus.style.color = "#ff0000";
-            audioStatus.style.display = "block";
-            return;
+      // Set up post-processing
+      setupPostProcessing: function() {
+        try {
+          const theme = this.visualThemes[this.config.visualTheme];
+          
+          // Create composer
+          this.composer = new THREE.EffectComposer(this.renderer);
+          
+          // Add render pass
+          const renderPass = new THREE.RenderPass(this.scene, this.camera);
+          this.composer.addPass(renderPass);
+          
+          // Add bloom pass if enabled
+          if (this.config.bloomEnabled) {
+            this.bloomPass = new THREE.UnrealBloomPass(
+              new THREE.Vector2(window.innerWidth, window.innerHeight),
+              theme.bloomStrength,
+              theme.bloomRadius,
+              theme.bloomThreshold
+            );
+            this.composer.addPass(this.bloomPass);
           }
+          
+          // Add RGB shift pass
+          this.rgbShiftPass = new THREE.ShaderPass(THREE.RGBShiftShader);
+          this.rgbShiftPass.uniforms.amount.value = 0.0015;
+          this.rgbShiftPass.uniforms.angle.value = 0;
+          this.composer.addPass(this.rgbShiftPass);
+          
+          // Add glitch pass
+          this.glitchPass = new THREE.GlitchPass();
+          this.glitchPass.goWild = false;
+          this.glitchPass.enabled = true;
+          this.composer.addPass(this.glitchPass);
+        } catch (error) {
+          this.showError(`Failed to set up post-processing: ${error.message}`);
         }
-        
-        // Resume audio context if suspended
-        if (audioContext.state === "suspended") {
-          audioContext.resume();
+      },
+
+      // Create scene objects
+      createSceneObjects: function() {
+        try {
+          const theme = this.visualThemes[this.config.visualTheme];
+          
+          // Create floor (dance floor)
+          this.createDanceFloor(theme);
+          
+          // Create sky dome
+          this.createSkyDome(theme);
+          
+          // Create particle system
+          this.createParticles(theme);
+          
+          // Create characters
+          this.createCharacters(theme);
+          
+          // Create buildings
+          this.createBuildings(theme);
+          
+          // Create lasers
+          this.createLasers(theme);
+        } catch (error) {
+          this.showError(`Failed to create scene objects: ${error.message}`);
         }
+      },
+
+      // Create dance floor
+      createDanceFloor: function(theme) {
+        // Create a grid floor for the dance floor
+        const floorSize = 100;
+        const floorSegments = 50;
         
-        // Set volume
-        audioElement.volume = config.volume;
-        
-        // Play audio
-        audioElement.play().then(() => {
-          audioButton.classList.add('active');
-          audioButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>';
-          audioVisualizer.style.display = 'block';
-          audioStatus.textContent = "Audio playing";
-          audioStatus.style.color = "#00ffff";
-          audioStatus.style.display = "block";
-          setTimeout(() => {
-            audioStatus.style.display = "none";
-          }, 2000);
-        }).catch(e => {
-          console.error("Audio play error:", e);
-          audioStatus.textContent = "Couldn't play audio. Try clicking again.";
-          audioStatus.style.color = "#ff0000";
-          audioStatus.style.display = "block";
+        const floorGeometry = new THREE.PlaneGeometry(floorSize, floorSize, floorSegments, floorSegments);
+        const floorMaterial = new THREE.MeshBasicMaterial({
+          color: theme.gridColor,
+          wireframe: true,
+          transparent: true,
+          opacity: 0.5
         });
-      }
-      
-      isPlaying = !isPlaying;
-    }
+        
+        this.floorMesh = new THREE.Mesh(floorGeometry, floorMaterial);
+        this.floorMesh.rotation.x = -Math.PI / 2;
+        this.floorMesh.position.y = -2;
+        this.scene.add(this.floorMesh);
+        
+        // Add a reflective surface under the wireframe
+        const reflectiveGeometry = new THREE.PlaneGeometry(floorSize, floorSize);
+        const reflectiveMaterial = new THREE.MeshBasicMaterial({
+          color: 0x000000,
+          transparent: true,
+          opacity: 0.3
+        });
+        
+        const reflectiveMesh = new THREE.Mesh(reflectiveGeometry, reflectiveMaterial);
+        reflectiveMesh.rotation.x = -Math.PI / 2;
+        reflectiveMesh.position.y = -2.1;
+        this.scene.add(reflectiveMesh);
+      },
 
-    function updateAudioData() {
-      if (!audioAnalyser) return;
-      
-      // Get time domain data
-      audioAnalyser.getFloatTimeDomainData(audioData);
-      
-      // Get frequency data
-      audioAnalyser.getByteFrequencyData(frequencyData);
-      
-      // Update visualizer
-      drawAudioVisualizer();
-      
-      requestAnimationFrame(updateAudioData);
-    }
+      // Create sky dome
+      createSkyDome: function(theme) {
+        // Create a large sphere for the sky
+        const skyGeometry = new THREE.SphereGeometry(400, 32, 32);
+        const skyMaterial = new THREE.MeshBasicMaterial({
+          color: theme.skyColor,
+          side: THREE.BackSide,
+          transparent: true,
+          opacity: 0.8
+        });
+        
+        this.skyMesh = new THREE.Mesh(skyGeometry, skyMaterial);
+        this.scene.add(this.skyMesh);
+        
+        // Add stars to the sky dome
+        const starCount = 1000;
+        const starGeometry = new THREE.BufferGeometry();
+        const starPositions = new Float32Array(starCount * 3);
+        
+        for (let i = 0; i < starCount; i++) {
+          // Create stars in a full sphere around the scene
+          const theta = Math.random() * Math.PI * 2;
+          const phi = Math.random() * Math.PI;
+          const radius = 350 + Math.random() * 50;
+          
+          starPositions[i * 3] = radius * Math.sin(theta) * Math.cos(theta);
+          starPositions[i * 3 + 1] = radius * Math.cos(phi);
+          starPositions[i * 3 + 2] = radius * Math.sin(phi) * Math.sin(theta);
+        }
+        
+        starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+        
+        const starMaterial = new THREE.PointsMaterial({
+          color: 0xffffff,
+          size: 2,
+          transparent: true,
+          opacity: 0.8
+        });
+        
+        const stars = new THREE.Points(starGeometry, starMaterial);
+        this.scene.add(stars);
+        this.skyObjects.push(stars);
+      },
 
-    function drawAudioVisualizer() {
-      if (!visualizerCtx || !frequencyData) return;
-      
-      // Clear canvas
-      visualizerCtx.clearRect(0, 0, audioVisualizer.width, audioVisualizer.height);
-      
-      // Set up visualization style
-      const barWidth = 3;
-      const barGap = 1;
-      const barCount = Math.min(64, frequencyData.length);
-      const centerY = audioVisualizer.height / 2;
-      
-      // Draw frequency bars
-      for (let i = 0; i < barCount; i++) {
-        const amplitude = frequencyData[i] / 255; // Normalize to 0-1
-        const barHeight = Math.max(2, amplitude * audioVisualizer.height / 2);
+      // Create particles
+      createParticles: function(theme) {
+        const particleGeometry = new THREE.BufferGeometry();
+        const particleCount = this.config.density * 100;
         
-        // Create gradient for each bar
-        const gradient = visualizerCtx.createLinearGradient(0, centerY - barHeight, 0, centerY + barHeight);
-        gradient.addColorStop(0, "rgba(255, 0, 255, 0.8)");
-        gradient.addColorStop(0.5, "rgba(0, 255, 255, 0.8)");
-        gradient.addColorStop(1, "rgba(255, 0, 255, 0.8)");
+        const positions = new Float32Array(particleCount * 3);
+        const colors = new Float32Array(particleCount * 3);
         
-        visualizerCtx.fillStyle = gradient;
-        
-        // Draw mirrored bars
-        visualizerCtx.fillRect(i * (barWidth + barGap), centerY - barHeight, barWidth, barHeight);
-        visualizerCtx.fillRect(i * (barWidth + barGap), centerY, barWidth, barHeight);
-      }
-      
-      // Draw center line
-      visualizerCtx.strokeStyle = "rgba(255, 255, 255, 0.5)";
-      visualizerCtx.beginPath();
-      visualizerCtx.moveTo(0, centerY);
-      visualizerCtx.lineTo(audioVisualizer.width, centerY);
-      visualizerCtx.stroke();
-    }
-    
-    // ===== Theme Handling =====
-    function cycleTheme() {
-      const themes = Object.keys(visualThemes);
-      const currentIndex = themes.indexOf(config.visualTheme);
-      const nextIndex = (currentIndex + 1) % themes.length;
-      config.visualTheme = themes[nextIndex];
-      
-      // Show theme indicator
-      themeIndicator.textContent = visualThemes[config.visualTheme].name;
-      themeIndicator.style.opacity = "1";
-      themeIndicator.classList.add("fade-in");
-      
-      // Hide theme indicator after a delay
-      setTimeout(() => {
-        themeIndicator.classList.remove("fade-in");
-        themeIndicator.classList.add("fade-out");
-        setTimeout(() => {
-          themeIndicator.style.opacity = "0";
-          themeIndicator.classList.remove("fade-out");
-        }, 500);
-      }, 2000);
-      
-      // Update scene
-      updateVisualTheme();
-    }
-    
-    function updateVisualTheme() {
-      const theme = visualThemes[config.visualTheme];
-      
-      // Update fog
-      if (scene && scene.fog) {
-        scene.fog.color.set(theme.fogColor);
-      }
-      
-      // Update sky
-      if (skyMesh) {
-        skyMesh.material.color.set(theme.skyColor);
-      }
-      
-      // Update floor
-      if (floorMesh) {
-        floorMesh.material.color.set(theme.gridColor);
-      }
-      
-      // Update particles
-      if (particles) {
-        const positions = particles.geometry.attributes.position.array;
-        const colors = particles.geometry.attributes.color.array;
         const color1 = new THREE.Color(theme.particleColor1);
         const color2 = new THREE.Color(theme.particleColor2);
         
-        for (let i = 0; i < colors.length / 3; i++) {
+        for (let i = 0; i < particleCount; i++) {
+          // Position
+          const x = (Math.random() - 0.5) * 100;
+          const y = Math.random() * 50;
+          const z = (Math.random() - 0.5) * 100;
+          
+          positions[i * 3] = x;
+          positions[i * 3 + 1] = y;
+          positions[i * 3 + 2] = z;
+          
+          // Color
           const mixRatio = Math.random();
           const mixedColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
           
@@ -2169,84 +1395,1056 @@
           colors[i * 3 + 2] = mixedColor.b;
         }
         
-        particles.geometry.attributes.color.needsUpdate = true;
-      }
-      
-      // Update dancers
-      dancers.forEach(dancer => scene.remove(dancer));
-      createDancers(theme);
-      
-      // Update buildings
-      buildings.forEach(building => scene.remove(building));
-      createBuildings(theme);
-      
-      // Update sky objects
-      skyObjects.forEach(obj => scene.remove(obj));
-      createSkyObjects(theme);
-      
-      // Update lasers
-      lasers.forEach(laser => scene.remove(laser));
-      createLasers(theme);
-      
-      // Update bloom settings
-      if (bloomPass) {
-        bloomPass.strength = theme.bloomStrength;
-        bloomPass.radius = theme.bloomRadius;
-        bloomPass.threshold = theme.bloomThreshold;
-      }
-      
-      // Update aurora colors if it exists
-      skyObjects.forEach(obj => {
-        if (obj.type === 'Mesh' && obj.geometry.type === 'PlaneGeometry' && obj.geometry.parameters.width === 800) {
-          obj.material.uniforms.color1.value = new THREE.Color(theme.particleColor1);
-          obj.material.uniforms.color2.value = new THREE.Color(theme.particleColor2);
-        }
-      });
-    }
-    
-    // ===== Fullscreen Handling =====
-    function initFullscreen() {
-      fullscreenButton.addEventListener('click', toggleFullscreen);
-    }
-    
-    function toggleFullscreen() {
-      if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(err => {
-          console.error(`Error attempting to enable fullscreen: ${err.message}`);
+        particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        
+        const particleMaterial = new THREE.PointsMaterial({
+          size: 2,
+          vertexColors: true,
+          transparent: true,
+          opacity: 0.8
         });
-      } else {
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
+        
+        this.particles = new THREE.Points(particleGeometry, particleMaterial);
+        this.scene.add(this.particles);
+      },
+
+      // Create characters
+      createCharacters: function(theme) {
+        // Create dancers
+        for (let i = 0; i < this.config.dancerCount; i++) {
+          const dancer = this.createCharacter(theme);
+          
+          // Random position on the dance floor
+          dancer.position.x = (Math.random() - 0.5) * 40;
+          dancer.position.z = (Math.random() - 0.5) * 40;
+          dancer.position.y = -2; // On the floor
+          
+          // Random rotation
+          dancer.rotation.y = Math.random() * Math.PI * 2;
+          
+          this.scene.add(dancer);
+          this.characters.push(dancer);
+        }
+      },
+
+      // Create a single character
+      createCharacter: function(theme) {
+        // Create a group for the character
+        const character = new THREE.Group();
+        
+        // Random color for this character
+        const color1 = new THREE.Color(theme.particleColor1);
+        const color2 = new THREE.Color(theme.particleColor2);
+        const mixRatio = Math.random();
+        const characterColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
+        
+        // Material for the character - wireframe for vector outline look
+        const material = new THREE.MeshBasicMaterial({
+          color: characterColor,
+          wireframe: true,
+          transparent: true,
+          opacity: 0.8
+        });
+        
+        // Head
+        const headGeometry = new THREE.SphereGeometry(0.5, 8, 8);
+        const head = new THREE.Mesh(headGeometry, material);
+        head.position.y = 4.5;
+        character.add(head);
+        
+        // Body
+        const bodyGeometry = new THREE.CylinderGeometry(0.5, 0.7, 3, 8);
+        const body = new THREE.Mesh(bodyGeometry, material);
+        body.position.y = 2.5;
+        character.add(body);
+        
+        // Arms
+        const armGeometry = new THREE.CylinderGeometry(0.2, 0.2, 2, 6);
+        
+        // Left arm
+        const leftArm = new THREE.Mesh(armGeometry, material);
+        leftArm.position.set(-0.8, 3, 0);
+        leftArm.rotation.z = Math.PI / 4;
+        character.add(leftArm);
+        
+        // Right arm
+        const rightArm = new THREE.Mesh(armGeometry, material);
+        rightArm.position.set(0.8, 3, 0);
+        rightArm.rotation.z = -Math.PI / 4;
+        character.add(rightArm);
+        
+        // Legs
+        const legGeometry = new THREE.CylinderGeometry(0.25, 0.25, 2.5, 6);
+        
+        // Left leg
+        const leftLeg = new THREE.Mesh(legGeometry, material);
+        leftLeg.position.set(-0.5, 0.5, 0);
+        character.add(leftLeg);
+        
+        // Right leg
+        const rightLeg = new THREE.Mesh(legGeometry, material);
+        rightLeg.position.set(0.5, 0.5, 0);
+        character.add(rightLeg);
+        
+        // Add a subtle glow effect
+        const glowGeometry = new THREE.SphereGeometry(1.5, 16, 16);
+        const glowMaterial = new THREE.MeshBasicMaterial({
+          color: characterColor,
+          transparent: true,
+          opacity: 0.1,
+          side: THREE.BackSide
+        });
+        const glow = new THREE.Mesh(glowGeometry, glowMaterial);
+        glow.position.y = 2;
+        character.add(glow);
+        
+        // Add animation data
+        character.userData = {
+          animPhase: Math.random() * Math.PI * 2,
+          animSpeed: 0.5 + Math.random() * 1.5,
+          rotSpeed: (Math.random() - 0.5) * 0.02,
+          danceIntensity: 0.7 + Math.random() * 0.6
+        };
+        
+        return character;
+      },
+
+      // Create buildings
+      createBuildings: function(theme) {
+        // Create city grid
+        const gridSize = 3;
+        const spacing = 25;
+        
+        for (let x = -gridSize; x <= gridSize; x++) {
+          for (let z = -gridSize; z <= gridSize; z++) {
+            // Skip center area (dance floor)
+            if (Math.abs(x) < 2 && Math.abs(z) < 2) continue;
+            
+            // Random building height
+            const height = 10 + Math.random() * 40;
+            
+            // Create building
+            const building = this.createBuilding(height, theme);
+            
+            // Position
+            building.position.x = x * spacing;
+            building.position.z = z * spacing;
+            building.position.y = height / 2 - 2; // Half height (origin at center) and floor offset
+            
+            this.scene.add(building);
+            this.buildings.push(building);
+          }
+        }
+      },
+
+      // Create a single building
+      createBuilding: function(height, theme) {
+        // Create a group for the building
+        const building = new THREE.Group();
+        
+        // Random color for this building
+        const color1 = new THREE.Color(theme.buildingColor1);
+        const color2 = new THREE.Color(theme.buildingColor2);
+        const mixRatio = Math.random();
+        const buildingColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
+        
+        // Building base geometry
+        const width = 5 + Math.random() * 10;
+        const depth = 5 + Math.random() * 10;
+        const geometry = new THREE.BoxGeometry(width, height, depth);
+        
+        // Wireframe material for vector outline look
+        const material = new THREE.MeshBasicMaterial({
+          color: buildingColor,
+          wireframe: true,
+          transparent: true,
+          opacity: 0.6
+        });
+        
+        const mesh = new THREE.Mesh(geometry, material);
+        building.add(mesh);
+        
+        // Add animation data
+        building.userData = {
+          pulseSpeed: Math.random() * 2 + 1,
+          originalColor: buildingColor.clone()
+        };
+        
+        return building;
+      },
+
+      // Create lasers
+      createLasers: function(theme) {
+        if (!this.config.showLasers) return;
+        
+        // Create laser beams
+        const laserCount = 20;
+        
+        for (let i = 0; i < laserCount; i++) {
+          const laser = this.createLaser(theme);
+          this.scene.add(laser);
+          this.lasers.push(laser);
+        }
+      },
+
+      // Create a single laser
+      createLaser: function(theme) {
+        // Create a group for the laser
+        const laser = new THREE.Group();
+        
+        // Random color
+        const color1 = new THREE.Color(theme.particleColor1);
+        const color2 = new THREE.Color(theme.particleColor2);
+        const mixRatio = Math.random();
+        const laserColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
+        
+        // Create laser beam
+        const beamGeometry = new THREE.CylinderGeometry(0.1, 0.1, 100, 8);
+        const beamMaterial = new THREE.MeshBasicMaterial({
+          color: laserColor,
+          transparent: true,
+          opacity: 0.7
+        });
+        
+        const beam = new THREE.Mesh(beamGeometry, beamMaterial);
+        beam.position.y = 50;
+        beam.rotation.x = Math.PI / 2;
+        laser.add(beam);
+        
+        // Random position around the dance floor
+        const angle = Math.random() * Math.PI * 2;
+        const radius = 30 + Math.random() * 20;
+        
+        laser.position.x = Math.cos(angle) * radius;
+        laser.position.z = Math.sin(angle) * radius;
+        laser.position.y = -2;
+        
+        // Random rotation
+        laser.rotation.y = Math.random() * Math.PI * 2;
+        
+        // Add animation data
+        laser.userData = {
+          rotationSpeed: (Math.random() - 0.5) * 0.02,
+          pulseSpeed: Math.random() * 2 + 1
+        };
+        
+        return laser;
+      },
+
+      // Initialize controls
+      initControls: function() {
+        // Mouse/touch event handlers
+        window.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+        window.addEventListener('touchmove', (e) => this.handleTouchMove(e));
+        
+        // Keyboard event handlers
+        window.addEventListener('keydown', (e) => this.handleKeyDown(e));
+        window.addEventListener('keyup', (e) => this.handleKeyUp(e));
+        
+        // Window resize handler
+        window.addEventListener('resize', () => this.onWindowResize());
+        
+        // Button event handlers
+        this.elements.fullscreenButton.addEventListener('click', () => this.toggleFullscreen());
+        this.elements.themeButton.addEventListener('click', () => this.cycleTheme());
+        this.elements.trackButton.addEventListener('click', () => this.toggleTrackSelector());
+        this.elements.audioButton.addEventListener('click', () => this.toggleAudio());
+        this.elements.helpButton.addEventListener('click', () => this.toggleHelp());
+        this.elements.settingsButton.addEventListener('click', () => this.toggleSettings());
+        this.elements.settingsApply.addEventListener('click', () => this.applySettings());
+        this.elements.settingsClose.addEventListener('click', () => this.toggleSettings());
+        
+        // Mobile controls
+        if (this.config.isMobile) {
+          this.initMobileControls();
+        }
+      },
+
+      // Initialize mobile controls
+      initMobileControls: function() {
+        // Touch events for mobile controls
+        this.elements.mobileUp.addEventListener('touchstart', () => { this.keys['w'] = true; });
+        this.elements.mobileUp.addEventListener('touchend', () => { this.keys['w'] = false; });
+        
+        this.elements.mobileDown.addEventListener('touchstart', () => { this.keys['s'] = true; });
+        this.elements.mobileDown.addEventListener('touchend', () => { this.keys['s'] = false; });
+        
+        this.elements.mobileLeft.addEventListener('touchstart', () => { this.keys['a'] = true; });
+        this.elements.mobileLeft.addEventListener('touchend', () => { this.keys['a'] = false; });
+        
+        this.elements.mobileRight.addEventListener('touchstart', () => { this.keys['d'] = true; });
+        this.elements.mobileRight.addEventListener('touchend', () => { this.keys['d'] = false; });
+      },
+
+      // Handle mouse move
+      handleMouseMove: function(e) {
+        this.mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+        this.mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+        this.mouse.active = true;
+      },
+
+      // Handle touch move
+      handleTouchMove: function(e) {
+        if (e.touches && e.touches[0]) {
+          this.mouse.x = (e.touches[0].clientX / window.innerWidth) * 2 - 1;
+          this.mouse.y = -(e.touches[0].clientY / window.innerHeight) * 2 + 1;
+          this.mouse.active = true;
+        }
+      },
+
+      // Handle key down
+      handleKeyDown: function(e) {
+        this.keys[e.key.toLowerCase()] = true;
+        
+        // Toggle keyboard controls display with H key
+        if (e.key.toLowerCase() === 'h') {
+          this.toggleHelp();
+        }
+        
+        // Toggle fullscreen with F key
+        if (e.key.toLowerCase() === 'f') {
+          this.toggleFullscreen();
+        }
+        
+        // Toggle audio with Space key
+        if (e.key === ' ') {
+          this.toggleAudio();
+        }
+        
+        // Reset camera with R key
+        if (e.key.toLowerCase() === 'r') {
+          this.camera.position.set(0, 5, 20);
+          this.camera.lookAt(0, 0, 0);
+        }
+        
+        // Change visual theme with C key
+        if (e.key.toLowerCase() === 'c') {
+          this.cycleTheme();
+        }
+        
+        // Change track with T key
+        if (e.key.toLowerCase() === 't') {
+          this.toggleTrackSelector();
+        }
+        
+        // Toggle settings with P key
+        if (e.key.toLowerCase() === 'p') {
+          this.toggleSettings();
+        }
+      },
+
+      // Handle key up
+      handleKeyUp: function(e) {
+        this.keys[e.key.toLowerCase()] = false;
+      },
+
+      // Toggle help display
+      toggleHelp: function() {
+        this.elements.keyboardControls.style.display = 
+          this.elements.keyboardControls.style.display === 'none' ? 'block' : 'none';
+      },
+
+      // Toggle fullscreen
+      toggleFullscreen: function() {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(err => {
+            console.error(`Error attempting to enable fullscreen: ${err.message}`);
+          });
+        } else {
+          if (document.exitFullscreen) {
+            document.exitFullscreen();
+          }
+        }
+      },
+
+      // Toggle settings panel
+      toggleSettings: function() {
+        const display = this.elements.settingsPanel.style.display;
+        this.elements.settingsPanel.style.display = display === 'none' ? 'block' : 'none';
+        
+        // Update settings controls with current values
+        if (display === 'none') {
+          document.getElementById('quality-setting').value = this.config.quality;
+          document.getElementById('density-setting').value = this.config.density;
+          document.getElementById('fps-setting').checked = this.config.showFps;
+          document.getElementById('bloom-setting').value = this.visualThemes[this.config.visualTheme].bloomStrength;
+          document.getElementById('glitch-setting').value = this.config.glitchIntensity;
+          document.getElementById('color-shift-setting').value = this.config.colorShiftSpeed;
+          document.getElementById('volume-setting').value = this.config.volume;
+          document.getElementById('bass-setting').value = this.config.bassImpact;
+          document.getElementById('ambient-setting').checked = this.config.showAmbientSound;
+        }
+      },
+
+      // Apply settings
+      applySettings: function() {
+        // Get values from settings controls
+        const quality = document.getElementById('quality-setting').value;
+        const density = parseInt(document.getElementById('density-setting').value);
+        const showFps = document.getElementById('fps-setting').checked;
+        const bloomStrength = parseFloat(document.getElementById('bloom-setting').value);
+        const glitchIntensity = parseFloat(document.getElementById('glitch-setting').value);
+        const colorShiftSpeed = parseFloat(document.getElementById('color-shift-setting').value);
+        const volume = parseFloat(document.getElementById('volume-setting').value);
+        const bassImpact = parseFloat(document.getElementById('bass-setting').value);
+        const showAmbientSound = document.getElementById('ambient-setting').checked;
+        
+        // Apply quality settings
+        this.config.quality = quality;
+        this.applyQualitySettings(quality);
+        
+        // Apply other settings
+        this.config.density = density;
+        this.config.showFps = showFps;
+        this.config.glitchIntensity = glitchIntensity;
+        this.config.colorShiftSpeed = colorShiftSpeed;
+        this.config.volume = volume;
+        this.config.bassImpact = bassImpact;
+        this.config.showAmbientSound = showAmbientSound;
+        
+        // Update bloom strength
+        if (this.bloomPass) {
+          this.bloomPass.strength = bloomStrength;
+          this.visualThemes[this.config.visualTheme].bloomStrength = bloomStrength;
+        }
+        
+        // Update audio volume
+        if (this.audioElement) {
+          this.audioElement.volume = volume;
+        }
+        
+        // Update ambient sound
+        if (this.ambientSound) {
+          if (showAmbientSound) {
+            if (this.isPlaying && !this.ambientSound.paused) {
+              this.ambientSound.play();
+            }
+          } else {
+            this.ambientSound.pause();
+          }
+        }
+        
+        // Show/hide FPS counter
+        this.elements.performanceIndicator.style.display = showFps ? 'block' : 'none';
+        
+        // Hide settings panel
+        this.elements.settingsPanel.style.display = 'none';
+        
+        // Recreate scene objects if density changed significantly
+        if (Math.abs(this.config.density - density) > 10) {
+          this.recreateSceneObjects();
+        }
+      },
+
+      // Recreate scene objects
+      recreateSceneObjects: function() {
+        // Remove existing objects
+        if (this.particles) {
+          this.scene.remove(this.particles);
+        }
+        
+        this.characters.forEach(character => {
+          this.scene.remove(character);
+        });
+        this.characters = [];
+        
+        // Create new objects
+        const theme = this.visualThemes[this.config.visualTheme];
+        this.createParticles(theme);
+        this.createCharacters(theme);
+      },
+
+      // Handle window resize
+      onWindowResize: function() {
+        this.camera.aspect = window.innerWidth / window.innerHeight;
+        this.camera.updateProjectionMatrix();
+        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        
+        if (this.composer) {
+          this.composer.setSize(window.innerWidth, window.innerHeight);
+        }
+      },
+
+      // Update camera from keyboard
+      updateCameraFromKeyboard: function() {
+        const moveSpeed = 0.5 * this.config.cameraSpeed;
+        
+        // Get camera direction vectors
+        const forward = new THREE.Vector3(0, 0, -1).applyQuaternion(this.camera.quaternion);
+        const right = new THREE.Vector3(1, 0, 0).applyQuaternion(this.camera.quaternion);
+        
+        // Forward/backward
+        if (this.keys['w'] || this.keys['arrowup']) {
+          const newPosition = this.camera.position.clone().addScaledVector(forward, moveSpeed);
+          // Only move if we're not going below the minimum height
+          if (newPosition.y >= this.config.minCameraHeight) {
+            this.camera.position.copy(newPosition);
+          } else {
+            // Allow horizontal movement even if we can't move vertically
+            forward.y = 0;
+            forward.normalize();
+            this.camera.position.addScaledVector(forward, moveSpeed);
+          }
+        }
+        if (this.keys['s'] || this.keys['arrowdown']) {
+          const newPosition = this.camera.position.clone().addScaledVector(forward, -moveSpeed);
+          // Only move if we're not going below the minimum height
+          if (newPosition.y >= this.config.minCameraHeight) {
+            this.camera.position.copy(newPosition);
+          } else {
+            // Allow horizontal movement even if we can't move vertically
+            forward.y = 0;
+            forward.normalize();
+            this.camera.position.addScaledVector(forward, -moveSpeed);
+          }
+        }
+        
+        // Left/right
+        if (this.keys['a'] || this.keys['arrowleft']) {
+          this.camera.position.addScaledVector(right, -moveSpeed);
+        }
+        if (this.keys['d'] || this.keys['arrowright']) {
+          this.camera.position.addScaledVector(right, moveSpeed);
+        }
+        
+        // Enforce minimum height
+        if (this.camera.position.y < this.config.minCameraHeight) {
+          this.camera.position.y = this.config.minCameraHeight;
+        }
+      },
+
+      // Animation loop
+      animate: function() {
+        try {
+          this.animationFrameId = requestAnimationFrame(() => this.animate());
+          
+          const now = performance.now();
+          const delta = this.clock.getDelta();
+          this.time += delta;
+          
+          // Update FPS counter
+          this.frameCount++;
+          if (now - this.lastFpsUpdate > 1000) {
+            this.fps = Math.round((this.frameCount * 1000) / (now - this.lastFpsUpdate));
+            this.lastFpsUpdate = now;
+            this.frameCount = 0;
+            
+            if (this.config.showFps) {
+              this.elements.performanceIndicator.textContent = `FPS: ${this.fps}`;
+            }
+          }
+          
+          // Update camera from keyboard
+          this.updateCameraFromKeyboard();
+          
+          // Update controls
+          this.controls.update();
+          
+          // Get audio reactivity factor if enabled
+          let audioFactor = 1;
+          let bassValue = 0;
+          
+          if (this.config.audioReactive && this.isPlaying && this.frequencyData) {
+            // Get bass frequencies (typically the first few bins)
+            bassValue = 0;
+            for (let i = 0; i < 10; i++) {
+              bassValue += this.frequencyData[i];
+            }
+            bassValue = bassValue / 10 / 255; // Normalize
+            
+            // Apply bass impact multiplier
+            audioFactor = 1 + bassValue * this.config.bassImpact;
+          }
+          
+          // Update particle system
+          if (this.particles) {
+            // Audio reactivity
+            if (audioFactor > 1) {
+              const positions = this.particles.geometry.attributes.position.array;
+              for (let i = 0; i < positions.length; i += 3) {
+                const originalX = positions[i];
+                const originalY = positions[i + 1];
+                const originalZ = positions[i + 2];
+                
+                const distance = Math.sqrt(originalX * originalX + originalY * originalY + originalZ * originalZ);
+                const pulseFactor = 1 + 0.2 * bassValue * Math.sin(this.time * 2 + distance);
+                
+                positions[i] = originalX * pulseFactor;
+                positions[i + 1] = originalY * pulseFactor;
+                positions[i + 2] = originalZ * pulseFactor;
+              }
+              
+              this.particles.geometry.attributes.position.needsUpdate = true;
+            }
+          }
+          
+          // Update floor
+          if (this.floorMesh) {
+            // Warp floor based on audio
+            if (audioFactor > 1) {
+              const positions = this.floorMesh.geometry.attributes.position.array;
+              const count = positions.length / 3;
+              
+              for (let i = 0; i < count; i++) {
+                const x = positions[i * 3];
+                const z = positions[i * 3 + 2];
+                
+                const distance = Math.sqrt(x * x + z * z);
+                const y = Math.sin(distance * 0.1 + this.time * 2) * bassValue * 2;
+                
+                positions[i * 3 + 1] = y;
+              }
+              
+              this.floorMesh.geometry.attributes.position.needsUpdate = true;
+            }
+          }
+          
+          // Update characters
+          this.characters.forEach(character => {
+            // Rotate character
+            character.rotation.y += character.userData.rotSpeed;
+            
+            // Animate character parts based on time and audio
+            const phase = this.time * character.userData.animSpeed + character.userData.animPhase;
+            const intensity = character.userData.danceIntensity * (1 + (audioFactor - 1) * 2);
+            
+            // Get character parts
+            const head = character.children[0];
+            const body = character.children[1];
+            const leftArm = character.children[2];
+            const rightArm = character.children[3];
+            const leftLeg = character.children[4];
+            const rightLeg = character.children[5];
+            const glow = character.children[6];
+            
+            // Animate head bobbing
+            head.position.y = 4.5 + Math.sin(phase) * 0.2 * intensity;
+            
+            // Animate arms
+            leftArm.rotation.z = Math.PI / 4 + Math.sin(phase) * 0.5 * intensity;
+            rightArm.rotation.z = -Math.PI / 4 + Math.sin(phase + Math.PI) * 0.5 * intensity;
+            
+            // Animate legs
+            leftLeg.rotation.x = Math.sin(phase) * 0.3 * intensity;
+            rightLeg.rotation.x = Math.sin(phase + Math.PI) * 0.3 * intensity;
+            
+            // Animate glow - reduced intensity
+            glow.scale.setScalar(1 + bassValue * 0.3);
+            glow.material.opacity = 0.1 + bassValue * 0.1;
+          });
+          
+          // Update buildings
+          this.buildings.forEach(building => {
+            // Pulse building color based on audio
+            const mesh = building.children[0];
+            
+            const pulsePhase = this.time * building.userData.pulseSpeed;
+            const pulseIntensity = 1 + (audioFactor - 1) * 0.5;
+            
+            const originalColor = building.userData.originalColor;
+            const pulseColor = new THREE.Color(originalColor).lerp(
+              new THREE.Color(0xffffff),
+              0.2 * Math.sin(pulsePhase) * pulseIntensity
+            );
+            
+            mesh.material.color.copy(pulseColor);
+          });
+          
+          // Update lasers
+          if (this.config.showLasers) {
+            this.lasers.forEach(laser => {
+              // Rotate laser
+              laser.rotation.y += laser.userData.rotationSpeed;
+              
+              // Pulse laser opacity based on audio
+              const beam = laser.children[0];
+              const pulsePhase = this.time * laser.userData.pulseSpeed;
+              const pulseIntensity = 1 + (audioFactor - 1) * 2;
+              
+              beam.material.opacity = 0.5 + 0.5 * Math.sin(pulsePhase) * pulseIntensity;
+            });
+          }
+          
+          // Update post-processing effects
+          if (this.rgbShiftPass) {
+            this.rgbShiftPass.uniforms.angle.value = this.time * 0.5 * this.config.colorShiftSpeed;
+            this.rgbShiftPass.uniforms.amount.value = 0.001 + 0.004 * this.config.trippyLevel + (audioFactor - 1) * 0.01;
+          }
+          
+          if (this.glitchPass) {
+            // Occasional glitches based on intensity - reduced frequency
+            if (Math.random() < 0.002 * this.config.glitchIntensity) {
+              this.glitchPass.goWild = true;
+              setTimeout(() => {
+                this.glitchPass.goWild = false;
+              }, 50 + Math.random() * 100); // Shorter glitch duration
+            }
+          }
+          
+          if (this.bloomPass) {
+            const theme = this.visualThemes[this.config.visualTheme];
+            this.bloomPass.strength = theme.bloomStrength * (1 + (audioFactor - 1) * 0.5);
+          }
+          
+          // Render scene with post-processing
+          if (this.composer) {
+            this.composer.render();
+          } else {
+            this.renderer.render(this.scene, this.camera);
+          }
+        } catch (error) {
+          console.error("Animation error:", error);
+          cancelAnimationFrame(this.animationFrameId);
+          this.showError(`Animation error: ${error.message}. Try refreshing the page.`);
+        }
+      },
+
+      // Initialize audio
+      initAudio: function() {
+        try {
+          // Create audio element
+          this.audioElement = new Audio();
+          this.audioElement.crossOrigin = "anonymous";
+          this.audioElement.src = this.audioTracks[this.config.audioTrack].url;
+          
+          // Show audio status
+          this.elements.audioStatus.textContent = "Loading audio...";
+          this.elements.audioStatus.style.display = "block";
+          
+          // Create track selector options
+          this.createTrackSelector();
+          
+          // Audio loaded event
+          this.audioElement.addEventListener('canplaythrough', () => {
+            this.audioLoaded = true;
+            this.elements.audioStatus.textContent = "Audio ready! Click play button to start.";
+            setTimeout(() => {
+              this.elements.audioStatus.style.display = "none";
+            }, 3000);
+          });
+          
+          // Audio error event
+          this.audioElement.addEventListener('error', (e) => {
+            console.error("Audio error:", e);
+            this.elements.audioStatus.textContent = "Audio failed to load. Try another track.";
+            this.elements.audioStatus.style.color = "#ff0000";
+          });
+          
+          // Preload audio
+          this.audioElement.load();
+          
+          // Initialize ambient crowd sound
+          if (this.config.showAmbientSound) {
+            this.ambientSound = new Audio();
+            this.ambientSound.src = "https://cdn.glitch.global/25331b85-e206-4347-93a8-666983818ff8/crowd-talking-loop.mp3?v=1747328000000";
+            this.ambientSound.loop = true;
+            this.ambientSound.volume = 0.2;
+          }
+        } catch (error) {
+          this.showError(`Failed to initialize audio: ${error.message}`);
+        }
+      },
+
+      // Create track selector
+      createTrackSelector: function() {
+        // Clear existing options
+        this.elements.trackSelector.innerHTML = '<h3>SELECT TRACK</h3>';
+        
+        // Add options for each track
+        Object.keys(this.audioTracks).forEach(trackId => {
+          const track = this.audioTracks[trackId];
+          const option = document.createElement('div');
+          option.className = 'track-option';
+          option.textContent = track.title;
+          option.dataset.trackId = trackId;
+          
+          if (trackId === this.config.audioTrack) {
+            option.classList.add('active');
+          }
+          
+          option.addEventListener('click', () => {
+            this.changeTrack(trackId);
+            this.elements.trackSelector.style.display = 'none';
+          });
+          
+          this.elements.trackSelector.appendChild(option);
+        });
+      },
+
+      // Toggle track selector
+      toggleTrackSelector: function() {
+        if (this.elements.trackSelector.style.display === 'block') {
+          this.elements.trackSelector.style.display = 'none';
+        } else {
+          this.elements.trackSelector.style.display = 'block';
+        }
+      },
+
+      // Change track
+      changeTrack: function(trackId) {
+        // Update active track
+        this.config.audioTrack = trackId;
+        
+        // Update track info
+        this.elements.trackInfo.textContent = `Now Playing: ${this.audioTracks[trackId].title}`;
+        
+        // If currently playing, restart with new track
+        const wasPlaying = this.isPlaying;
+        
+        if (this.isPlaying) {
+          this.audioElement.pause();
+          this.isPlaying = false;
+        }
+        
+        // Load new track
+        this.audioElement.src = this.audioTracks[trackId].url;
+        this.audioElement.load();
+        
+        // Show loading status
+        this.elements.audioStatus.textContent = "Loading new track...";
+        this.elements.audioStatus.style.display = "block";
+        
+        // When loaded, play if it was playing before
+        this.audioElement.addEventListener('canplaythrough', () => {
+          this.elements.audioStatus.textContent = "Track loaded!";
+          setTimeout(() => {
+            this.elements.audioStatus.style.display = "none";
+          }, 2000);
+          
+          if (wasPlaying) {
+            this.toggleAudio();
+          }
+        });
+        
+        // Update track selector
+        this.createTrackSelector();
+      },
+
+      // Toggle audio
+      toggleAudio: function() {
+        if (!this.audioLoaded) {
+          this.elements.audioStatus.textContent = "Audio still loading... Please wait.";
+          this.elements.audioStatus.style.display = "block";
+          setTimeout(() => {
+            this.elements.audioStatus.style.display = "none";
+          }, 3000);
+          return;
+        }
+        
+        if (this.isPlaying) {
+          this.audioElement.pause();
+          this.elements.audioButton.classList.remove('active');
+          this.elements.audioButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
+          this.elements.audioVisualizer.style.display = 'none';
+          this.elements.trackInfo.style.display = 'none';
+          this.elements.audioStatus.style.display = "none";
+          
+          // Stop ambient sound
+          if (this.ambientSound) {
+            this.ambientSound.pause();
+          }
+        } else {
+          // Set up audio context if not already done
+          if (!this.audioContext) {
+            try {
+              const AudioContext = window.AudioContext || window.webkitAudioContext;
+              this.audioContext = new AudioContext();
+              
+              // Create analyzer
+              this.audioAnalyser = this.audioContext.createAnalyser();
+              this.audioAnalyser.fftSize = 256;
+              
+              // Connect audio element to the audio context
+              this.audioSource = this.audioContext.createMediaElementSource(this.audioElement);
+              this.audioSource.connect(this.audioAnalyser);
+              this.audioAnalyser.connect(this.audioContext.destination);
+              
+              // Create data arrays
+              this.audioData = new Float32Array(this.audioAnalyser.frequencyBinCount);
+              this.frequencyData = new Uint8Array(this.audioAnalyser.frequencyBinCount);
+              
+              // Start audio data update loop
+              this.updateAudioData();
+            } catch (e) {
+              console.error("Web Audio API error:", e);
+              this.elements.audioStatus.textContent = "Audio API error. Try a different browser.";
+              this.elements.audioStatus.style.color = "#ff0000";
+              this.elements.audioStatus.style.display = "block";
+              return;
+            }
+          }
+          
+          // Resume audio context if suspended
+          if (this.audioContext.state === "suspended") {
+            this.audioContext.resume();
+          }
+          
+          // Set volume
+          this.audioElement.volume = this.config.volume;
+          
+          // Play audio
+          this.audioElement.play().then(() => {
+            this.elements.audioButton.classList.add('active');
+            this.elements.audioButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>';
+            this.elements.audioVisualizer.style.display = 'block';
+            
+            // Display track info
+            this.elements.trackInfo.textContent = `Now Playing: ${this.audioTracks[this.config.audioTrack].title}`;
+            this.elements.trackInfo.style.display = 'block';
+            
+            this.elements.audioStatus.textContent = "Audio playing";
+            this.elements.audioStatus.style.color = "#00ffff";
+            this.elements.audioStatus.style.display = "block";
+            setTimeout(() => {
+              this.elements.audioStatus.style.display = "none";
+            }, 2000);
+            
+            // Start ambient sound
+            if (this.ambientSound && this.config.showAmbientSound) {
+              this.ambientSound.play();
+            }
+          }).catch(e => {
+            console.error("Audio play error:", e);
+            this.elements.audioStatus.textContent = "Couldn't play audio. Try clicking again.";
+            this.elements.audioStatus.style.color = "#ff0000";
+            this.elements.audioStatus.style.display = "block";
+          });
+        }
+        
+        this.isPlaying = !this.isPlaying;
+      },
+
+      // Update audio data
+      updateAudioData: function() {
+        if (!this.audioAnalyser) return;
+        
+        // Get time domain data
+        this.audioAnalyser.getFloatTimeDomainData(this.audioData);
+        
+        // Get frequency data
+        this.audioAnalyser.getByteFrequencyData(this.frequencyData);
+        
+        // Update visualizer
+        this.drawAudioVisualizer();
+        
+        requestAnimationFrame(() => this.updateAudioData());
+      },
+
+      // Draw audio visualizer
+      drawAudioVisualizer: function() {
+        if (!this.visualizerCtx || !this.frequencyData) return;
+        
+        // Clear canvas
+        this.visualizerCtx.clearRect(0, 0, this.elements.audioVisualizer.width, this.elements.audioVisualizer.height);
+        
+        // Set up visualization style
+        const barWidth = 3;
+        const barGap = 1;
+        const barCount = Math.min(64, this.frequencyData.length);
+        const centerY = this.elements.audioVisualizer.height / 2;
+        
+        // Draw frequency bars
+        for (let i = 0; i < barCount; i++) {
+          const amplitude = this.frequencyData[i] / 255; // Normalize to 0-1
+          const barHeight = Math.max(2, amplitude * this.elements.audioVisualizer.height / 2);
+          
+          // Create gradient for each bar
+          const gradient = this.visualizerCtx.createLinearGradient(0, centerY - barHeight, 0, centerY + barHeight);
+          
+          gradient.addColorStop(0, "rgba(255, 0, 255, 0.8)");
+          gradient.addColorStop(0.5, "rgba(0, 255, 255, 0.8)");
+          gradient.addColorStop(1, "rgba(255, 0, 255, 0.8)");
+          
+          this.visualizerCtx.fillStyle = gradient;
+          
+          // Draw mirrored bars
+          this.visualizerCtx.fillRect(i * (barWidth + barGap), centerY - barHeight, barWidth, barHeight);
+          this.visualizerCtx.fillRect(i * (barWidth + barGap), centerY, barWidth, barHeight);
+        }
+        
+        // Draw center line
+        this.visualizerCtx.strokeStyle = "rgba(255, 255, 255, 0.5)";
+        this.visualizerCtx.beginPath();
+        this.visualizerCtx.moveTo(0, centerY);
+        this.visualizerCtx.lineTo(this.elements.audioVisualizer.width, centerY);
+        this.visualizerCtx.stroke();
+      },
+
+      // Cycle through visual themes
+      cycleTheme: function() {
+        const themes = Object.keys(this.visualThemes);
+        const currentIndex = themes.indexOf(this.config.visualTheme);
+        const nextIndex = (currentIndex + 1) % themes.length;
+        this.config.visualTheme = themes[nextIndex];
+        
+        // Show theme indicator
+        this.elements.themeIndicator.textContent = this.visualThemes[this.config.visualTheme].name;
+        this.elements.themeIndicator.style.opacity = "1";
+        this.elements.themeIndicator.classList.add("fade-in");
+        
+        // Hide theme indicator after a delay
+        setTimeout(() => {
+          this.elements.themeIndicator.classList.remove("fade-in");
+          this.elements.themeIndicator.classList.add("fade-out");
+          setTimeout(() => {
+            this.elements.themeIndicator.style.opacity = "0";
+            this.elements.themeIndicator.classList.remove("fade-out");
+          }, 500);
+        }, 2000);
+        
+        // Update scene
+        this.updateVisualTheme();
+      },
+
+      // Update visual theme
+      updateVisualTheme: function() {
+        const theme = this.visualThemes[this.config.visualTheme];
+        
+        // Update fog
+        if (this.scene && this.scene.fog) {
+          this.scene.fog.color.set(theme.fogColor);
+        }
+        
+        // Update sky
+        if (this.skyMesh) {
+          this.skyMesh.material.color.set(theme.skyColor);
+        }
+        
+        // Update floor
+        if (this.floorMesh) {
+          this.floorMesh.material.color.set(theme.gridColor);
+        }
+        
+        // Update particles
+        if (this.particles) {
+          const colors = this.particles.geometry.attributes.color.array;
+          const color1 = new THREE.Color(theme.particleColor1);
+          const color2 = new THREE.Color(theme.particleColor2);
+          
+          for (let i = 0; i < colors.length / 3; i++) {
+            const mixRatio = Math.random();
+            const mixedColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
+            
+            colors[i * 3] = mixedColor.r;
+            colors[i * 3 + 1] = mixedColor.g;
+            colors[i * 3 + 2] = mixedColor.b;
+          }
+          
+          this.particles.geometry.attributes.color.needsUpdate = true;
+        }
+        
+        // Update bloom settings
+        if (this.bloomPass) {
+          this.bloomPass.strength = theme.bloomStrength;
+          this.bloomPass.radius = theme.bloomRadius;
+          this.bloomPass.threshold = theme.bloomThreshold;
         }
       }
-    }
+    };
 
-    // ===== Initialization =====
-    function init() {
-      // Check if device is mobile
-      checkMobile();
-      
-      // Initialize components
-      initLoadingScreen();
-      initScene();
-      initAudio();
-      initFullscreen();
-      initMobileControls();
-      
-      // Set up theme button
-      themeButton.addEventListener('click', cycleTheme);
-      
-      // Set up help button
-      helpButton.addEventListener('click', () => {
-        keyboardControls.style.display = keyboardControls.style.display === 'none' ? 'block' : 'none';
-      });
-      
-      // Start animation loop
-      animate();
-    }
-
-    // Start everything
-    document.addEventListener('DOMContentLoaded', init);
+    // Start Tripscape when the DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => Tripscape.init());
   </script>
 </body>
 </html>

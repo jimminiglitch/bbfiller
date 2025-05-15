@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Explorer - F1LL3R'5 R4D W385173</title>
+  <link rel="stylesheet" href="css/file-explorer.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Instructions -->
+  <div style="max-width: 800px; margin: 20px auto; padding: 20px; background: rgba(0,0,0,0.8); color: #00f0ff; font-family: 'VT323', monospace; border: 1px solid #a9a1ff;">
+    <h1>File Explorer Integration Instructions</h1>
+    
+    <h2>Option 1: Add to your existing site</h2>
+    <ol>
+      <li>Copy the <code>file-explorer.js</code> file to your <code>/js</code> folder</li>
+      <li>Copy the <code>file-explorer.css</code> file to your <code>/css</code> folder</li>
+      <li>Add the following HTML to your site where you want the file explorer window to appear:
+        <pre style="background: #111; padding: 10px; overflow-x: auto;">
+&lt;div id="file-explorer" class="popup-window"&gt;
+  &lt;div class="window-header"&gt;
+    &lt;span&gt;FILE_EXPLORER.EXE&lt;/span&gt;
+    &lt;button class="minimize"&gt;_&lt;/button&gt;
+    &lt;button class="maximize"&gt;▭&lt;/button&gt;
+    &lt;button class="close"&gt;X&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="window-content file-explorer-content"&gt;
+    &lt;!-- File explorer content will be loaded here by file-explorer.js --&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+      </li>
+      <li>Add this script tag at the end of your body:
+        <pre style="background: #111; padding: 10px; overflow-x: auto;">
+&lt;script src="js/file-explorer.js"&gt;&lt;/script&gt;</pre>
+      </li>
+    </ol>
+
+    <h2>Option 2: Test standalone version</h2>
+    <p>You can also test the file explorer by opening this HTML file directly in your browser.</p>
+    
+    <div style="margin-top: 20px;">
+      <button id="show-explorer" style="background: none; border: 1px solid #00f0ff; color: #00f0ff; padding: 8px 16px; cursor: pointer; font-family: 'VT323', monospace; font-size: 18px;">Show File Explorer Demo</button>
+    </div>
+  </div>
+
+  <!-- Demo File Explorer -->
+  <div id="file-explorer" class="popup-window" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 800px; height: 500px; background: #000; border: 1px solid #a9a1ff; box-shadow: 0 0 20px rgba(0, 240, 255, 0.5); z-index: 1000;">
+    <div class="window-header" style="height: 30px; background: #111; display: flex; justify-content: space-between; align-items: center; padding: 0 10px; border-bottom: 1px solid #a9a1ff; cursor: move;">
+      <span style="color: #00f0ff; font-family: 'VT323', monospace;">FILE_EXPLORER.EXE</span>
+      <div>
+        <button class="minimize" style="background: none; border: none; color: #00f0ff; cursor: pointer; margin-left: 5px;">_</button>
+        <button class="maximize" style="background: none; border: none; color: #00f0ff; cursor: pointer; margin-left: 5px;">▭</button>
+        <button class="close" style="background: none; border: none; color: #ff3366; cursor: pointer; margin-left: 5px;">X</button>
+      </div>
+    </div>
+    <div class="window-content file-explorer-content">
+      <!-- File explorer content will be loaded here by file-explorer.js -->
+    </div>
+  </div>
+
+  <script>
+    // Demo functionality
+    document.getElementById('show-explorer').addEventListener('click', function() {
+      document.getElementById('file-explorer').style.display = 'block';
+    });
+
+    document.querySelector('#file-explorer .close').addEventListener('click', function() {
+      document.getElementById('file-explorer').style.display = 'none';
+    });
+
+    document.querySelector('#file-explorer .minimize').addEventListener('click', function() {
+      document.getElementById('file-explorer').style.display = 'none';
+    });
+
+    // Make window draggable
+    (function() {
+      var windowHeader = document.querySelector('#file-explorer .window-header');
+      var fileExplorer = document.getElementById('file-explorer');
+      var isDragging = false;
+      var offsetX, offsetY;
+
+      windowHeader.addEventListener('mousedown', function(e) {
+        isDragging = true;
+        var rect = fileExplorer.getBoundingClientRect();
+        offsetX = e.clientX - rect.left;
+        offsetY = e.clientY - rect.top;
+      });
+
+      document.addEventListener('mousemove', function(e) {
+        if (isDragging) {
+          fileExplorer.style.left = (e.clientX - offsetX) + 'px';
+          fileExplorer.style.top = (e.clientY - offsetY) + 'px';
+          fileExplorer.style.transform = 'none';
+        }
+      });
+
+      document.addEventListener('mouseup', function() {
+        isDragging = false;
+      });
+    })();
+  </script>
+
+  <script src="js/file-explorer.js"></script>
+</body>
+</html>

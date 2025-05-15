@@ -1,4 +1,7 @@
 // consolidated.js - Complete solution
+document.getElementById("icon-file-explorer").addEventListener("click", () => {
+  import('./file-explorer.js');
+});
 
 // ===== UTILITY FUNCTIONS =====
 function debounce(func, wait) {

@@ -32,16 +32,16 @@
   </head>
   <body>
     <div class="scanlines" aria-hidden="true"></div>
-    <div id="bootScreen" class="boot-screen">
-      <pre id="boot-log" class="boot-log"></pre>
-      <div id="static"></div>
-      <div class="progress-container">
-        <div id="progress-bar" class="progress-bar"></div>
-      </div>
-    </div>
-    <div class="container">
-      <h1 class="glitch" data-text="Benjamin Filler">Benjamin Filler</h1>
-      <div id="desktop-icons">
+<div id="bootScreen" class="boot-screen">
+  <pre id="boot-log" class="boot-log"></pre>
+  <div id="static"></div>
+  <div class="progress-container">
+    <div id="progress-bar" class="progress-bar"></div>
+  </div>
+</div>
+<div class="container">
+  <h1 class="glitch" data-text="Benjamin Filler">Benjamin Filler</h1>
+  <div id="desktop-icons">
         <button
           class="desktop-icon"
           id="icon-about"
@@ -341,6 +341,11 @@
           <span>r3d3ch0</span>
         </button>
       </div>
+
+<div class="desktop-icon" id="icon-file-explorer" style="top: 400px; left: 40px;">
+  <img src="/icons/folder-icon.png" alt="Explorer">
+  <span>Explorer</span>
+</div>
 
       <!-- Popup windows… -->
       <!-- ABOUT.EXE -->
@@ -715,17 +720,17 @@
 
     <!-- Background & Visualizers -->
     <canvas id="background-canvas" class="persistent"></canvas>
-    <canvas id="audio-visualizer"></canvas>
+<canvas id="audio-visualizer"></canvas>
 
-    <!-- Taskbar & Clock -->
-    <div id="start-bar">
-      <button id="start-button">START</button>
-      <div id="taskbar-icons"></div>
-      <span id="clock"></span>
-    </div>
+<!-- Taskbar & Clock -->
+<div id="start-bar">
+  <button id="start-button">START</button>
+  <div id="taskbar-icons"></div>
+  <span id="clock"></span>
+</div>
 
-    <!-- Start Menu -->
-    <div id="start-menu">
+<!-- Start Menu -->
+<div id="start-menu">
       <a href="javascript:void(0)" onclick="openWindow('about')">About</a>
       <a href="javascript:void(0)" onclick="openWindow('resume')">Resume</a>
       <a href="javascript:void(0)" onclick="openWindow('contact')">Contact</a>
@@ -739,6 +744,7 @@
         >BrianBirds</a
       >
       <a href="javascript:void(0)" onclick="openWindow('clydecup')">ClydeCup</a>
+
     </div>
 
     <div class="window" id="window1">
