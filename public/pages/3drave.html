@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TRIPSCAPE RAVE - 3D Psychedelic Experience</title>
+  <title>Tripscape - 3D Psychedelic Experience</title>
   <style>
     /* Reset and base styles */
     * {
@@ -110,133 +110,34 @@
       color: #6b7280;
     }
 
-    /* Control panel */
-    #control-panel {
+    /* Audio visualizer */
+    #audio-visualizer {
       position: absolute;
-      top: 50%;
-      right: 16px;
-      transform: translateY(-50%);
-      width: 280px;
-      background-color: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(10px);
+      bottom: 16px;
+      left: 16px;
+      z-index: 50;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 0, 255, 0.3);
       border-radius: 8px;
-      border: 1px solid rgba(255, 0, 255, 0.5);
-      color: white;
-      overflow: hidden;
-      z-index: 100;
+      width: 256px;
+      height: 80px;
       display: none;
     }
 
-    .panel-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px;
-      border-bottom: 1px solid rgba(255, 0, 255, 0.3);
-      background: linear-gradient(90deg, rgba(255,0,255,0.2) 0%, rgba(0,255,255,0.2) 100%);
-    }
-
-    .panel-title {
+    /* Audio status */
+    #audio-status {
+      position: absolute;
+      bottom: 80px;
+      left: 16px;
+      background-color: rgba(0, 0, 0, 0.7);
       color: #ff00ff;
-      font-weight: bold;
-      text-shadow: 0 0 5px #ff00ff;
-    }
-
-    .close-button {
-      background: none;
-      border: none;
-      color: #9ca3af;
-      cursor: pointer;
-    }
-
-    .close-button:hover {
-      color: white;
-    }
-
-    .panel-tabs {
-      display: flex;
-      border-bottom: 1px solid rgba(255, 0, 255, 0.3);
-    }
-
-    .panel-tab {
-      flex: 1;
-      padding: 8px;
-      text-align: center;
-      font-size: 0.875rem;
-      color: #9ca3af;
-      background: none;
-      border: none;
-      cursor: pointer;
-    }
-
-    .panel-tab.active {
-      color: #ff00ff;
-      border-bottom: 2px solid #ff00ff;
-      text-shadow: 0 0 5px #ff00ff;
-    }
-
-    .panel-content {
-      padding: 16px;
-      max-height: 60vh;
-      overflow-y: auto;
-    }
-
-    .control-group {
-      margin-bottom: 16px;
-    }
-
-    .control-label {
-      display: block;
-      font-size: 0.875rem;
-      color: #9ca3af;
-      margin-bottom: 4px;
-    }
-
-    .control-select {
-      width: 100%;
-      background-color: #1f2937;
-      border: 1px solid #4b5563;
-      border-radius: 4px;
       padding: 8px 12px;
-      color: white;
-    }
-
-    .control-range {
-      width: 100%;
-      margin-top: 8px;
-    }
-
-    .control-toggle {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .toggle-switch {
-      width: 48px;
-      height: 24px;
-      background-color: #4b5563;
-      border-radius: 9999px;
-      padding: 4px;
-      cursor: pointer;
-      position: relative;
-    }
-
-    .toggle-switch.active {
-      background-color: #ff00ff;
-      box-shadow: 0 0 10px #ff00ff;
-    }
-
-    .toggle-handle {
-      width: 16px;
-      height: 16px;
-      background-color: white;
-      border-radius: 50%;
-      transition: transform 0.2s ease;
-    }
-
-    .toggle-switch.active .toggle-handle {
-      transform: translateX(24px);
+      border-radius: 4px;
+      font-size: 0.875rem;
+      z-index: 50;
+      display: none;
     }
 
     /* Control buttons */
@@ -245,7 +146,7 @@
       bottom: 16px;
       right: 16px;
       display: flex;
-      gap: 16px;
+      gap: 12px;
       z-index: 50;
     }
 
@@ -255,6 +156,7 @@
       border-radius: 50%;
       background-color: rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       border: 1px solid #ff00ff;
       color: #ff00ff;
       display: flex;
@@ -277,53 +179,76 @@
       box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
     }
 
-    /* Audio visualizer */
-    #audio-visualizer {
+    /* Theme indicator */
+    #theme-indicator {
       position: absolute;
-      bottom: 16px;
+      top: 16px;
       left: 16px;
-      z-index: 50;
-      background-color: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 0, 255, 0.3);
+      background-color: rgba(0, 0, 0, 0.7);
+      border: 1px solid #ff00ff;
       border-radius: 8px;
-      display: none;
+      padding: 4px 12px;
+      color: #ff00ff;
+      font-size: 0.9rem;
+      z-index: 100;
+      text-align: center;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+      opacity: 0;
+      transition: opacity 0.5s ease;
     }
 
-    /* Audio status */
-    #audio-status {
+    /* Mobile controls */
+    .mobile-controls {
       position: absolute;
       bottom: 80px;
-      right: 16px;
-      background-color: rgba(0, 0, 0, 0.7);
-      color: #ff00ff;
-      padding: 8px 12px;
-      border-radius: 4px;
-      font-size: 0.875rem;
-      z-index: 50;
+      left: 50%;
+      transform: translateX(-50%);
       display: none;
+      z-index: 50;
+      width: 180px;
+      height: 180px;
     }
 
-    /* Fullscreen button */
-    #fullscreen-button {
-      width: 48px;
-      height: 48px;
+    .mobile-control {
+      position: absolute;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
       background-color: rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(8px);
-      border: 1px solid #00ffff;
-      color: #00ffff;
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 0, 255, 0.5);
+      color: #ff00ff;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+      touch-action: manipulation;
     }
 
-    #fullscreen-button:hover {
-      background-color: rgba(0, 0, 0, 0.7);
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+    .mobile-up {
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .mobile-down {
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .mobile-left {
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .mobile-right {
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
     }
 
     /* Keyboard controls overlay */
@@ -342,6 +267,7 @@
       display: none;
       text-align: center;
       backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
       box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
     }
 
@@ -376,27 +302,6 @@
       font-family: monospace;
       min-width: 20px;
       text-align: center;
-    }
-
-    /* Rave mode indicator */
-    #rave-mode {
-      position: absolute;
-      top: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: rgba(0, 0, 0, 0.7);
-      border: 1px solid #ff00ff;
-      border-radius: 8px;
-      padding: 4px 16px;
-      color: #ff00ff;
-      font-size: 1.2rem;
-      font-weight: bold;
-      z-index: 100;
-      display: none;
-      text-align: center;
-      backdrop-filter: blur(5px);
-      box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
-      animation: pulse 1s infinite alternate;
     }
 
     /* Animations */
@@ -456,6 +361,25 @@
       50% { transform: scale(1.1); }
       100% { transform: scale(1); }
     }
+
+    /* Fade in/out animation */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s forwards;
+    }
+
+    .fade-out {
+      animation: fadeOut 0.5s forwards;
+    }
   </style>
 </head>
 <body>
@@ -473,7 +397,7 @@
   <!-- Loading Screen -->
   <div id="loading-screen">
     <div class="loading-container">
-      <h1 class="loading-title">TRIPSCAPE RAVE</h1>
+      <h1 class="loading-title">TRIPSCAPE</h1>
       <p id="loading-text" class="loading-text">INITIALIZING NEURAL INTERFACE</p>
       
       <div class="progress-bar">
@@ -492,9 +416,14 @@
     </div>
   </div>
   
+  <!-- Theme Indicator -->
+  <div id="theme-indicator">
+    RAVE MADNESS
+  </div>
+  
   <!-- Control Buttons -->
   <div class="control-buttons">
-    <button id="fullscreen-button" title="Toggle Fullscreen">
+    <button id="fullscreen-button" class="control-button" title="Toggle Fullscreen">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="15 3 21 3 21 9"></polyline>
         <polyline points="9 21 3 21 3 15"></polyline>
@@ -503,10 +432,9 @@
       </svg>
     </button>
     
-    <button id="settings-button" class="control-button" title="Settings">
+    <button id="theme-button" class="control-button" title="Change Theme">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
-        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
       </svg>
     </button>
     
@@ -515,6 +443,38 @@
         <polygon points="5 3 19 12 5 21 5 3"></polygon>
       </svg>
     </button>
+    
+    <button id="help-button" class="control-button" title="Show Controls">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+      </svg>
+    </button>
+  </div>
+  
+  <!-- Mobile Controls -->
+  <div class="mobile-controls">
+    <div class="mobile-control mobile-up" id="mobile-up">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="18 15 12 9 6 15"></polyline>
+      </svg>
+    </div>
+    <div class="mobile-control mobile-down" id="mobile-down">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </div>
+    <div class="mobile-control mobile-left" id="mobile-left">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </div>
+    <div class="mobile-control mobile-right" id="mobile-right">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </div>
   </div>
 
   <!-- Keyboard Controls -->
@@ -525,173 +485,12 @@
       <li><span class="key">S</span> Move backward</li>
       <li><span class="key">A</span> Move left</li>
       <li><span class="key">D</span> Move right</li>
-      <li><span class="key">Q</span> Move up</li>
-      <li><span class="key">E</span> Move down</li>
       <li><span class="key">R</span> Reset camera</li>
       <li><span class="key">F</span> Fullscreen</li>
       <li><span class="key">Space</span> Toggle audio</li>
       <li><span class="key">C</span> Change theme</li>
-      <li><span class="key">V</span> Toggle dancers</li>
-      <li><span class="key">B</span> Toggle buildings</li>
-      <li><span class="key">N</span> Toggle sky objects</li>
-      <li><span class="key">M</span> Toggle auto-camera</li>
-      <li><span class="key">+</span> / <span class="key">-</span> Adjust trippy level</li>
       <li><span class="key">H</span> Toggle this help</li>
     </ul>
-  </div>
-  
-  <!-- Rave Mode Indicator -->
-  <div id="rave-mode">
-    RAVE MODE ACTIVATED
-  </div>
-  
-  <!-- Control Panel -->
-  <div id="control-panel">
-    <div class="panel-header">
-      <h3 class="panel-title">TRIPSCAPE CONTROLS</h3>
-      <button id="close-panel" class="close-button">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
-    </div>
-    
-    <div class="panel-tabs">
-      <button class="panel-tab active" data-tab="visuals">Visuals</button>
-      <button class="panel-tab" data-tab="audio">Audio</button>
-      <button class="panel-tab" data-tab="scene">Scene</button>
-      <button class="panel-tab" data-tab="effects">Effects</button>
-    </div>
-    
-    <div class="panel-content">
-      <!-- Visuals Tab -->
-      <div id="visuals-tab" class="tab-content">
-        <div class="control-group">
-          <label class="control-label">Visual Theme</label>
-          <select id="visual-theme" class="control-select">
-            <option value="rave">Rave Madness</option>
-            <option value="hyperspace">Hyperspace</option>
-            <option value="vaporwave">Vaporwave</option>
-            <option value="cyberdelic">Cyberdelic</option>
-            <option value="neon">Neon Dreams</option>
-          </select>
-        </div>
-        
-        <div class="control-group">
-          <label class="control-label">Density: <span id="density-value">40</span></label>
-          <input id="density-slider" type="range" min="10" max="100" step="5" value="40" class="control-range">
-        </div>
-        
-        <div class="control-group">
-          <label class="control-label">Camera Speed: <span id="camera-speed-value">1.0</span></label>
-          <input id="camera-speed-slider" type="range" min="0.1" max="3.0" step="0.1" value="1.0" class="control-range">
-        </div>
-        
-        <div class="control-group control-toggle">
-          <label class="control-label">Auto Camera</label>
-          <div id="auto-camera-toggle" class="toggle-switch active">
-            <div class="toggle-handle"></div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Audio Tab -->
-      <div id="audio-tab" class="tab-content" style="display: none;">
-        <div class="control-group control-toggle">
-          <label class="control-label">Audio Reactive</label>
-          <div id="audio-reactive-toggle" class="toggle-switch active">
-            <div class="toggle-handle"></div>
-          </div>
-        </div>
-        
-        <div class="control-group">
-          <label class="control-label">Audio Volume: <span id="volume-value">0.7</span></label>
-          <input id="volume-slider" type="range" min="0" max="1" step="0.1" value="0.7" class="control-range">
-        </div>
-        
-        <div class="control-group">
-          <label class="control-label">Bass Impact: <span id="bass-value">1.5</span></label>
-          <input id="bass-slider" type="range" min="0.5" max="3.0" step="0.1" value="1.5" class="control-range">
-        </div>
-        
-        <div class="control-group">
-          <label class="control-label">Audio Track</label>
-          <select id="audio-track" class="control-select">
-  <option value="song1">SoundHelix Song 1</option>
-  <option value="song2">SoundHelix Song 2</option>
-  <option value="song3">SoundHelix Song 3</option>
-  <option value="song4">SoundHelix Song 4</option>
-</select>
-        </div>
-      </div>
-      
-      <!-- Scene Tab -->
-      <div id="scene-tab" class="tab-content" style="display: none;">
-        <div class="control-group control-toggle">
-          <label class="control-label">Show Dancers</label>
-          <div id="dancers-toggle" class="toggle-switch active">
-            <div class="toggle-handle"></div>
-          </div>
-        </div>
-        
-        <div class="control-group">
-          <label class="control-label">Dancer Count: <span id="dancer-count-value">20</span></label>
-          <input id="dancer-count-slider" type="range" min="5" max="50" step="5" value="20" class="control-range">
-        </div>
-        
-        <div class="control-group control-toggle">
-          <label class="control-label">Show Buildings</label>
-          <div id="buildings-toggle" class="toggle-switch active">
-            <div class="toggle-handle"></div>
-          </div>
-        </div>
-        
-        <div class="control-group control-toggle">
-          <label class="control-label">Show Sky Objects</label>
-          <div id="sky-toggle" class="toggle-switch active">
-            <div class="toggle-handle"></div>
-          </div>
-        </div>
-        
-        <div class="control-group">
-          <label class="control-label">Sky Object Count: <span id="sky-count-value">100</span></label>
-          <input id="sky-count-slider" type="range" min="20" max="200" step="10" value="100" class="control-range">
-        </div>
-      </div>
-      
-      <!-- Effects Tab -->
-      <div id="effects-tab" class="tab-content" style="display: none;">
-        <div class="control-group">
-          <label class="control-label">Trippy Level: <span id="trippy-value">2.0</span></label>
-          <input id="trippy-slider" type="range" min="0.5" max="3.0" step="0.1" value="2.0" class="control-range">
-        </div>
-        
-        <div class="control-group">
-          <label class="control-label">Glitch Intensity: <span id="glitch-value">0.7</span></label>
-          <input id="glitch-slider" type="range" min="0" max="1" step="0.1" value="0.7" class="control-range">
-        </div>
-        
-        <div class="control-group">
-          <label class="control-label">Color Shift Speed: <span id="color-shift-value">1.0</span></label>
-          <input id="color-shift-slider" type="range" min="0.1" max="2.0" step="0.1" value="1.0" class="control-range">
-        </div>
-        
-        <div class="control-group control-toggle">
-          <label class="control-label">Bloom Effect</label>
-          <div id="bloom-toggle" class="toggle-switch active">
-            <div class="toggle-handle"></div>
-          </div>
-        </div>
-        
-        <div class="control-group control-toggle">
-          <label class="control-label">Laser Beams</label>
-          <div id="lasers-toggle" class="toggle-switch active">
-            <div class="toggle-handle"></div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 
   <!-- Load Three.js from CDN -->
@@ -717,8 +516,8 @@
       volume: 0.7,
       bassImpact: 1.5,
       audioTrack: 'song1',
-      trippyLevel: 2.0,
-      glitchIntensity: 0.7,
+      trippyLevel: 1.5, // Reduced from 2.0 to reduce glitches
+      glitchIntensity: 0.3, // Reduced from 0.7 to reduce glitches
       colorShiftSpeed: 1.0,
       bloomEnabled: true,
       autoCamera: true,
@@ -727,12 +526,15 @@
       showBuildings: true,
       showSkyObjects: true,
       skyObjectCount: 100,
-      showLasers: true
+      showLasers: true,
+      isMobile: false,
+      minCameraHeight: 1.0 // Prevent going through floor
     };
 
     // Visual themes
     const visualThemes = {
       rave: {
+        name: "RAVE MADNESS",
         fogColor: 0x000022,
         particleColor1: 0xff00ff,
         particleColor2: 0x00ffff,
@@ -740,11 +542,12 @@
         buildingColor1: 0xff00ff,
         buildingColor2: 0x00ffff,
         skyColor: 0x000033,
-        bloomStrength: 2.0,
+        bloomStrength: 1.5, // Reduced from 2.0
         bloomRadius: 0.8,
         bloomThreshold: 0.1
       },
       hyperspace: {
+        name: "HYPERSPACE",
         fogColor: 0x000033,
         particleColor1: 0xff00ff,
         particleColor2: 0x00ffff,
@@ -752,11 +555,12 @@
         buildingColor1: 0x8800ff,
         buildingColor2: 0x0088ff,
         skyColor: 0x000066,
-        bloomStrength: 1.5,
+        bloomStrength: 1.2, // Reduced from 1.5
         bloomRadius: 0.75,
         bloomThreshold: 0.2
       },
       vaporwave: {
+        name: "VAPORWAVE",
         fogColor: 0x551a8b,
         particleColor1: 0xff71ce,
         particleColor2: 0x01cdfe,
@@ -764,11 +568,12 @@
         buildingColor1: 0xff71ce,
         buildingColor2: 0x05ffa1,
         skyColor: 0x2d1b4e,
-        bloomStrength: 1.2,
+        bloomStrength: 1.0, // Reduced from 1.2
         bloomRadius: 0.5,
         bloomThreshold: 0.3
       },
       cyberdelic: {
+        name: "CYBERDELIC",
         fogColor: 0x000000,
         particleColor1: 0xff3300,
         particleColor2: 0x33ff00,
@@ -776,11 +581,12 @@
         buildingColor1: 0xff3300,
         buildingColor2: 0x0033ff,
         skyColor: 0x000000,
-        bloomStrength: 1.8,
+        bloomStrength: 1.4, // Reduced from 1.8
         bloomRadius: 0.8,
         bloomThreshold: 0.1
       },
       neon: {
+        name: "NEON DREAMS",
         fogColor: 0x000000,
         particleColor1: 0xff0066,
         particleColor2: 0x00ff66,
@@ -788,21 +594,16 @@
         buildingColor1: 0xff0066,
         buildingColor2: 0x6600ff,
         skyColor: 0x000000,
-        bloomStrength: 2.2,
+        bloomStrength: 1.8, // Reduced from 2.2
         bloomRadius: 0.6,
         bloomThreshold: 0.1
       }
     };
 
     // Audio tracks
-   // Audio tracks (now using SoundHelix examples)
-const audioTracks = {
-  song1: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-  song2: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-  song3: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
-  song4: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"
-};
-
+    const audioTracks = {
+      song1: "https://cdn.glitch.global/25331b85-e206-4347-93a8-666983818ff8/melodic-techno-03-extended-version-moogify-9867.mp3?v=1747323781216",
+    };
 
     // DOM Elements
     const loadingScreen = document.getElementById('loading-screen');
@@ -812,15 +613,17 @@ const audioTracks = {
     const sceneCanvas = document.getElementById('scene-canvas');
     const audioVisualizer = document.getElementById('audio-visualizer');
     const audioStatus = document.getElementById('audio-status');
-    const controlPanel = document.getElementById('control-panel');
     const keyboardControls = document.getElementById('keyboard-controls');
-    const raveMode = document.getElementById('rave-mode');
-    const settingsButton = document.getElementById('settings-button');
+    const themeIndicator = document.getElementById('theme-indicator');
+    const themeButton = document.getElementById('theme-button');
     const audioButton = document.getElementById('audio-button');
     const fullscreenButton = document.getElementById('fullscreen-button');
-    const closePanel = document.getElementById('close-panel');
-    const tabs = document.querySelectorAll('.panel-tab');
-    const tabContents = document.querySelectorAll('.tab-content');
+    const helpButton = document.getElementById('help-button');
+    const mobileControls = document.querySelector('.mobile-controls');
+    const mobileUp = document.getElementById('mobile-up');
+    const mobileDown = document.getElementById('mobile-down');
+    const mobileLeft = document.getElementById('mobile-left');
+    const mobileRight = document.getElementById('mobile-right');
 
     // Canvas contexts
     const visualizerCtx = audioVisualizer.getContext('2d');
@@ -857,6 +660,14 @@ const audioTracks = {
     let dancers = [], buildings = [], skyObjects = [], lasers = [];
     let floorMesh, skyMesh;
     
+    // Check if device is mobile
+    function checkMobile() {
+      config.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      if (config.isMobile) {
+        mobileControls.style.display = 'block';
+      }
+    }
+    
     // ===== Loading Screen =====
     function initLoadingScreen() {
       // Create glitch effects on progress bar
@@ -882,6 +693,9 @@ const audioTracks = {
               loadingScreen.style.display = 'none';
               // Show keyboard controls after loading
               keyboardControls.style.display = 'block';
+              setTimeout(() => {
+                keyboardControls.style.display = 'none';
+              }, 5000);
             }, 500);
           }, 500);
         }
@@ -943,6 +757,9 @@ const audioTracks = {
       controls.dampingFactor = 0.05;
       controls.autoRotate = config.autoCamera;
       controls.autoRotateSpeed = 0.5;
+      controls.maxPolarAngle = Math.PI / 2 - 0.1; // Prevent going below the floor
+      controls.minDistance = 5; // Prevent getting too close to objects
+      controls.maxDistance = 100; // Prevent getting too far
       
       // Set up post-processing
       setupPostProcessing();
@@ -987,7 +804,7 @@ const audioTracks = {
       rgbShiftPass.uniforms.angle.value = 0;
       composer.addPass(rgbShiftPass);
       
-      // Add glitch pass
+      // Add glitch pass - reduced intensity
       glitchPass = new THREE.GlitchPass();
       glitchPass.goWild = false;
       glitchPass.enabled = true;
@@ -1000,7 +817,7 @@ const audioTracks = {
       // Create floor (dance floor)
       createDanceFloor(theme);
       
-      // Create sky dome
+      // Create sky dome with enhanced effects
       createSkyDome(theme);
       
       // Create particle system
@@ -1063,6 +880,139 @@ const audioTracks = {
       
       skyMesh = new THREE.Mesh(skyGeometry, skyMaterial);
       scene.add(skyMesh);
+      
+      // Add stars to the sky dome
+      const starCount = 1000;
+      const starGeometry = new THREE.BufferGeometry();
+      const starPositions = new Float32Array(starCount * 3);
+      const starSizes = new Float32Array(starCount);
+      
+      for (let i = 0; i < starCount; i++) {
+        // Create stars in a dome shape above the scene
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.random() * Math.PI * 0.5; // Only in the upper hemisphere
+        const radius = 350 + Math.random() * 50;
+        
+        starPositions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+        starPositions[i * 3 + 1] = radius * Math.cos(phi); // Mostly above
+        starPositions[i * 3 + 2] = radius * Math.sin(phi) * Math.sin(theta);
+        
+        starSizes[i] = Math.random() * 2 + 0.5;
+      }
+      
+      starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+      starGeometry.setAttribute('size', new THREE.BufferAttribute(starSizes, 1));
+      
+      const starMaterial = new THREE.ShaderMaterial({
+        uniforms: {
+          time: { value: 0 },
+          color: { value: new THREE.Color(0xffffff) }
+        },
+        vertexShader: `
+          uniform float time;
+          attribute float size;
+          varying vec3 vPosition;
+          
+          void main() {
+            vPosition = position;
+            
+            // Twinkle effect
+            float twinkle = sin(time * 0.5 + length(position) * 0.1) * 0.5 + 0.5;
+            
+            vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+            gl_PointSize = size * (1.0 + twinkle) * (300.0 / length(mvPosition.xyz));
+            gl_Position = projectionMatrix * mvPosition;
+          }
+        `,
+        fragmentShader: `
+          uniform vec3 color;
+          uniform float time;
+          varying vec3 vPosition;
+          
+          void main() {
+            // Create circular point
+            float r = length(gl_PointCoord - vec2(0.5, 0.5));
+            if (r > 0.5) discard;
+            
+            // Twinkle effect
+            float twinkle = sin(time * 0.5 + length(vPosition) * 0.1) * 0.5 + 0.5;
+            
+            // Color variation based on position
+            vec3 starColor = color;
+            if (vPosition.y > 300.0) {
+              starColor = mix(color, vec3(0.8, 0.8, 1.0), 0.5); // Bluer at the top
+            }
+            
+            gl_FragColor = vec4(starColor, 1.0) * (1.0 - r * 2.0) * (0.5 + twinkle * 0.5);
+          }
+        `,
+        transparent: true,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending
+      });
+      
+      const stars = new THREE.Points(starGeometry, starMaterial);
+      scene.add(stars);
+      skyObjects.push(stars);
+      
+      // Add a subtle aurora effect in the sky
+      const auroraGeometry = new THREE.PlaneGeometry(800, 200, 20, 20);
+      const auroraTexture = new THREE.DataTexture(
+        new Uint8Array(3), 1, 1, THREE.RGBFormat
+      );
+      auroraTexture.needsUpdate = true;
+      
+      const auroraMaterial = new THREE.ShaderMaterial({
+        uniforms: {
+          time: { value: 0 },
+          color1: { value: new THREE.Color(theme.particleColor1) },
+          color2: { value: new THREE.Color(theme.particleColor2) }
+        },
+        vertexShader: `
+          uniform float time;
+          varying vec2 vUv;
+          
+          void main() {
+            vUv = uv;
+            
+            // Wave effect
+            vec3 pos = position;
+            pos.z = sin(pos.x * 0.05 + time * 0.5) * 20.0 + sin(pos.y * 0.1 + time * 0.3) * 10.0;
+            
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+          }
+        `,
+        fragmentShader: `
+          uniform float time;
+          uniform vec3 color1;
+          uniform vec3 color2;
+          varying vec2 vUv;
+          
+          void main() {
+            // Gradient and wave effect
+            float wave = sin(vUv.x * 10.0 + time * 0.5) * 0.5 + 0.5;
+            wave *= sin(vUv.y * 5.0 + time * 0.3) * 0.5 + 0.5;
+            
+            vec3 color = mix(color1, color2, wave);
+            
+            // Fade out at edges
+            float fadeY = smoothstep(0.0, 0.3, vUv.y) * smoothstep(1.0, 0.7, vUv.y);
+            float alpha = wave * fadeY * 0.3; // Subtle effect
+            
+            gl_FragColor = vec4(color, alpha);
+          }
+        `,
+        transparent: true,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+        side: THREE.DoubleSide
+      });
+      
+      const aurora = new THREE.Mesh(auroraGeometry, auroraMaterial);
+      aurora.position.y = 100;
+      aurora.rotation.x = Math.PI / 2;
+      scene.add(aurora);
+      skyObjects.push(aurora);
     }
     
     function createParticles(theme) {
@@ -1693,83 +1643,7 @@ const audioTracks = {
       
       // Change visual theme with C key
       if (e.key.toLowerCase() === 'c') {
-        const themes = Object.keys(visualThemes);
-        const currentIndex = themes.indexOf(config.visualTheme);
-        const nextIndex = (currentIndex + 1) % themes.length;
-        config.visualTheme = themes[nextIndex];
-        
-        // Update UI
-        document.getElementById('visual-theme').value = config.visualTheme;
-        
-        // Update scene
-        updateVisualTheme();
-      }
-      
-      // Toggle dancers with V key
-      if (e.key.toLowerCase() === 'v') {
-        config.showDancers = !config.showDancers;
-        
-        // Update UI
-        document.getElementById('dancers-toggle').classList.toggle('active', config.showDancers);
-        
-        // Update scene
-        dancers.forEach(dancer => {
-          dancer.visible = config.showDancers;
-        });
-      }
-      
-      // Toggle buildings with B key
-      if (e.key.toLowerCase() === 'b') {
-        config.showBuildings = !config.showBuildings;
-        
-        // Update UI
-        document.getElementById('buildings-toggle').classList.toggle('active', config.showBuildings);
-        
-        // Update scene
-        buildings.forEach(building => {
-          building.visible = config.showBuildings;
-        });
-      }
-      
-      // Toggle sky objects with N key
-      if (e.key.toLowerCase() === 'n') {
-        config.showSkyObjects = !config.showSkyObjects;
-        
-        // Update UI
-        document.getElementById('sky-toggle').classList.toggle('active', config.showSkyObjects);
-        
-        // Update scene
-        skyObjects.forEach(obj => {
-          obj.visible = config.showSkyObjects;
-        });
-      }
-      
-      // Toggle auto camera with M key
-      if (e.key.toLowerCase() === 'm') {
-        config.autoCamera = !config.autoCamera;
-        
-        // Update UI
-        document.getElementById('auto-camera-toggle').classList.toggle('active', config.autoCamera);
-        
-        // Update controls
-        controls.autoRotate = config.autoCamera;
-      }
-      
-      // Adjust trippy level with + and - keys
-      if (e.key === '+' || e.key === '=') {
-        config.trippyLevel = Math.min(3.0, config.trippyLevel + 0.1);
-        
-        // Update UI
-        document.getElementById('trippy-slider').value = config.trippyLevel;
-        document.getElementById('trippy-value').textContent = config.trippyLevel.toFixed(1);
-      }
-      
-      if (e.key === '-' || e.key === '_') {
-        config.trippyLevel = Math.max(0.5, config.trippyLevel - 0.1);
-        
-        // Update UI
-        document.getElementById('trippy-slider').value = config.trippyLevel;
-        document.getElementById('trippy-value').textContent = config.trippyLevel.toFixed(1);
+        cycleTheme();
       }
     }
     
@@ -1786,10 +1660,28 @@ const audioTracks = {
       
       // Forward/backward
       if (keys['w'] || keys['arrowup']) {
-        camera.position.addScaledVector(forward, moveSpeed);
+        const newPosition = camera.position.clone().addScaledVector(forward, moveSpeed);
+        // Only move if we're not going below the minimum height
+        if (newPosition.y >= config.minCameraHeight) {
+          camera.position.copy(newPosition);
+        } else {
+          // Allow horizontal movement even if we can't move vertically
+          forward.y = 0;
+          forward.normalize();
+          camera.position.addScaledVector(forward, moveSpeed);
+        }
       }
       if (keys['s'] || keys['arrowdown']) {
-        camera.position.addScaledVector(forward, -moveSpeed);
+        const newPosition = camera.position.clone().addScaledVector(forward, -moveSpeed);
+        // Only move if we're not going below the minimum height
+        if (newPosition.y >= config.minCameraHeight) {
+          camera.position.copy(newPosition);
+        } else {
+          // Allow horizontal movement even if we can't move vertically
+          forward.y = 0;
+          forward.normalize();
+          camera.position.addScaledVector(forward, -moveSpeed);
+        }
       }
       
       // Left/right
@@ -1800,13 +1692,26 @@ const audioTracks = {
         camera.position.addScaledVector(right, moveSpeed);
       }
       
-      // Up/down
-      if (keys['q']) {
-        camera.position.y += moveSpeed;
+      // Enforce minimum height
+      if (camera.position.y < config.minCameraHeight) {
+        camera.position.y = config.minCameraHeight;
       }
-      if (keys['e']) {
-        camera.position.y -= moveSpeed;
-      }
+    }
+    
+    // Handle mobile controls
+    function initMobileControls() {
+      // Touch events for mobile controls
+      mobileUp.addEventListener('touchstart', () => { keys['w'] = true; });
+      mobileUp.addEventListener('touchend', () => { keys['w'] = false; });
+      
+      mobileDown.addEventListener('touchstart', () => { keys['s'] = true; });
+      mobileDown.addEventListener('touchend', () => { keys['s'] = false; });
+      
+      mobileLeft.addEventListener('touchstart', () => { keys['a'] = true; });
+      mobileLeft.addEventListener('touchend', () => { keys['a'] = false; });
+      
+      mobileRight.addEventListener('touchstart', () => { keys['d'] = true; });
+      mobileRight.addEventListener('touchend', () => { keys['d'] = false; });
     }
     
     function animate() {
@@ -1956,7 +1861,7 @@ const audioTracks = {
             // This is a star
             const twinklePhase = time * obj.userData.twinkleSpeed;
             obj.intensity = obj.userData.originalIntensity * (0.7 + 0.3 * Math.sin(twinklePhase));
-          } else if (obj.children.length === 2) {
+          } else if (obj.children && obj.children.length === 2) {
             // This is a comet
             // Rotate around its axis
             obj.rotateOnAxis(obj.userData.rotationAxis, obj.userData.rotationSpeed);
@@ -1975,7 +1880,7 @@ const audioTracks = {
             if (distance > 350) {
               obj.position.multiplyScalar(350 / distance);
             }
-          } else {
+          } else if (obj.children && obj.children.length === 3) {
             // This is a satellite
             // Orbit around a point
             const orbitCenter = new THREE.Vector3(0, 0, 0);
@@ -1990,6 +1895,12 @@ const audioTracks = {
             
             // Rotate the satellite
             obj.rotateOnAxis(obj.userData.orbitAxis, obj.userData.rotationSpeed);
+          } else if (obj.type === 'Points') {
+            // This is the star field
+            obj.material.uniforms.time.value = time;
+          } else if (obj.type === 'Mesh' && obj.geometry.type === 'PlaneGeometry' && obj.geometry.parameters.width === 800) {
+            // This is the aurora
+            obj.material.uniforms.time.value = time;
           }
         });
       }
@@ -2016,12 +1927,12 @@ const audioTracks = {
       }
       
       if (glitchPass) {
-        // Occasional glitches based on intensity
-        if (Math.random() < 0.01 * config.glitchIntensity) {
+        // Occasional glitches based on intensity - reduced frequency
+        if (Math.random() < 0.005 * config.glitchIntensity) {
           glitchPass.goWild = true;
           setTimeout(() => {
             glitchPass.goWild = false;
-          }, 100 + Math.random() * 200);
+          }, 50 + Math.random() * 100); // Shorter glitch duration
         }
       }
       
@@ -2197,163 +2108,31 @@ const audioTracks = {
       visualizerCtx.lineTo(audioVisualizer.width, centerY);
       visualizerCtx.stroke();
     }
-
-    // ===== Control Panel =====
-    function initControlPanel() {
-      // Control panel toggle
-      settingsButton.addEventListener('click', () => {
-        controlPanel.style.display = controlPanel.style.display === 'none' ? 'block' : 'none';
-      });
+    
+    // ===== Theme Handling =====
+    function cycleTheme() {
+      const themes = Object.keys(visualThemes);
+      const currentIndex = themes.indexOf(config.visualTheme);
+      const nextIndex = (currentIndex + 1) % themes.length;
+      config.visualTheme = themes[nextIndex];
       
-      // Close button
-      closePanel.addEventListener('click', () => {
-        controlPanel.style.display = 'none';
-      });
+      // Show theme indicator
+      themeIndicator.textContent = visualThemes[config.visualTheme].name;
+      themeIndicator.style.opacity = "1";
+      themeIndicator.classList.add("fade-in");
       
-      // Tab switching
-      tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-          // Update active tab
-          tabs.forEach(t => t.classList.remove('active'));
-          tab.classList.add('active');
-          
-          // Show corresponding content
-          const tabName = tab.getAttribute('data-tab');
-          tabContents.forEach(content => {
-            content.style.display = content.id === `${tabName}-tab` ? 'block' : 'none';
-          });
-        });
-      });
+      // Hide theme indicator after a delay
+      setTimeout(() => {
+        themeIndicator.classList.remove("fade-in");
+        themeIndicator.classList.add("fade-out");
+        setTimeout(() => {
+          themeIndicator.style.opacity = "0";
+          themeIndicator.classList.remove("fade-out");
+        }, 500);
+      }, 2000);
       
-      // Control sliders
-      document.getElementById('density-slider').addEventListener('input', function() {
-        config.density = parseInt(this.value);
-        document.getElementById('density-value').textContent = config.density;
-      });
-      
-      document.getElementById('camera-speed-slider').addEventListener('input', function() {
-        config.cameraSpeed = parseFloat(this.value);
-        document.getElementById('camera-speed-value').textContent = config.cameraSpeed.toFixed(1);
-        controls.autoRotateSpeed = 0.5 * config.cameraSpeed;
-      });
-      
-      document.getElementById('volume-slider').addEventListener('input', function() {
-        config.volume = parseFloat(this.value);
-        document.getElementById('volume-value').textContent = config.volume.toFixed(1);
-        if (audioElement) {
-          audioElement.volume = config.volume;
-        }
-      });
-      
-      document.getElementById('bass-slider').addEventListener('input', function() {
-        config.bassImpact = parseFloat(this.value);
-        document.getElementById('bass-value').textContent = config.bassImpact.toFixed(1);
-      });
-      
-      document.getElementById('dancer-count-slider').addEventListener('input', function() {
-        config.dancerCount = parseInt(this.value);
-        document.getElementById('dancer-count-value').textContent = config.dancerCount;
-        createDancers(visualThemes[config.visualTheme]);
-      });
-      
-      document.getElementById('sky-count-slider').addEventListener('input', function() {
-        config.skyObjectCount = parseInt(this.value);
-        document.getElementById('sky-count-value').textContent = config.skyObjectCount;
-        createSkyObjects(visualThemes[config.visualTheme]);
-      });
-      
-      document.getElementById('trippy-slider').addEventListener('input', function() {
-        config.trippyLevel = parseFloat(this.value);
-        document.getElementById('trippy-value').textContent = config.trippyLevel.toFixed(1);
-      });
-      
-      document.getElementById('glitch-slider').addEventListener('input', function() {
-        config.glitchIntensity = parseFloat(this.value);
-        document.getElementById('glitch-value').textContent = config.glitchIntensity.toFixed(1);
-      });
-      
-      document.getElementById('color-shift-slider').addEventListener('input', function() {
-        config.colorShiftSpeed = parseFloat(this.value);
-        document.getElementById('color-shift-value').textContent = config.colorShiftSpeed.toFixed(1);
-      });
-      
-      // Visual theme select
-      document.getElementById('visual-theme').addEventListener('change', function() {
-        config.visualTheme = this.value;
-        updateVisualTheme();
-      });
-      
-      // Audio track select
-      document.getElementById('audio-track').addEventListener('change', function() {
-        config.audioTrack = this.value;
-        
-        // If audio is playing, stop it first
-        if (isPlaying) {
-          toggleAudio();
-        }
-        
-        // Update audio source
-        audioElement.src = audioTracks[config.audioTrack];
-        audioLoaded = false;
-        
-        // Show loading status
-        audioStatus.textContent = "Loading audio...";
-        audioStatus.style.color = "#ff00ff";
-        audioStatus.style.display = "block";
-        
-        // Preload audio
-        audioElement.load();
-      });
-      
-      // Toggle switches
-      document.getElementById('audio-reactive-toggle').addEventListener('click', function() {
-        config.audioReactive = !config.audioReactive;
-        this.classList.toggle('active', config.audioReactive);
-      });
-      
-      document.getElementById('auto-camera-toggle').addEventListener('click', function() {
-        config.autoCamera = !config.autoCamera;
-        this.classList.toggle('active', config.autoCamera);
-        controls.autoRotate = config.autoCamera;
-      });
-      
-      document.getElementById('dancers-toggle').addEventListener('click', function() {
-        config.showDancers = !config.showDancers;
-        this.classList.toggle('active', config.showDancers);
-        dancers.forEach(dancer => {
-          dancer.visible = config.showDancers;
-        });
-      });
-      
-      document.getElementById('buildings-toggle').addEventListener('click', function() {
-        config.showBuildings = !config.showBuildings;
-        this.classList.toggle('active', config.showBuildings);
-        buildings.forEach(building => {
-          building.visible = config.showBuildings;
-        });
-      });
-      
-      document.getElementById('sky-toggle').addEventListener('click', function() {
-        config.showSkyObjects = !config.showSkyObjects;
-        this.classList.toggle('active', config.showSkyObjects);
-        skyObjects.forEach(obj => {
-          obj.visible = config.showSkyObjects;
-        });
-      });
-      
-      document.getElementById('bloom-toggle').addEventListener('click', function() {
-        config.bloomEnabled = !config.bloomEnabled;
-        this.classList.toggle('active', config.bloomEnabled);
-        if (bloomPass) {
-          bloomPass.enabled = config.bloomEnabled;
-        }
-      });
-      
-      document.getElementById('lasers-toggle').addEventListener('click', function() {
-        config.showLasers = !config.showLasers;
-        this.classList.toggle('active', config.showLasers);
-        createLasers(visualThemes[config.visualTheme]);
-      });
+      // Update scene
+      updateVisualTheme();
     }
     
     function updateVisualTheme() {
@@ -2415,6 +2194,14 @@ const audioTracks = {
         bloomPass.radius = theme.bloomRadius;
         bloomPass.threshold = theme.bloomThreshold;
       }
+      
+      // Update aurora colors if it exists
+      skyObjects.forEach(obj => {
+        if (obj.type === 'Mesh' && obj.geometry.type === 'PlaneGeometry' && obj.geometry.parameters.width === 800) {
+          obj.material.uniforms.color1.value = new THREE.Color(theme.particleColor1);
+          obj.material.uniforms.color2.value = new THREE.Color(theme.particleColor2);
+        }
+      });
     }
     
     // ===== Fullscreen Handling =====
@@ -2436,11 +2223,23 @@ const audioTracks = {
 
     // ===== Initialization =====
     function init() {
+      // Check if device is mobile
+      checkMobile();
+      
+      // Initialize components
       initLoadingScreen();
       initScene();
       initAudio();
-      initControlPanel();
       initFullscreen();
+      initMobileControls();
+      
+      // Set up theme button
+      themeButton.addEventListener('click', cycleTheme);
+      
+      // Set up help button
+      helpButton.addEventListener('click', () => {
+        keyboardControls.style.display = keyboardControls.style.display === 'none' ? 'block' : 'none';
+      });
       
       // Start animation loop
       animate();

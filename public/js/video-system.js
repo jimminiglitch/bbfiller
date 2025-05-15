@@ -41,9 +41,9 @@ document.addEventListener("DOMContentLoaded", () => {
     description: "S.E.P. Challenge Video 6"
   },
     "Papaz": {
-      type: "direct",
-      src: "https://cdn.glitch.me/25331b85-e206-4347-93a8-666983818ff8/papaz.mp4?v=1746823684714",
-      poster: "https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/VaporTV.png?v=1746411817932",
+      type: "youtube",
+      id: "fJE_uqm8NOU",
+      poster: "https://img.youtube.com/vi/fJE_uqm8NOU/hqdefault.jpg",
       title: "Papaz",
       description: "S.E.P. Challenge Video 2",
     },
