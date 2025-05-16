@@ -1,6 +1,6 @@
 // Wait for DOM to be fully loaded
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("🎵 SonicWave Music Player initializing...")
+  console.log("🎵 Initializing...")
 
   // Simulate loading screen
   const loadingScreen = document.getElementById("loading-screen")

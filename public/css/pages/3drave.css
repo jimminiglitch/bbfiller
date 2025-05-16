@@ -175,6 +175,11 @@ canvas {
 .control-button:hover {
   background-color: rgba(0, 0, 0, 0.7);
   box-shadow: 0 0 15px rgba(255, 0, 255, 0.8);
+  transform: scale(1.05);
+}
+
+.control-button:active {
+  transform: scale(0.95);
 }
 
 .control-button.active {
@@ -276,6 +281,21 @@ canvas {
   border-radius: 4px;
   padding: 4px 8px;
   color: #00ffff;
+  font-size: 0.75rem;
+  z-index: 50;
+  display: none;
+}
+
+/* Performance mode indicator */
+#performance-mode {
+  position: absolute;
+  top: 50px;
+  right: 16px;
+  background-color: rgba(255, 0, 0, 0.3);
+  border: 1px solid rgba(255, 0, 0, 0.5);
+  border-radius: 4px;
+  padding: 4px 8px;
+  color: #ffffff;
   font-size: 0.75rem;
   z-index: 50;
   display: none;
@@ -386,6 +406,11 @@ canvas {
 
 .settings-button:hover {
   background-color: rgba(255, 0, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.settings-button:active {
+  transform: translateY(1px);
 }
 
 /* Controls info */
@@ -555,4 +580,84 @@ canvas {
 
 .fade-out {
   animation: fadeOut 0.5s forwards;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .loading-title {
+    font-size: 2.5rem;
+  }
+
+  .control-buttons {
+    gap: 8px;
+  }
+
+  .control-button {
+    width: 40px;
+    height: 40px;
+  }
+
+  #audio-visualizer {
+    width: 200px;
+    height: 60px;
+  }
+
+  #track-info,
+  #audio-status {
+    max-width: 200px;
+    font-size: 0.8rem;
+  }
+
+  #track-info {
+    bottom: 84px;
+  }
+
+  #audio-status {
+    bottom: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .loading-title {
+    font-size: 2rem;
+  }
+
+  .control-buttons {
+    gap: 6px;
+  }
+
+  .control-button {
+    width: 36px;
+    height: 36px;
+  }
+
+  .control-button svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  #audio-visualizer {
+    width: 160px;
+    height: 50px;
+  }
+
+  #track-info,
+  #audio-status {
+    max-width: 160px;
+    font-size: 0.75rem;
+  }
+
+  #track-info {
+    bottom: 74px;
+  }
+
+  #audio-status {
+    bottom: 50px;
+  }
+
+  #settings-panel,
+  #controls-info {
+    width: 280px;
+    font-size: 0.8rem;
+  }
 }

@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SonicWave Music Player</title>
+  <title>My Music</title>
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <!-- Three.js for 3D visualization -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <style>
     /* Base Styles */
     body {
@@ -17,6 +19,9 @@
       padding: 0;
       overflow-x: hidden;
       min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     /* CRT Effects */
@@ -44,73 +49,60 @@
       z-index: 1000;
     }
 
-    /* Layout */
-    .music-content {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      padding: 1rem;
-      box-sizing: border-box;
-      max-width: 1200px;
-      margin: 0 auto;
+    /* iPod-like Layout */
+    .ipod-container {
+      width: 320px;
+      height: 600px;
+      background: linear-gradient(145deg, #222, #111);
+      border-radius: 30px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 
+                  inset 0 2px 10px rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #333;
     }
 
     .player-header {
       text-align: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 15px;
     }
 
     .player-title {
       font-family: "Press Start 2P", monospace;
-      font-size: 1.8rem;
+      font-size: 1.2rem;
       color: #0ff;
       margin: 0;
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
     }
 
     .player-title span {
       color: #f0f;
     }
 
-    .player-container {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      flex: 1;
-    }
-
-    @media (min-width: 992px) {
-      .player-container {
-        flex-direction: row;
-      }
-
-      .visualizer-section {
-        flex: 2;
-      }
-
-      .playlist-section {
-        flex: 1;
-        max-width: 350px;
-      }
-    }
-
     /* Visualizer */
-    #visualizer-container {
+    .visualizer-container {
       position: relative;
       width: 100%;
-      aspect-ratio: 16 / 9;
+      height: 200px;
       background: #000;
       border: 2px solid #0ff;
-      border-radius: 8px;
+      border-radius: 15px;
       overflow: hidden;
       box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+      margin-bottom: 15px;
     }
 
-    #visualizer {
+    #visualizer, #visualizer-3d {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
+    }
+
+    #visualizer-3d {
+      display: none;
     }
 
     /* Track Info */
@@ -119,23 +111,23 @@
       bottom: 0;
       left: 0;
       right: 0;
-      padding: 1rem;
+      padding: 10px;
       background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 10px;
     }
 
     .track-info-icon {
-      width: 2.5rem;
-      height: 2.5rem;
+      width: 30px;
+      height: 30px;
       background: #f0f;
       color: #000;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.2rem;
+      font-size: 14px;
       font-weight: bold;
     }
 
@@ -146,13 +138,19 @@
     #now-playing {
       font-family: "Press Start 2P", monospace;
       color: #fff;
-      font-size: 1rem;
-      margin-bottom: 0.25rem;
+      font-size: 0.7rem;
+      margin-bottom: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     #track-artist {
       color: #0ff;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     /* Progress Bar */
@@ -160,18 +158,18 @@
       display: flex;
       justify-content: space-between;
       color: #0ff;
-      font-size: 0.9rem;
-      margin: 0.5rem 0;
+      font-size: 0.8rem;
+      margin: 5px 0;
     }
 
     .progress-container {
       position: relative;
       width: 100%;
-      height: 8px;
+      height: 6px;
       background: #111;
       border: 1px solid #0ff;
-      border-radius: 4px;
-      margin-bottom: 1rem;
+      border-radius: 3px;
+      margin-bottom: 10px;
       cursor: pointer;
       overflow: hidden;
     }
@@ -183,122 +181,94 @@
       height: 100%;
       background: linear-gradient(to right, #0ff, #f0f);
       width: 0;
-      border-radius: 4px;
+      border-radius: 3px;
       transition: width 0.1s ease;
     }
 
-    /* Controls */
-    .controls-row {
+    /* iPod-like Control Wheel */
+    .control-wheel {
+      width: 180px;
+      height: 180px;
+      background: linear-gradient(145deg, #333, #222);
+      border-radius: 50%;
+      margin: 15px auto;
+      position: relative;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5),
+                  inset 0 1px 5px rgba(255, 255, 255, 0.1);
       display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    @media (min-width: 768px) {
-      .controls-row {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-      }
-    }
-
-    .music-controls {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-
-    .control-button {
-      font-family: "Press Start 2P", monospace;
-      background: rgba(0, 0, 0, 0.8);
-      border: 2px solid #0ff;
-      color: #0ff;
-      border-radius: 4px;
-      padding: 0.4rem 0.8rem;
-      text-shadow: 0 0 3px #0ff;
-      box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-      cursor: pointer;
-      transition: all 0.2s;
-      font-size: 0.7rem;
-    }
-
-    .control-button:hover {
-      background: #0ff;
-      color: #000;
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
-    }
-
-    .control-button-play {
-      font-size: 0.8rem;
-      padding: 0.5rem 1rem;
-      background: rgba(0, 0, 0, 0.8);
-      border: 2px solid #f0f;
-      color: #f0f;
-      text-shadow: 0 0 3px #f0f;
-      box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
-    }
-
-    .control-button-play:hover {
-      background: #f0f;
-      color: #000;
-      box-shadow: 0 0 20px rgba(255, 0, 255, 0.8);
-    }
-
-    .volume-control {
-      display: flex;
+      justify-content: center;
       align-items: center;
-      gap: 0.5rem;
     }
 
-    #volume-slider {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 100px;
-      height: 8px;
-      background: #111;
-      border: 1px solid #0ff;
-      border-radius: 4px;
-      outline: none;
-    }
-
-    #volume-slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 16px;
-      height: 16px;
-      background: #0ff;
+    .center-button {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(145deg, #444, #333);
       border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       cursor: pointer;
-      box-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+      z-index: 2;
     }
 
-    #volume-slider::-moz-range-thumb {
-      width: 16px;
-      height: 16px;
-      background: #0ff;
-      border-radius: 50%;
+    .center-button:active {
+      transform: scale(0.95);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .wheel-button {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Press Start 2P", monospace;
+      font-size: 0.6rem;
+      color: #0ff;
       cursor: pointer;
-      box-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
-      border: none;
+      text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+    }
+
+    .wheel-button:active {
+      transform: scale(0.95);
+    }
+
+    .menu-button {
+      top: 10px;
+    }
+
+    .next-button {
+      right: 10px;
+    }
+
+    .prev-button {
+      left: 10px;
+    }
+
+    .play-button {
+      bottom: 10px;
     }
 
     /* Visualizer Modes */
-    #visualizer-modes {
+    .visualizer-modes {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
+      justify-content: center;
+      gap: 5px;
+      margin-top: 15px;
     }
 
     .mode-button {
       font-family: "Press Start 2P", monospace;
       background: rgba(0, 0, 0, 0.8);
-      border: 2px solid #0ff;
+      border: 1px solid #0ff;
       color: #0ff;
       border-radius: 4px;
-      padding: 0.3rem 0.6rem;
-      font-size: 0.6rem;
+      padding: 5px 8px;
+      font-size: 0.5rem;
       cursor: pointer;
       transition: all 0.2s;
     }
@@ -310,26 +280,34 @@
     .mode-button.active {
       background: linear-gradient(to right, #0ff, #f0f);
       color: #000;
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
     }
 
     /* Playlist */
-    .playlist-section {
-      border: 2px solid #0ff;
-      border-radius: 8px;
-      background: rgba(0, 0, 0, 0.5);
-      display: flex;
+    .playlist-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 10;
+      display: none;
       flex-direction: column;
-      overflow: hidden;
+      padding: 20px;
+      box-sizing: border-box;
+      border-radius: 30px;
+    }
+
+    .playlist-container.active {
+      display: flex;
     }
 
     .playlist-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.75rem;
-      border-bottom: 1px solid #0ff;
-      background: rgba(0, 0, 0, 0.8);
+      margin-bottom: 15px;
     }
 
     .playlist-header h2 {
@@ -339,9 +317,13 @@
       margin: 0;
     }
 
-    #track-count {
-      color: #0ff;
-      font-size: 0.8rem;
+    .close-playlist {
+      font-family: "Press Start 2P", monospace;
+      background: none;
+      border: none;
+      color: #f0f;
+      font-size: 1rem;
+      cursor: pointer;
     }
 
     #playlist {
@@ -350,17 +332,16 @@
       margin: 0;
       overflow-y: auto;
       flex-grow: 1;
-      max-height: 400px;
     }
 
     #playlist li {
-      padding: 0.75rem;
+      padding: 10px;
       border-bottom: 1px solid #333;
       transition: background 0.2s, color 0.2s;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 10px;
     }
 
     #playlist li:hover {
@@ -395,81 +376,82 @@
 
     .track-title {
       color: #fff;
-      font-size: 1rem;
-      margin-bottom: 0.25rem;
+      font-size: 0.9rem;
+      margin-bottom: 3px;
     }
 
     .track-artist-name {
       color: #0ff;
+      font-size: 0.7rem;
+    }
+
+    /* Volume Indicator */
+    .volume-indicator {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .volume-indicator.active {
+      opacity: 1;
+    }
+
+    .volume-icon {
       font-size: 0.8rem;
+      color: #0ff;
+    }
+
+    .volume-level {
+      width: 50px;
+      height: 5px;
+      background: #111;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .volume-fill {
+      height: 100%;
+      background: linear-gradient(to right, #0ff, #f0f);
+      width: 70%;
+    }
+
+    /* Animations */
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+      }
+    }
+
+    .pulse {
+      animation: pulse 2s infinite;
     }
 
     /* Responsive Adjustments */
-    .mobile-only {
-      display: none;
-    }
-
-    @media (max-width: 991px) {
-      .mobile-only {
-        display: block;
+    @media (max-width: 400px) {
+      .ipod-container {
+        width: 280px;
+        height: 550px;
+        padding: 15px;
       }
 
-      .playlist-section {
-        display: none;
+      .control-wheel {
+        width: 150px;
+        height: 150px;
       }
 
-      .playlist-section.active {
-        display: flex;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .player-title {
-        font-size: 1.5rem;
-      }
-
-      .control-button {
-        padding: 0.3rem 0.6rem;
-        font-size: 0.6rem;
-      }
-
-      .control-button-play {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.7rem;
-      }
-
-      .mode-button {
-        padding: 0.25rem 0.5rem;
-        font-size: 0.5rem;
-      }
-
-      #now-playing {
-        font-size: 0.8rem;
-      }
-
-      .track-info-icon {
-        width: 2rem;
-        height: 2rem;
-        font-size: 1rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .music-content {
-        padding: 0.5rem;
-      }
-
-      .player-title {
-        font-size: 1.2rem;
-      }
-
-      #visualizer-modes {
-        gap: 0.25rem;
-      }
-
-      .mode-button {
-        padding: 0.2rem 0.4rem;
-        font-size: 0.45rem;
+      .center-button {
+        width: 50px;
+        height: 50px;
       }
     }
   </style>
@@ -478,71 +460,70 @@
   <div class="scanlines"></div>
   <div class="crt-effect"></div>
 
-  <div class="music-content">
-    <header class="player-header">
-      <h1 class="player-title">SONIC<span>WAVE</span></h1>
-    </header>
+  <div class="ipod-container">
+    <div class="player-header">
+      <h1 class="player-title">MY<span>MUSIC</span></h1>
+    </div>
 
-    <div class="player-container">
-      <div class="visualizer-section">
-        <div id="visualizer-container">
-          <canvas id="visualizer"></canvas>
-          
-          <div class="track-info">
-            <div class="track-info-icon">▶</div>
-            <div class="track-info-text">
-              <div id="now-playing">Select a track</div>
-              <div id="track-artist"></div>
-            </div>
-          </div>
+    <div class="visualizer-container">
+      <canvas id="visualizer"></canvas>
+      <div id="visualizer-3d"></div>
+      
+      <div class="track-info">
+        <div class="track-info-icon">▶</div>
+        <div class="track-info-text">
+          <div id="now-playing">Select a track</div>
+          <div id="track-artist"></div>
         </div>
-
-        <div class="track-time">
-          <span id="current-time">0:00</span>
-          <span id="total-time">0:00</span>
-        </div>
-
-        <div class="progress-container" id="progress-container">
-          <div class="progress-bar" id="progress-bar"></div>
-        </div>
-
-        <div class="controls-row">
-          <div class="music-controls">
-            <button id="prevTrack" class="control-button">◀ PREV</button>
-            <button id="togglePlay" class="control-button control-button-play">▶ PLAY</button>
-            <button id="nextTrack" class="control-button">NEXT ▶</button>
-            <button id="togglePlaylist" class="control-button mobile-only">PLAYLIST</button>
-          </div>
-
-          <div class="volume-control">
-            <button id="toggleMute" class="control-button">🔊</button>
-            <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.7">
-          </div>
-        </div>
-
-        <div id="visualizer-modes">
-          <button class="mode-button active" data-mode="bars">BARS</button>
-          <button class="mode-button" data-mode="wave">WAVE</button>
-          <button class="mode-button" data-mode="circle">CIRCLE</button>
-        </div>
-      </div>
-
-      <div class="playlist-section" id="playlist-section">
-        <div class="playlist-header">
-          <h2>PLAYLIST</h2>
-          <span id="track-count">0 tracks</span>
-        </div>
-        <ul id="playlist"></ul>
       </div>
     </div>
 
-    <!-- crossOrigin needed for Web Audio API -->
-    <audio id="music-player" preload="auto" crossOrigin="anonymous"></audio>
+    <div class="track-time">
+      <span id="current-time">0:00</span>
+      <span id="total-time">0:00</span>
+    </div>
+
+    <div class="progress-container" id="progress-container">
+      <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <div class="control-wheel">
+      <div class="wheel-button menu-button" id="menu-button">MENU</div>
+      <div class="wheel-button next-button" id="next-button">▶▶</div>
+      <div class="wheel-button prev-button" id="prev-button">◀◀</div>
+      <div class="wheel-button play-button" id="play-button">▶/❚❚</div>
+      <div class="center-button" id="center-button"></div>
+    </div>
+
+    <div class="visualizer-modes">
+      <button class="mode-button active" data-mode="bars">BARS</button>
+      <button class="mode-button" data-mode="wave">WAVE</button>
+      <button class="mode-button" data-mode="circle">CIRCLE</button>
+      <button class="mode-button" data-mode="3d">3D</button>
+    </div>
+
+    <div class="volume-indicator">
+      <div class="volume-icon">🔊</div>
+      <div class="volume-level">
+        <div class="volume-fill" id="volume-fill"></div>
+      </div>
+    </div>
   </div>
+
+  <div class="playlist-container" id="playlist-container">
+    <div class="playlist-header">
+      <h2>PLAYLIST</h2>
+      <button class="close-playlist" id="close-playlist">X</button>
+    </div>
+    <ul id="playlist"></ul>
+  </div>
+
+  <!-- Audio element - crossOrigin needed for Web Audio API -->
+  <audio id="music-player" preload="none" crossOrigin="anonymous"></audio>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      console.log("🎵 SonicWave Music Player initializing...");
+      console.log("🎵 Initializing...");
 
       // Define tracks with artist information
       const tracks = [
@@ -596,22 +577,24 @@
       // DOM refs - with safety checks
       const audio = getElement("music-player");
       const canvas = getElement("visualizer");
+      const visualizer3d = getElement("visualizer-3d");
       const playlist = getElement("playlist");
+      const playlistContainer = getElement("playlist-container");
+      const closePlaylistBtn = getElement("close-playlist");
       const nowTxt = getElement("now-playing");
       const artistTxt = getElement("track-artist");
       const curT = getElement("current-time");
       const totT = getElement("total-time");
       const progBar = getElement("progress-bar");
       const progCon = getElement("progress-container");
-      const prevBtn = getElement("prevTrack");
-      const nxtBtn = getElement("nextTrack");
-      const playBtn = getElement("togglePlay");
+      const menuBtn = getElement("menu-button");
+      const prevBtn = getElement("prev-button");
+      const nextBtn = getElement("next-button");
+      const playBtn = getElement("play-button");
+      const centerBtn = getElement("center-button");
       const modeBtns = document.querySelectorAll(".mode-button");
-      const volumeSlider = getElement("volume-slider");
-      const muteBtn = getElement("toggleMute");
-      const togglePlaylistBtn = getElement("togglePlaylist");
-      const playlistSection = getElement("playlist-section");
-      const trackCount = getElement("track-count");
+      const volumeIndicator = document.querySelector(".volume-indicator");
+      const volumeFill = getElement("volume-fill");
 
       // Initialize canvas context if canvas exists
       let ctx = null;
@@ -633,9 +616,21 @@
       let dataArray = null;
       let timeData = null;
       let audioInitialized = false;
-      let previousVolume = 0.7;
+      let volume = 0.7;
       let isMuted = false;
       let animationId = null;
+      let wheelTouchActive = false;
+      let wheelAngle = 0;
+      let lastWheelAngle = 0;
+
+      // 3D visualization variables
+      const three = {
+        initialized: false,
+        scene: null,
+        camera: null,
+        renderer: null,
+        objects: [],
+      };
 
       // Prevent screen from sleeping
       let wakeLock = null;
@@ -715,6 +710,13 @@
             canvas.width = container.clientWidth;
             canvas.height = container.clientHeight;
           }
+          
+          // Also resize 3D renderer if initialized
+          if (visualizerMode === "3d" && three.initialized && three.renderer) {
+            three.renderer.setSize(container.clientWidth, container.clientHeight);
+            three.camera.aspect = container.clientWidth / container.clientHeight;
+            three.camera.updateProjectionMatrix();
+          }
         } catch (e) {
           console.error("Error resizing canvas:", e);
         }
@@ -742,14 +744,12 @@
                 <div class="track-artist-name">${track.artist}</div>
               </div>
             `;
-            li.onclick = () => loadTrack(index);
+            li.onclick = () => {
+              loadTrack(index);
+              togglePlaylist();
+            };
             playlist.appendChild(li);
           });
-          
-          // Update track count
-          if (trackCount) {
-            trackCount.textContent = `${tracks.length} tracks`;
-          }
           
           console.log("Playlist built with", tracks.length, "tracks");
         } catch (e) {
@@ -759,14 +759,27 @@
 
       buildPlaylist();
 
+      // Toggle playlist visibility
+      function togglePlaylist() {
+        if (playlistContainer) {
+          playlistContainer.classList.toggle("active");
+        }
+      }
+
       // Load & play track
       function loadTrack(index) {
         if (!audio || !tracks[index]) return;
         
         try {
           currentTrackIndex = index;
-          audio.src = tracks[index].src;
           
+          // Set audio source
+          if (audio.src !== tracks[index].src) {
+            audio.src = tracks[index].src;
+            audio.load(); // Explicitly load the audio
+          }
+          
+          // Update track info display
           if (nowTxt) nowTxt.textContent = tracks[index].title;
           if (artistTxt) artistTxt.textContent = tracks[index].artist;
           
@@ -791,16 +804,11 @@
             });
           }
           
-          // Update play button
-          if (playBtn) {
-            playBtn.textContent = isPlaying ? "⏸ PAUSE" : "▶ PLAY";
-            playBtn.classList.toggle("playing", isPlaying);
-          }
-          
-          // Update track info icon
+          // Update play button and track info icon
           const trackInfoIcon = document.querySelector(".track-info-icon");
           if (trackInfoIcon) {
             trackInfoIcon.textContent = isPlaying ? "▶" : "❚❚";
+            trackInfoIcon.classList.toggle("pulse", isPlaying);
           }
         } catch (e) {
           console.error("Error updating UI:", e);
@@ -907,6 +915,7 @@
 
       // Set up controls
       if (playBtn) playBtn.addEventListener("click", togglePlay);
+      if (centerBtn) centerBtn.addEventListener("click", togglePlay);
       
       if (prevBtn) {
         prevBtn.addEventListener("click", () => {
@@ -919,8 +928,8 @@
         });
       }
       
-      if (nxtBtn) {
-        nxtBtn.addEventListener("click", () => {
+      if (nextBtn) {
+        nextBtn.addEventListener("click", () => {
           try {
             currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
             loadTrack(currentTrackIndex);
@@ -928,6 +937,14 @@
             console.error("Error on next track:", e);
           }
         });
+      }
+      
+      if (menuBtn) {
+        menuBtn.addEventListener("click", togglePlaylist);
+      }
+      
+      if (closePlaylistBtn) {
+        closePlaylistBtn.addEventListener("click", togglePlaylist);
       }
       
       if (progCon) {
@@ -950,83 +967,303 @@
           try {
             visualizerMode = button.dataset.mode;
             modeBtns.forEach(btn => btn.classList.toggle("active", btn === button));
+            
+            // Toggle 3D mode
+            if (visualizerMode === "3d") {
+              if (canvas) canvas.style.display = "none";
+              if (visualizer3d) visualizer3d.style.display = "block";
+              
+              // Initialize 3D if needed
+              if (!three.initialized) {
+                init3D();
+              }
+            } else {
+              if (canvas) canvas.style.display = "block";
+              if (visualizer3d) visualizer3d.style.display = "none";
+            }
           } catch (e) {
             console.error("Error changing visualizer mode:", e);
           }
         });
       });
 
-      // Volume control
-      if (volumeSlider) {
-        volumeSlider.addEventListener("input", () => {
-          try {
-            if (!audio) return;
-            
-            const volume = parseFloat(volumeSlider.value);
-            audio.volume = volume;
-            
-            // Update mute button
-            updateMuteButton(volume);
-            
-            // Store volume for unmute
-            if (volume > 0) {
-              previousVolume = volume;
-              isMuted = false;
-            } else {
-              isMuted = true;
-            }
-          } catch (e) {
-            console.error("Error adjusting volume:", e);
-          }
-        });
-      }
-
-      // Mute button
-      if (muteBtn) {
-        muteBtn.addEventListener("click", () => {
-          try {
-            if (!audio) return;
-            
-            if (isMuted) {
-              // Unmute
-              audio.volume = previousVolume;
-              if (volumeSlider) volumeSlider.value = previousVolume;
-              isMuted = false;
-            } else {
-              // Mute
-              previousVolume = audio.volume;
-              audio.volume = 0;
-              if (volumeSlider) volumeSlider.value = 0;
-              isMuted = true;
-            }
-            
-            updateMuteButton(audio.volume);
-          } catch (e) {
-            console.error("Error toggling mute:", e);
-          }
-        });
-      }
-
-      // Update mute button icon
-      function updateMuteButton(volume) {
-        if (!muteBtn) return;
+      // Volume control with iPod wheel
+      const controlWheel = document.querySelector(".control-wheel");
+      if (controlWheel) {
+        // Mouse/touch events for the wheel
+        controlWheel.addEventListener("mousedown", startWheelControl);
+        controlWheel.addEventListener("touchstart", startWheelControl);
         
-        if (volume === 0) {
-          muteBtn.textContent = "🔇";
-        } else if (volume < 0.3) {
-          muteBtn.textContent = "🔈";
-        } else if (volume < 0.7) {
-          muteBtn.textContent = "🔉";
-        } else {
-          muteBtn.textContent = "🔊";
+        document.addEventListener("mousemove", moveWheelControl);
+        document.addEventListener("touchmove", moveWheelControl);
+        
+        document.addEventListener("mouseup", endWheelControl);
+        document.addEventListener("touchend", endWheelControl);
+      }
+
+      function startWheelControl(e) {
+        e.preventDefault();
+        wheelTouchActive = true;
+        
+        // Get center of wheel
+        const rect = controlWheel.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        
+        // Get touch/mouse position
+        const clientX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+        const clientY = e.clientY || (e.touches && e.touches[0].clientY) || 0;
+        
+        // Calculate angle
+        wheelAngle = Math.atan2(clientY - centerY, clientX - centerX);
+        lastWheelAngle = wheelAngle;
+        
+        // Show volume indicator
+        if (volumeIndicator) {
+          volumeIndicator.classList.add("active");
         }
       }
 
-      // Toggle playlist on mobile
-      if (togglePlaylistBtn && playlistSection) {
-        togglePlaylistBtn.addEventListener("click", () => {
-          playlistSection.classList.toggle("active");
-        });
+      function moveWheelControl(e) {
+        if (!wheelTouchActive || !audio) return;
+        
+        try {
+          // Get center of wheel
+          const rect = controlWheel.getBoundingClientRect();
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+          
+          // Get touch/mouse position
+          const clientX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+          const clientY = e.clientY || (e.touches && e.touches[0].clientY) || 0;
+          
+          // Calculate new angle
+          const newAngle = Math.atan2(clientY - centerY, clientX - centerX);
+          
+          // Calculate angle difference
+          let angleDiff = newAngle - lastWheelAngle;
+          
+          // Handle angle wrap-around
+          if (angleDiff > Math.PI) angleDiff -= Math.PI * 2;
+          if (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
+          
+          // Update volume based on wheel rotation
+          volume += angleDiff * 0.1;
+          volume = Math.max(0, Math.min(1, volume));
+          
+          // Apply volume
+          audio.volume = volume;
+          
+          // Update volume indicator
+          if (volumeFill) {
+            volumeFill.style.width = `${volume * 100}%`;
+          }
+          
+          // Update last angle
+          lastWheelAngle = newAngle;
+        } catch (e) {
+          console.error("Error in wheel control:", e);
+        }
+      }
+
+      function endWheelControl() {
+        wheelTouchActive = false;
+        
+        // Hide volume indicator after a delay
+        setTimeout(() => {
+          if (volumeIndicator) {
+            volumeIndicator.classList.remove("active");
+          }
+        }, 1500);
+      }
+
+      // Initialize 3D visualization
+      function init3D() {
+        if (!visualizer3d || !window.THREE) {
+          console.error("Cannot initialize 3D: missing element or THREE.js");
+          return;
+        }
+        
+        try {
+          // Create scene
+          three.scene = new THREE.Scene();
+          
+          // Create camera
+          const container = visualizer3d;
+          const width = container.clientWidth;
+          const height = container.clientHeight;
+          three.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+          three.camera.position.z = 20;
+          
+          // Create renderer
+          three.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+          three.renderer.setSize(width, height);
+          three.renderer.setClearColor(0x000000, 0);
+          
+          // Add renderer to container
+          container.innerHTML = "";
+          container.appendChild(three.renderer.domElement);
+          
+          // Add lights
+          const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+          three.scene.add(ambientLight);
+          
+          const pointLight = new THREE.PointLight(0x00ffff, 1, 100);
+          pointLight.position.set(10, 10, 10);
+          three.scene.add(pointLight);
+          
+          // Create 3D objects
+          create3DObjects();
+          
+          three.initialized = true;
+          console.log("3D visualization initialized");
+        } catch (e) {
+          console.error("Error initializing 3D:", e);
+        }
+      }
+
+      // Create 3D objects for visualization
+      function create3DObjects() {
+        if (!three.scene) return;
+        
+        try {
+          // Create a group to hold all objects
+          const group = new THREE.Group();
+          three.scene.add(group);
+          three.objects.push(group);
+          
+          // Create cubes in a circle
+          const cubeCount = 32;
+          for (let i = 0; i < cubeCount; i++) {
+            const geometry = new THREE.BoxGeometry(1, 1, 1);
+            const material = new THREE.MeshPhongMaterial({
+              color: new THREE.Color(`hsl(${(i / cubeCount) * 360}, 100%, 50%)`),
+              transparent: true,
+              opacity: 0.8,
+              specular: 0xffffff,
+              shininess: 100
+            });
+            
+            const cube = new THREE.Mesh(geometry, material);
+            
+            // Position in a circle
+            const angle = (i / cubeCount) * Math.PI * 2;
+            const radius = 10;
+            cube.position.x = Math.cos(angle) * radius;
+            cube.position.y = Math.sin(angle) * radius;
+            
+            group.add(cube);
+          }
+          
+          // Create center sphere
+          const sphereGeometry = new THREE.SphereGeometry(3, 32, 32);
+          const sphereMaterial = new THREE.MeshPhongMaterial({
+            color: 0x00ffff,
+            transparent: true,
+            opacity: 0.6,
+            specular: 0xffffff,
+            shininess: 100,
+            wireframe: true
+          });
+          
+          const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+          group.add(sphere);
+        } catch (e) {
+          console.error("Error creating 3D objects:", e);
+        }
+      }
+
+      // Update 3D visualization
+      function update3D() {
+        if (!three.initialized || !analyser || !dataArray) return;
+        
+        try {
+          // Get audio data
+          analyser.getByteFrequencyData(dataArray);
+          
+          // Calculate average levels for different frequency ranges
+          let bassSum = 0, midSum = 0, highSum = 0;
+          const bassRange = 10, midRange = 100, highRange = 300;
+          
+          for (let i = 0; i < bassRange; i++) {
+            bassSum += dataArray[i];
+          }
+          for (let i = bassRange; i < midRange; i++) {
+            midSum += dataArray[i];
+          }
+          for (let i = midRange; i < highRange; i++) {
+            highSum += dataArray[i];
+          }
+          
+          const bassLevel = bassSum / (bassRange * 255);
+          const midLevel = midSum / ((midRange - bassRange) * 255);
+          const highLevel = highSum / ((highRange - midRange) * 255);
+          
+          // Get the main group
+          const group = three.objects[0];
+          if (!group) return;
+          
+          // Rotate the group
+          group.rotation.y += 0.005;
+          group.rotation.x = Math.sin(Date.now() * 0.001) * 0.2;
+          
+          // Update cubes based on frequency data
+          const cubes = group.children.filter(child => 
+            child.geometry && child.geometry.type === "BoxGeometry"
+          );
+          
+          const cubeCount = cubes.length;
+          for (let i = 0; i < cubeCount; i++) {
+            const cube = cubes[i];
+            const dataIndex = Math.floor((i / cubeCount) * dataArray.length);
+            const value = dataArray[dataIndex] / 255;
+            
+            // Scale based on frequency
+            cube.scale.y = 1 + value * 5;
+            
+            // Move in and out based on frequency
+            const angle = (i / cubeCount) * Math.PI * 2;
+            const radius = 10 + value * 5;
+            cube.position.x = Math.cos(angle) * radius;
+            cube.position.y = Math.sin(angle) * radius;
+            
+            // Rotate based on frequency
+            cube.rotation.x += value * 0.1;
+            cube.rotation.y += value * 0.1;
+            
+            // Update color based on frequency
+            const hue = ((i / cubeCount) * 360 + Date.now() * 0.05) % 360;
+            if (cube.material) {
+              cube.material.color.setHSL(hue / 360, 1, 0.5);
+              cube.material.opacity = 0.5 + value * 0.5;
+            }
+          }
+          
+          // Update center sphere
+          const sphere = group.children.find(child => 
+            child.geometry && child.geometry.type === "SphereGeometry"
+          );
+          
+          if (sphere) {
+            // Pulse with bass
+            sphere.scale.set(1 + bassLevel * 2, 1 + bassLevel * 2, 1 + bassLevel * 2);
+            
+            // Change color with time
+            const hue = (Date.now() * 0.02) % 360;
+            if (sphere.material) {
+              sphere.material.color.setHSL(hue / 360, 1, 0.5);
+            }
+            
+            // Rotate
+            sphere.rotation.y += 0.01;
+            sphere.rotation.x += 0.005;
+          }
+          
+          // Render the scene
+          three.renderer.render(three.scene, three.camera);
+        } catch (e) {
+          console.error("Error updating 3D:", e);
+        }
       }
 
       // Draw bars visualizer
@@ -1228,7 +1465,7 @@
           ctx.stroke();
           
           // Draw text
-          ctx.font = "16px 'Press Start 2P', monospace";
+          ctx.font = "12px 'Press Start 2P', monospace";
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
           ctx.fillStyle = "#0ff";
@@ -1244,6 +1481,22 @@
           // Cancel any existing animation frame
           if (animationId) {
             cancelAnimationFrame(animationId);
+          }
+          
+          // If 3D mode is active, update 3D visualization
+          if (visualizerMode === "3d") {
+            if (three.initialized) {
+              if (audioInitialized && isPlaying) {
+                update3D();
+              } else {
+                // Just render the scene without updates
+                if (three.renderer && three.scene && three.camera) {
+                  three.renderer.render(three.scene, three.camera);
+                }
+              }
+            }
+            animationId = requestAnimationFrame(draw);
+            return;
           }
           
           // If audio isn't initialized or playing, show placeholder
