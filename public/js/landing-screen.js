@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function loadMainContent() {
     // Load the main index.html content
-    fetch("index-content.html")
+    fetch("boot.html")
       .then((response) => response.text())
       .then((html) => {
         mainContent.innerHTML = html

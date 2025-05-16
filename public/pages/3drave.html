@@ -13,7 +13,8 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+        "Helvetica Neue", sans-serif;
       background-color: #000;
       color: #fff;
       overflow: hidden;
@@ -273,111 +274,6 @@
       display: none;
     }
 
-    /* Mobile controls */
-    .mobile-controls {
-      position: absolute;
-      bottom: 80px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: none;
-      z-index: 50;
-      width: 180px;
-      height: 180px;
-    }
-
-    .mobile-control {
-      position: absolute;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background-color: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 0, 255, 0.5);
-      color: #ff00ff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      touch-action: manipulation;
-    }
-
-    .mobile-up {
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .mobile-down {
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .mobile-left {
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-
-    .mobile-right {
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-
-    /* Keyboard controls overlay */
-    #keyboard-controls {
-      position: absolute;
-      bottom: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: rgba(0, 0, 0, 0.7);
-      border: 1px solid #ff00ff;
-      border-radius: 8px;
-      padding: 8px 16px;
-      color: #00ffff;
-      font-size: 0.8rem;
-      z-index: 100;
-      display: none;
-      text-align: center;
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
-      box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
-    }
-
-    #keyboard-controls h4 {
-      margin: 0 0 8px 0;
-      color: #ff00ff;
-      font-size: 1rem;
-    }
-
-    #keyboard-controls ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 4px 16px;
-      text-align: left;
-    }
-
-    #keyboard-controls li {
-      display: flex;
-      align-items: center;
-    }
-
-    .key {
-      display: inline-block;
-      background-color: rgba(255, 255, 255, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      border-radius: 4px;
-      padding: 2px 6px;
-      margin-right: 8px;
-      font-family: monospace;
-      min-width: 20px;
-      text-align: center;
-    }
-
     /* Performance indicator */
     #performance-indicator {
       position: absolute;
@@ -499,35 +395,120 @@
       background-color: rgba(255, 0, 255, 0.5);
     }
 
+    /* Controls info */
+    #controls-info {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.8);
+      border: 1px solid #ff00ff;
+      border-radius: 8px;
+      padding: 16px;
+      color: #fff;
+      font-size: 0.9rem;
+      z-index: 1000;
+      width: 300px;
+      max-width: 90%;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    #controls-info h4 {
+      margin: 0 0 8px 0;
+      color: #00ffff;
+      font-size: 1rem;
+      border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+      padding-bottom: 4px;
+    }
+
+    #controls-info ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 16px 0;
+    }
+
+    #controls-info li {
+      display: flex;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .key {
+      display: inline-block;
+      background-color: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 4px;
+      padding: 2px 6px;
+      margin-right: 8px;
+      font-family: monospace;
+      min-width: 20px;
+      text-align: center;
+    }
+
+    .controls-note {
+      margin-top: 16px;
+      text-align: center;
+      color: #ff00ff;
+      font-style: italic;
+    }
+
+    /* Crosshair */
+    .crosshair {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.7);
+      z-index: 10;
+      pointer-events: none;
+    }
+
     /* Animations */
     @keyframes glitch {
       0% {
-        text-shadow: 0.05em 0 0 rgba(255, 0, 255, 0.75), -0.05em -0.025em 0 rgba(0, 255, 255, 0.75), -0.025em 0.05em 0 rgba(255, 255, 0, 0.75);
+        text-shadow: 0.05em 0 0 rgba(255, 0, 255, 0.75), -0.05em -0.025em 0 rgba(0, 255, 255, 0.75), -0.025em 0.05em 0
+          rgba(255, 255, 0, 0.75);
       }
       14% {
-        text-shadow: 0.05em 0 0 rgba(255, 0, 255, 0.75), -0.05em -0.025em 0 rgba(0, 255, 255, 0.75), -0.025em 0.05em 0 rgba(255, 255, 0, 0.75);
+        text-shadow: 0.05em 0 0 rgba(255, 0, 255, 0.75), -0.05em -0.025em 0 rgba(0, 255, 255, 0.75), -0.025em 0.05em 0
+          rgba(255, 255, 0, 0.75);
       }
       15% {
-        text-shadow: -0.05em -0.025em 0 rgba(255, 0, 255, 0.75), 0.025em 0.025em 0 rgba(0, 255, 255, 0.75), -0.05em -0.05em 0 rgba(255, 255, 0, 0.75);
+        text-shadow: -0.05em -0.025em 0 rgba(255, 0, 255, 0.75), 0.025em 0.025em 0 rgba(0, 255, 255, 0.75), -0.05em -0.05em
+          0 rgba(255, 255, 0, 0.75);
       }
       49% {
-        text-shadow: -0.05em -0.025em 0 rgba(255, 0, 255, 0.75), 0.025em 0.025em 0 rgba(0, 255, 255, 0.75), -0.05em -0.05em 0 rgba(255, 255, 0, 0.75);
+        text-shadow: -0.05em -0.025em 0 rgba(255, 0, 255, 0.75), 0.025em 0.025em 0 rgba(0, 255, 255, 0.75), -0.05em -0.05em
+          0 rgba(255, 255, 0, 0.75);
       }
       50% {
-        text-shadow: 0.025em 0.05em 0 rgba(255, 0, 255, 0.75), 0.05em 0 0 rgba(0, 255, 255, 0.75), 0 -0.05em 0 rgba(255, 255, 0, 0.75);
+        text-shadow: 0.025em 0.05em 0 rgba(255, 0, 255, 0.75), 0.05em 0 0 rgba(0, 255, 255, 0.75), 0 -0.05em 0
+          rgba(255, 255, 0, 0.75);
       }
       99% {
-        text-shadow: 0.025em 0.05em 0 rgba(255, 0, 255, 0.75), 0.05em 0 0 rgba(0, 255, 255, 0.75), 0 -0.05em 0 rgba(255, 255, 0, 0.75);
+        text-shadow: 0.025em 0.05em 0 rgba(255, 0, 255, 0.75), 0.05em 0 0 rgba(0, 255, 255, 0.75), 0 -0.05em 0
+          rgba(255, 255, 0, 0.75);
       }
       100% {
-        text-shadow: -0.025em 0 0 rgba(255, 0, 255, 0.75), -0.025em -0.025em 0 rgba(0, 255, 255, 0.75), -0.025em -0.05em 0 rgba(255, 255, 0, 0.75);
+        text-shadow: -0.025em 0 0 rgba(255, 0, 255, 0.75), -0.025em -0.025em 0 rgba(0, 255, 255, 0.75), -0.025em -0.05em 0
+          rgba(255, 255, 0, 0.75);
       }
     }
 
     @keyframes rainbow {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
     }
 
     .rainbow-text {
@@ -541,9 +522,15 @@
 
     /* Pulse animation for audio status */
     @keyframes pulse {
-      0% { opacity: 0.7; }
-      50% { opacity: 1; }
-      100% { opacity: 0.7; }
+      0% {
+        opacity: 0.7;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0.7;
+      }
     }
 
     .pulse {
@@ -552,13 +539,21 @@
 
     /* Fade in/out animation */
     @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
     }
 
     @keyframes fadeOut {
-      from { opacity: 1; }
-      to { opacity: 0; }
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+      }
     }
 
     .fade-in {
@@ -579,7 +574,7 @@
 
   <!-- Track Info -->
   <div id="track-info">
-    Now Playing: Melodic Techno
+    Now Playing: Initializing...
   </div>
 
   <!-- Audio Status -->
@@ -693,9 +688,31 @@
         </div>
       </div>
       <div class="setting-item">
-        <div class="setting-label">Ambient Sound</div>
+        <div class="setting-label">Randomize Tracks</div>
         <div class="setting-control">
-          <input type="checkbox" id="ambient-setting" checked>
+          <input type="checkbox" id="random-tracks-setting" checked>
+        </div>
+      </div>
+    </div>
+    
+    <div class="settings-group">
+      <h4>Movement</h4>
+      <div class="setting-item">
+        <div class="setting-label">Movement Speed</div>
+        <div class="setting-control">
+          <input type="range" id="movement-speed-setting" min="0.5" max="5" step="0.5" value="2">
+        </div>
+      </div>
+      <div class="setting-item">
+        <div class="setting-label">Flying Enabled</div>
+        <div class="setting-control">
+          <input type="checkbox" id="flying-setting" checked>
+        </div>
+      </div>
+      <div class="setting-item">
+        <div class="setting-label">Mouse Sensitivity</div>
+        <div class="setting-control">
+          <input type="range" id="sensitivity-setting" min="0.1" max="2" step="0.1" value="1">
         </div>
       </div>
     </div>
@@ -720,7 +737,7 @@
     <button id="settings-button" class="control-button" title="Settings">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="12" r="3"></circle>
-        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
       </svg>
     </button>
     
@@ -748,104 +765,86 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="12" r="10"></circle>
         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-      <line x1="12" y1="17" x2="12.01" y2="17"></line>
-    </svg>
-  </button>
-</div>
-
-  <!-- Mobile Controls -->
-  <div class="mobile-controls">
-    <div class="mobile-control mobile-up" id="mobile-up">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="18 15 12 9 6 15"></polyline>
+        <line x1="12" y1="17" x2="12.01" y2="17"></line>
       </svg>
-    </div>
-    <div class="mobile-control mobile-down" id="mobile-down">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="6 9 12 15 18 9"></polyline>
-      </svg>
-    </div>
-    <div class="mobile-control mobile-left" id="mobile-left">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="15 18 9 12 15 6"></polyline>
-      </svg>
-    </div>
-    <div class="mobile-control mobile-right" id="mobile-right">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="9 18 15 12 9 6"></polyline>
-      </svg>
-    </div>
+    </button>
   </div>
 
-  <!-- Keyboard Controls -->
-  <div id="keyboard-controls">
-    <h4>Keyboard Controls</h4>
+  <!-- Controls Info -->
+  <div id="controls-info">
+    <h4>Movement Controls</h4>
     <ul>
       <li><span class="key">W</span> Move forward</li>
       <li><span class="key">S</span> Move backward</li>
       <li><span class="key">A</span> Move left</li>
       <li><span class="key">D</span> Move right</li>
-      <li><span class="key">R</span> Reset camera</li>
-      <li><span class="key">F</span> Fullscreen</li>
-      <li><span class="key">Space</span> Toggle audio</li>
-      <li><span class="key">C</span> Change theme</li>
-      <li><span class="key">T</span> Change track</li>
-      <li><span class="key">H</span> Toggle this help</li>
-      <li><span class="key">P</span> Settings</li>
+      <li><span class="key">Space</span> Fly up</li>
+      <li><span class="key">Shift</span> Fly down</li>
+      <li><span class="key">Mouse</span> Look around</li>
+      <li><span class="key">Esc</span> Release mouse</li>
     </ul>
+    <h4>Other Controls</h4>
+    <ul>
+      <li><span class="key">F</span> Fullscreen</li>
+      <li><span class="key">M</span> Toggle music</li>
+      <li><span class="key">T</span> Change theme</li>
+      <li><span class="key">N</span> Next track</li>
+      <li><span class="key">P</span> Settings</li>
+      <li><span class="key">H</span> Toggle this help</li>
+    </ul>
+    <p class="controls-note">Click anywhere to lock mouse and start exploring!</p>
   </div>
 
   <!-- Load Three.js from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/PointerLockControls.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/RGBShiftShader.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/DigitalGlitch.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/GlitchPass.min.js"></script>
+  
+  <!-- Main Application Script -->
   <script>
-    // Tripscape Application
-    const Tripscape = {
-      // Libraries
-      libs: {
-        three: null,
-        loaded: false,
-        dependencies: [
-          { name: 'three', url: 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js' },
-          { name: 'OrbitControls', url: 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js' },
-          { name: 'EffectComposer', url: 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.min.js' },
-          { name: 'RenderPass', url: 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.min.js' },
-          { name: 'UnrealBloomPass', url: 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.min.js' },
-          { name: 'ShaderPass', url: 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.min.js' },
-          { name: 'CopyShader', url: 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.min.js' },
-          { name: 'LuminosityHighPassShader', url: 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.min.js' },
-          { name: 'RGBShiftShader', url: 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/RGBShiftShader.min.js' },
-          { name: 'DigitalGlitch', url: 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/DigitalGlitch.min.js' },
-          { name: 'GlitchPass', url: 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/GlitchPass.min.js' }
-        ]
-      },
+    // Tripscape - 3D Psychedelic Experience
+    // A first-person immersive rave experience
 
+    // Main Tripscape object
+    const Tripscape = {
       // Configuration and state
       config: {
-        density: 40,
-        cameraSpeed: 1.0,
-        visualTheme: 'rave',
+        density: 60,
+        movementSpeed: 2.0,
+        flyingEnabled: true,
+        visualTheme: "rave",
         audioReactive: true,
         volume: 0.7,
         bassImpact: 1.5,
-        audioTrack: 'melodic-techno',
+        audioTrack: "melodic-techno",
+        randomizeTracks: true,
         trippyLevel: 1.0,
         glitchIntensity: 0.15,
         colorShiftSpeed: 1.0,
         bloomEnabled: true,
-        autoCamera: false,
         showDancers: true,
-        dancerCount: 30,
-        regularPeopleCount: 20,
+        dancerCount: 100,
+        regularPeopleCount: 50,
         showBuildings: true,
+        buildingCount: 200,
         showSkyObjects: true,
-        skyObjectCount: 50,
+        skyObjectCount: 100,
         showLasers: true,
+        laserCount: 50,
         showSmoke: true,
-        smokeCount: 4,
+        smokeCount: 8,
         isMobile: false,
-        minCameraHeight: 0.5,
-        showAmbientSound: true,
         showFps: false,
-        quality: 'medium'
+        quality: "medium",
+        mouseSensitivity: 1.0,
       },
 
       // Visual themes
@@ -861,7 +860,7 @@
           skyColor: 0x000033,
           bloomStrength: 1.2,
           bloomRadius: 0.7,
-          bloomThreshold: 0.1
+          bloomThreshold: 0.1,
         },
         hyperspace: {
           name: "HYPERSPACE",
@@ -874,7 +873,7 @@
           skyColor: 0x000066,
           bloomStrength: 1.0,
           bloomRadius: 0.6,
-          bloomThreshold: 0.2
+          bloomThreshold: 0.2,
         },
         vaporwave: {
           name: "VAPORWAVE",
@@ -887,42 +886,72 @@
           skyColor: 0x2d1b4e,
           bloomStrength: 0.8,
           bloomRadius: 0.4,
-          bloomThreshold: 0.3
-        }
+          bloomThreshold: 0.3,
+        },
+        cyberpunk: {
+          name: "CYBERPUNK",
+          fogColor: 0x0a001a,
+          particleColor1: 0xff3c6f,
+          particleColor2: 0x00f9ff,
+          gridColor: 0xffff00,
+          buildingColor1: 0xff3c6f,
+          buildingColor2: 0x00f9ff,
+          skyColor: 0x0a001a,
+          bloomStrength: 1.5,
+          bloomRadius: 0.5,
+          bloomThreshold: 0.1,
+        },
+        neon: {
+          name: "NEON DREAMS",
+          fogColor: 0x000000,
+          particleColor1: 0xff00ff,
+          particleColor2: 0x00ffff,
+          gridColor: 0x00ff00,
+          buildingColor1: 0xff00ff,
+          buildingColor2: 0x00ffff,
+          skyColor: 0x000000,
+          bloomStrength: 1.8,
+          bloomRadius: 0.8,
+          bloomThreshold: 0.1,
+        },
       },
 
       // Audio tracks
       audioTracks: {
-        'melodic-techno': {
+        "melodic-techno": {
           url: "https://cdn.glitch.global/25331b85-e206-4347-93a8-666983818ff8/melodic-techno-03-extended-version-moogify-9867.mp3?v=1747323781216",
-          title: "Melodic Techno"
+          title: "Melodic Techno",
         },
-        'berlin-techno': {
+        "berlin-techno": {
           url: "https://cdn.glitch.global/25331b85-e206-4347-93a8-666983818ff8/berlin-techno-106820.mp3?v=1747327926985",
-          title: "Berlin Techno"
+          title: "Berlin Techno",
         },
-        'dopetronic-echoes': {
+        "dopetronic-echoes": {
           url: "https://cdn.glitch.global/25331b85-e206-4347-93a8-666983818ff8/dopetronic-echoes-from-nowhere-original-mix-gift-track-321994.mp3?v=1747327850182",
-          title: "Dopetronic - Echoes From Nowhere"
+          title: "Dopetronic - Echoes From Nowhere",
         },
-        'unknown-planet': {
+        "unknown-planet": {
           url: "https://cdn.glitch.global/25331b85-e206-4347-93a8-666983818ff8/unknown-planet-driving-techno-music-312478.mp3?v=1747327934012",
-          title: "Unknown Planet - Driving Techno"
-        }
+          title: "Unknown Planet - Driving Techno",
+        },
       },
 
       // DOM Elements
       elements: {},
 
-      // Mouse/touch tracking
-      mouse: {
-        x: 0,
-        y: 0,
-        active: false
+      // Movement state
+      movement: {
+        forward: false,
+        backward: false,
+        left: false,
+        right: false,
+        up: false,
+        down: false,
+        speed: 0.15,
+        velocity: new THREE.Vector3(),
+        direction: new THREE.Vector3(),
+        pointerLocked: false,
       },
-
-      // Keyboard state
-      keys: {},
 
       // Animation state
       animationFrameId: null,
@@ -941,7 +970,7 @@
       audioElement: null,
       isPlaying: false,
       audioLoaded: false,
-      ambientSound: null,
+      trackQueue: [],
 
       // Three.js variables
       scene: null,
@@ -950,6 +979,7 @@
       composer: null,
       controls: null,
       clock: null,
+      raycaster: null,
       particles: null,
       floorMesh: null,
       skyMesh: null,
@@ -961,173 +991,142 @@
       skyObjects: [],
       lasers: [],
       smokeMachines: [],
+      zones: [],
+      lastGenerationPosition: null,
+      generationRadius: 500,
+      generationDistance: 300,
 
       // Initialize the application
-      init: function() {
+      init: function () {
         try {
+          console.log("Initializing Tripscape...");
+          
           // Get DOM elements
           this.getElements();
-          
+
           // Check if device is mobile
           this.checkMobile();
-          
+
           // Initialize loading screen
           this.initLoadingScreen();
-          
+
           // Load dependencies
           this.loadDependencies()
             .then(() => {
+              console.log("Dependencies loaded successfully");
+              
               // Initialize scene
               this.initScene();
-              
+
               // Initialize audio
               this.initAudio();
-              
+
               // Initialize controls
               this.initControls();
-              
+
               // Start animation loop
               this.animate();
+              
+              // Hide controls info initially
+              setTimeout(() => {
+                // Auto-hide controls after 3 seconds if not clicked
+                if (!this.movement.pointerLocked) {
+                  this.elements.controlsInfo.style.display = "none";
+                }
+              }, 3000);
             })
-            .catch(error => {
+            .catch((error) => {
+              console.error("Failed to load dependencies:", error);
               this.showError(`Failed to load dependencies: ${error.message}`);
             });
         } catch (error) {
+          console.error("Initialization error:", error);
           this.showError(`Initialization error: ${error.message}`);
         }
       },
 
-      // Load Three.js and its extensions
-      loadDependencies: function() {
-        return new Promise((resolve, reject) => {
-          let loaded = 0;
-          const total = this.libs.dependencies.length;
-          
-          // Update loading progress
-          const updateProgress = () => {
-            loaded++;
-            const percent = Math.round((loaded / total) * 100);
-            this.elements.progressFill.style.width = `${percent}%`;
-            this.elements.progressPercent.textContent = `${percent}%`;
-          };
-          
-          // Load each dependency sequentially
-          const loadNext = (index) => {
-            if (index >= total) {
-              this.libs.loaded = true;
-              resolve();
-              return;
-            }
-            
-            const dependency = this.libs.dependencies[index];
-            const script = document.createElement('script');
-            script.src = dependency.url;
-            
-            script.onload = () => {
-              updateProgress();
-              
-              // Store reference to Three.js
-              if (dependency.name === 'three') {
-                this.libs.three = THREE;
-              }
-              
-              // Load next dependency
-              loadNext(index + 1);
-            };
-            
-            script.onerror = (error) => {
-              reject(new Error(`Failed to load ${dependency.name}: ${error.message}`));
-            };
-            
-            document.head.appendChild(script);
-          };
-          
-          // Start loading
-          loadNext(0);
-        });
-      },
-
       // Get DOM elements
-      getElements: function() {
+      getElements: function () {
         this.elements = {
-          loadingScreen: document.getElementById('loading-screen'),
-          loadingText: document.getElementById('loading-text'),
-          progressFill: document.getElementById('progress-fill'),
-          progressPercent: document.getElementById('progress-percent'),
-          sceneCanvas: document.getElementById('scene-canvas'),
-          audioVisualizer: document.getElementById('audio-visualizer'),
-          trackInfo: document.getElementById('track-info'),
-          audioStatus: document.getElementById('audio-status'),
-          errorMessage: document.getElementById('error-message'),
-          keyboardControls: document.getElementById('keyboard-controls'),
-          themeIndicator: document.getElementById('theme-indicator'),
-          themeButton: document.getElementById('theme-button'),
-          trackButton: document.getElementById('track-button'),
-          trackSelector: document.getElementById('track-selector'),
-          audioButton: document.getElementById('audio-button'),
-          fullscreenButton: document.getElementById('fullscreen-button'),
-          helpButton: document.getElementById('help-button'),
-          settingsButton: document.getElementById('settings-button'),
-          settingsPanel: document.getElementById('settings-panel'),
-          settingsApply: document.getElementById('settings-apply'),
-          settingsClose: document.getElementById('settings-close'),
-          performanceIndicator: document.getElementById('performance-indicator'),
-          mobileControls: document.querySelector('.mobile-controls'),
-          mobileUp: document.getElementById('mobile-up'),
-          mobileDown: document.getElementById('mobile-down'),
-          mobileLeft: document.getElementById('mobile-left'),
-          mobileRight: document.getElementById('mobile-right')
+          loadingScreen: document.getElementById("loading-screen"),
+          loadingText: document.getElementById("loading-text"),
+          progressFill: document.getElementById("progress-fill"),
+          progressPercent: document.getElementById("progress-percent"),
+          sceneCanvas: document.getElementById("scene-canvas"),
+          audioVisualizer: document.getElementById("audio-visualizer"),
+          trackInfo: document.getElementById("track-info"),
+          audioStatus: document.getElementById("audio-status"),
+          errorMessage: document.getElementById("error-message"),
+          controlsInfo: document.getElementById("controls-info"),
+          themeIndicator: document.getElementById("theme-indicator"),
+          themeButton: document.getElementById("theme-button"),
+          trackButton: document.getElementById("track-button"),
+          trackSelector: document.getElementById("track-selector"),
+          audioButton: document.getElementById("audio-button"),
+          fullscreenButton: document.getElementById("fullscreen-button"),
+          helpButton: document.getElementById("help-button"),
+          settingsButton: document.getElementById("settings-button"),
+          settingsPanel: document.getElementById("settings-panel"),
+          settingsApply: document.getElementById("settings-apply"),
+          settingsClose: document.getElementById("settings-close"),
+          performanceIndicator: document.getElementById("performance-indicator"),
         };
 
         // Canvas contexts
-        this.visualizerCtx = this.elements.audioVisualizer.getContext('2d');
+        this.visualizerCtx = this.elements.audioVisualizer.getContext("2d");
       },
 
       // Check if device is mobile
-      checkMobile: function() {
+      checkMobile: function () {
         this.config.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        
+
         if (this.config.isMobile) {
-          this.elements.mobileControls.style.display = 'block';
-          
           // Reduce quality for mobile
-          this.config.quality = 'low';
-          this.applyQualitySettings('low');
+          this.config.quality = "low";
+          this.applyQualitySettings("low");
         }
       },
 
       // Apply quality settings
-      applyQualitySettings: function(quality) {
+      applyQualitySettings: function (quality) {
         switch (quality) {
-          case 'low':
+          case "low":
             this.config.density = 20;
-            this.config.dancerCount = 15;
-            this.config.regularPeopleCount = 10;
-            this.config.skyObjectCount = 20;
+            this.config.dancerCount = 30;
+            this.config.regularPeopleCount = 15;
+            this.config.skyObjectCount = 30;
+            this.config.buildingCount = 50;
+            this.config.laserCount = 15;
             this.config.showSmoke = false;
             this.config.bloomEnabled = false;
             break;
-          case 'medium':
+          case "medium":
             this.config.density = 40;
-            this.config.dancerCount = 30;
-            this.config.regularPeopleCount = 20;
-            this.config.skyObjectCount = 50;
-            this.config.showSmoke = true;
-            this.config.bloomEnabled = true;
-            break;
-          case 'high':
-            this.config.density = 60;
-            this.config.dancerCount = 45;
-            this.config.regularPeopleCount = 30;
-            this.config.skyObjectCount = 80;
-            this.config.showSmoke = true;
-            this.config.bloomEnabled = true;
-            break;
-          case 'ultra':
-            this.config.density = 100;
             this.config.dancerCount = 60;
-            this.config.regularPeopleCount = 40;
-            this.config.skyObjectCount = 120;
+            this.config.regularPeopleCount = 30;
+            this.config.skyObjectCount = 60;
+            this.config.buildingCount = 100;
+            this.config.laserCount = 30;
+            this.config.showSmoke = true;
+            this.config.bloomEnabled = true;
+            break;
+          case "high":
+            this.config.density = 60;
+            this.config.dancerCount = 100;
+            this.config.regularPeopleCount = 50;
+            this.config.skyObjectCount = 100;
+            this.config.buildingCount = 150;
+            this.config.laserCount = 50;
+            this.config.showSmoke = true;
+            this.config.bloomEnabled = true;
+            break;
+          case "ultra":
+            this.config.density = 100;
+            this.config.dancerCount = 150;
+            this.config.regularPeopleCount = 75;
+            this.config.skyObjectCount = 150;
+            this.config.buildingCount = 200;
+            this.config.laserCount = 80;
             this.config.showSmoke = true;
             this.config.bloomEnabled = true;
             break;
@@ -1135,7 +1134,7 @@
       },
 
       // Initialize loading screen
-      initLoadingScreen: function() {
+      initLoadingScreen: function () {
         // Glitch text effect
         setInterval(() => {
           if (Math.random() > 0.6) {
@@ -1158,163 +1157,458 @@
         }, 80);
       },
 
+      // Load dependencies
+      loadDependencies: function () {
+        return new Promise((resolve, reject) => {
+          // Simulate loading progress
+          let progress = 0;
+          const interval = setInterval(() => {
+            progress += Math.random() * 10;
+            if (progress >= 100) {
+              progress = 100;
+              clearInterval(interval);
+              resolve();
+            }
+            this.elements.progressFill.style.width = `${progress}%`;
+            this.elements.progressPercent.textContent = `${Math.round(progress)}%`;
+          }, 150);
+        });
+      },
+
       // Show error message
-      showError: function(message) {
+      showError: function (message) {
         console.error(message);
         this.elements.errorMessage.textContent = message;
-        this.elements.errorMessage.style.display = 'block';
+        this.elements.errorMessage.style.display = "block";
       },
 
       // Initialize Three.js scene
-      initScene: function() {
+      initScene: function () {
         try {
+          console.log("Initializing 3D scene...");
+          
           // Create scene
           this.scene = new THREE.Scene();
-          
+
           // Add fog for depth
           const theme = this.visualThemes[this.config.visualTheme];
-          this.scene.fog = new THREE.FogExp2(theme.fogColor, 0.015);
-          
+          this.scene.fog = new THREE.FogExp2(theme.fogColor, 0.008); // Reduced fog density for more visibility
+
           // Create camera
-          this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+          this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
           this.camera.position.set(0, 5, 20);
-          this.camera.lookAt(0, 0, 0);
-          
+
           // Create renderer
-          this.renderer = new THREE.WebGLRenderer({ 
+          this.renderer = new THREE.WebGLRenderer({
             canvas: this.elements.sceneCanvas,
             antialias: true,
-            alpha: true
+            alpha: true,
           });
           this.renderer.setSize(window.innerWidth, window.innerHeight);
           this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-          
+
           // Create clock for animation
           this.clock = new THREE.Clock();
-          
-          // Create orbit controls
-          this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
-          this.controls.enableDamping = true;
-          this.controls.dampingFactor = 0.05;
-          this.controls.autoRotate = this.config.autoCamera;
-          this.controls.autoRotateSpeed = 0.5;
-          this.controls.minDistance = 2;
-          this.controls.maxDistance = 200;
-          
+
+          // Create raycaster for collision detection
+          this.raycaster = new THREE.Raycaster();
+
+          // Create pointer lock controls for first-person movement
+          this.controls = new THREE.PointerLockControls(this.camera, document.body);
+
+          // Add crosshair
+          this.createCrosshair();
+
           // Set up post-processing
           this.setupPostProcessing();
-          
+
           // Create scene objects
           this.createSceneObjects();
-          
+
           // Handle window resize
-          window.addEventListener('resize', () => this.onWindowResize());
-          
+          window.addEventListener("resize", () => this.onWindowResize());
+
           // Hide loading screen
           setTimeout(() => {
-            this.elements.loadingScreen.style.opacity = '0';
+            this.elements.loadingScreen.style.opacity = "0";
             setTimeout(() => {
-              this.elements.loadingScreen.style.display = 'none';
+              this.elements.loadingScreen.style.display = "none";
             }, 500);
           }, 1000);
+          
+          console.log("3D scene initialized successfully");
         } catch (error) {
+          console.error("Failed to initialize 3D scene:", error);
           this.showError(`Failed to initialize 3D scene: ${error.message}`);
         }
       },
 
+      // Create crosshair
+      createCrosshair: () => {
+        const crosshair = document.createElement("div");
+        crosshair.className = "crosshair";
+        document.body.appendChild(crosshair);
+      },
+
       // Set up post-processing
-      setupPostProcessing: function() {
+      setupPostProcessing: function () {
         try {
           const theme = this.visualThemes[this.config.visualTheme];
-          
+
           // Create composer
           this.composer = new THREE.EffectComposer(this.renderer);
-          
+
           // Add render pass
           const renderPass = new THREE.RenderPass(this.scene, this.camera);
           this.composer.addPass(renderPass);
-          
+
           // Add bloom pass if enabled
           if (this.config.bloomEnabled) {
             this.bloomPass = new THREE.UnrealBloomPass(
               new THREE.Vector2(window.innerWidth, window.innerHeight),
               theme.bloomStrength,
               theme.bloomRadius,
-              theme.bloomThreshold
+              theme.bloomThreshold,
             );
             this.composer.addPass(this.bloomPass);
           }
-          
+
           // Add RGB shift pass
           this.rgbShiftPass = new THREE.ShaderPass(THREE.RGBShiftShader);
           this.rgbShiftPass.uniforms.amount.value = 0.0015;
           this.rgbShiftPass.uniforms.angle.value = 0;
           this.composer.addPass(this.rgbShiftPass);
-          
+
           // Add glitch pass
           this.glitchPass = new THREE.GlitchPass();
           this.glitchPass.goWild = false;
           this.glitchPass.enabled = true;
           this.composer.addPass(this.glitchPass);
         } catch (error) {
+          console.error("Failed to set up post-processing:", error);
           this.showError(`Failed to set up post-processing: ${error.message}`);
         }
       },
 
       // Create scene objects
-      createSceneObjects: function() {
+      createSceneObjects: function () {
         try {
           const theme = this.visualThemes[this.config.visualTheme];
-          
+
           // Create floor (dance floor)
           this.createDanceFloor(theme);
-          
+
           // Create sky dome
           this.createSkyDome(theme);
-          
+
           // Create particle system
           this.createParticles(theme);
-          
+
           // Create characters
           this.createCharacters(theme);
-          
+
           // Create buildings
           this.createBuildings(theme);
-          
+
           // Create lasers
           this.createLasers(theme);
+
+          // Create smoke machines
+          if (this.config.showSmoke) {
+            this.createSmokeMachines(theme);
+          }
+
+          // Create zones (different party areas)
+          this.createZones(theme);
+
+          // Set up infinite world generation
+          this.setupInfiniteWorld();
         } catch (error) {
+          console.error("Failed to create scene objects:", error);
           this.showError(`Failed to create scene objects: ${error.message}`);
         }
       },
 
-      // Create dance floor
-      createDanceFloor: function(theme) {
-        // Create a grid floor for the dance floor
-        const floorSize = 100;
-        const floorSegments = 50;
+      // Set up infinite world generation
+      setupInfiniteWorld: function () {
+        // Create a much larger floor that extends "infinitely"
+        this.updateDanceFloor(2000); // Extremely large floor
         
+        // Set up procedural generation based on player position
+        this.lastGenerationPosition = new THREE.Vector3();
+        this.generationRadius = 500;
+        this.generationDistance = 300;
+      },
+
+      // Update dance floor size
+      updateDanceFloor: function(size) {
+        // Remove old floor
+        if (this.floorMesh) {
+          this.scene.remove(this.floorMesh);
+        }
+        
+        const theme = this.visualThemes[this.config.visualTheme];
+        
+        // Create a much larger grid floor
+        const floorSize = size;
+        const floorSegments = 200;
+
         const floorGeometry = new THREE.PlaneGeometry(floorSize, floorSize, floorSegments, floorSegments);
         const floorMaterial = new THREE.MeshBasicMaterial({
           color: theme.gridColor,
           wireframe: true,
           transparent: true,
-          opacity: 0.5
+          opacity: 0.5,
         });
-        
+
         this.floorMesh = new THREE.Mesh(floorGeometry, floorMaterial);
         this.floorMesh.rotation.x = -Math.PI / 2;
         this.floorMesh.position.y = -2;
         this.scene.add(this.floorMesh);
-        
+
         // Add a reflective surface under the wireframe
         const reflectiveGeometry = new THREE.PlaneGeometry(floorSize, floorSize);
         const reflectiveMaterial = new THREE.MeshBasicMaterial({
           color: 0x000000,
           transparent: true,
-          opacity: 0.3
+          opacity: 0.3,
+        });
+
+        const reflectiveMesh = new THREE.Mesh(reflectiveGeometry, reflectiveMaterial);
+        reflectiveMesh.rotation.x = -Math.PI / 2;
+        reflectiveMesh.position.y = -2.1;
+        this.scene.add(reflectiveMesh);
+      },
+
+      // Check if we need to generate more content based on player position
+      checkProceduralGeneration: function() {
+        if (!this.lastGenerationPosition) return;
+        
+        const distanceMoved = this.camera.position.distanceTo(this.lastGenerationPosition);
+        
+        // If player has moved far enough, generate new content
+        if (distanceMoved > this.generationDistance) {
+          this.generateWorldContent();
+          this.lastGenerationPosition.copy(this.camera.position);
+        }
+      },
+
+      // Generate new world content around the player
+      generateWorldContent: function() {
+        const theme = this.visualThemes[this.config.visualTheme];
+        const playerPos = this.camera.position.clone();
+        
+        // Generate new buildings
+        for (let i = 0; i < 20; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const distance = this.generationRadius * 0.5 + Math.random() * this.generationRadius * 0.5;
+          
+          const x = playerPos.x + Math.cos(angle) * distance;
+          const z = playerPos.z + Math.sin(angle) * distance;
+          
+          this.createBuilding(x, z, theme);
+        }
+        
+        // Generate new characters
+        for (let i = 0; i < 15; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const distance = this.generationRadius * 0.3 + Math.random() * this.generationRadius * 0.3;
+          
+          const x = playerPos.x + Math.cos(angle) * distance;
+          const z = playerPos.z + Math.sin(angle) * distance;
+          
+          this.createCharacter(x, z, theme, Math.random() > 0.5);
+        }
+        
+        // Generate new sky objects
+        for (let i = 0; i < 10; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const distance = this.generationRadius * 0.7 + Math.random() * this.generationRadius * 0.3;
+          const height = 50 + Math.random() * 300;
+          
+          const x = playerPos.x + Math.cos(angle) * distance;
+          const z = playerPos.z + Math.sin(angle) * distance;
+          
+          this.createSkyObject(x, height, z, theme);
+        }
+      },
+
+      // Create a single building at specified position
+      createBuilding: function(x, z, theme) {
+        // Random building properties
+        const width = 5 + Math.random() * 15;
+        const height = 20 + Math.random() * 80;
+        const depth = 5 + Math.random() * 15;
+        
+        // Random color
+        const color1 = new THREE.Color(theme.buildingColor1);
+        const color2 = new THREE.Color(theme.buildingColor2);
+        const mixRatio = Math.random();
+        const buildingColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
+        
+        // Create building geometry
+        const buildingGeometry = new THREE.BoxGeometry(width, height, depth);
+        const buildingMaterial = new THREE.MeshBasicMaterial({
+          color: buildingColor,
+          wireframe: true,
+          transparent: true,
+          opacity: 0.7,
         });
         
+        const building = new THREE.Mesh(buildingGeometry, buildingMaterial);
+        building.position.set(x, height / 2 - 2, z);
+        
+        this.scene.add(building);
+        this.buildings.push(building);
+        
+        return building;
+      },
+
+      // Create a single character at specified position
+      createCharacter: function(x, z, theme, isDancing) {
+        // Create a simple character
+        const bodyGeometry = new THREE.BoxGeometry(1, 2, 1);
+        const headGeometry = new THREE.SphereGeometry(0.5, 8, 8);
+        
+        // Random color
+        const color1 = new THREE.Color(theme.particleColor1);
+        const color2 = new THREE.Color(theme.particleColor2);
+        const mixRatio = Math.random();
+        const characterColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
+        
+        const bodyMaterial = new THREE.MeshBasicMaterial({
+          color: characterColor,
+          wireframe: true,
+        });
+        
+        const headMaterial = new THREE.MeshBasicMaterial({
+          color: characterColor,
+          wireframe: true,
+        });
+        
+        // Create body and head
+        const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+        const head = new THREE.Mesh(headGeometry, headMaterial);
+        
+        // Position head on top of body
+        head.position.y = 1.5;
+        
+        // Create character group
+        const character = new THREE.Group();
+        character.add(body);
+        character.add(head);
+        
+        // Position character
+        character.position.set(x, 0, z);
+        
+        // Add animation data
+        character.userData = {
+          isDancing: isDancing,
+          danceSpeed: 0.5 + Math.random() * 1.5,
+          danceOffset: Math.random() * Math.PI * 2,
+          rotationSpeed: (Math.random() - 0.5) * 0.05,
+        };
+        
+        this.scene.add(character);
+        this.characters.push(character);
+        
+        return character;
+      },
+
+      // Create a single sky object at specified position
+      createSkyObject: function(x, y, z, theme) {
+        // Random color
+        const color1 = new THREE.Color(theme.particleColor1);
+        const color2 = new THREE.Color(theme.particleColor2);
+        const mixRatio = Math.random();
+        const objectColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
+        
+        // Create a random geometric shape
+        let object;
+        const shapeType = Math.floor(Math.random() * 5);
+        
+        const material = new THREE.MeshBasicMaterial({
+          color: objectColor,
+          wireframe: true,
+          transparent: true,
+          opacity: 0.7,
+        });
+        
+        switch (shapeType) {
+          case 0: // Cube
+            const cubeGeometry = new THREE.BoxGeometry(
+              10 + Math.random() * 20,
+              10 + Math.random() * 20,
+              10 + Math.random() * 20,
+            );
+            object = new THREE.Mesh(cubeGeometry, material);
+            break;
+          case 1: // Sphere
+            const sphereGeometry = new THREE.SphereGeometry(5 + Math.random() * 15, 8, 8);
+            object = new THREE.Mesh(sphereGeometry, material);
+            break;
+          case 2: // Torus
+            const torusGeometry = new THREE.TorusGeometry(10 + Math.random() * 10, 3 + Math.random() * 5, 8, 16);
+            object = new THREE.Mesh(torusGeometry, material);
+            break;
+          case 3: // Tetrahedron
+            const tetraGeometry = new THREE.TetrahedronGeometry(10 + Math.random() * 15);
+            object = new THREE.Mesh(tetraGeometry, material);
+            break;
+          case 4: // Octahedron
+            const octaGeometry = new THREE.OctahedronGeometry(10 + Math.random() * 15);
+            object = new THREE.Mesh(octaGeometry, material);
+            break;
+        }
+        
+        // Position
+        object.position.set(x, y, z);
+        
+        // Add animation data
+        object.userData = {
+          rotationSpeed: {
+            x: (Math.random() - 0.5) * 0.01,
+            y: (Math.random() - 0.5) * 0.01,
+            z: (Math.random() - 0.5) * 0.01,
+          },
+          floatSpeed: 0.2 + Math.random() * 0.8,
+          floatOffset: Math.random() * Math.PI * 2,
+          originalY: y,
+        };
+        
+        this.scene.add(object);
+        this.skyObjects.push(object);
+        
+        return object;
+      },
+
+      // Create dance floor
+      createDanceFloor: function (theme) {
+        // Create a grid floor for the dance floor
+        const floorSize = 500; // Much larger floor
+        const floorSegments = 100;
+
+        const floorGeometry = new THREE.PlaneGeometry(floorSize, floorSize, floorSegments, floorSegments);
+        const floorMaterial = new THREE.MeshBasicMaterial({
+          color: theme.gridColor,
+          wireframe: true,
+          transparent: true,
+          opacity: 0.5,
+        });
+
+        this.floorMesh = new THREE.Mesh(floorGeometry, floorMaterial);
+        this.floorMesh.rotation.x = -Math.PI / 2;
+        this.floorMesh.position.y = -2;
+        this.scene.add(this.floorMesh);
+
+        // Add a reflective surface under the wireframe
+        const reflectiveGeometry = new THREE.PlaneGeometry(floorSize, floorSize);
+        const reflectiveMaterial = new THREE.MeshBasicMaterial({
+          color: 0x000000,
+          transparent: true,
+          opacity: 0.3,
+        });
+
         const reflectiveMesh = new THREE.Mesh(reflectiveGeometry, reflectiveMaterial);
         reflectiveMesh.rotation.x = -Math.PI / 2;
         reflectiveMesh.position.y = -2.1;
@@ -1322,1129 +1616,1081 @@
       },
 
       // Create sky dome
-      createSkyDome: function(theme) {
+      createSkyDome: function (theme) {
         // Create a large sphere for the sky
-        const skyGeometry = new THREE.SphereGeometry(400, 32, 32);
+        const skyGeometry = new THREE.SphereGeometry(5000, 64, 64);
         const skyMaterial = new THREE.MeshBasicMaterial({
           color: theme.skyColor,
           side: THREE.BackSide,
           transparent: true,
-          opacity: 0.8
+          opacity: 0.8,
         });
-        
+
         this.skyMesh = new THREE.Mesh(skyGeometry, skyMaterial);
         this.scene.add(this.skyMesh);
-        
+
         // Add stars to the sky dome
-        const starCount = 1000;
+        const starCount = 3000;
         const starGeometry = new THREE.BufferGeometry();
         const starPositions = new Float32Array(starCount * 3);
-        
+
         for (let i = 0; i < starCount; i++) {
           // Create stars in a full sphere around the scene
           const theta = Math.random() * Math.PI * 2;
           const phi = Math.random() * Math.PI;
-          const radius = 350 + Math.random() * 50;
-          
+          const radius = 900 + Math.random() * 100;
+
           starPositions[i * 3] = radius * Math.sin(theta) * Math.cos(theta);
           starPositions[i * 3 + 1] = radius * Math.cos(phi);
           starPositions[i * 3 + 2] = radius * Math.sin(phi) * Math.sin(theta);
         }
-        
-        starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
-        
+
+        starGeometry.setAttribute("position", new THREE.BufferAttribute(starPositions, 3));
+
         const starMaterial = new THREE.PointsMaterial({
           color: 0xffffff,
           size: 2,
           transparent: true,
-          opacity: 0.8
+          opacity: 0.8,
         });
-        
+
         const stars = new THREE.Points(starGeometry, starMaterial);
         this.scene.add(stars);
         this.skyObjects.push(stars);
+
+        // Add floating objects in the sky
+        this.createSkyObjects(theme);
+      },
+
+      // Create sky objects
+      createSkyObjects: function (theme) {
+        if (!this.config.showSkyObjects) return;
+
+        for (let i = 0; i < this.config.skyObjectCount; i++) {
+          // Random position in the sky
+          const radius = 100 + Math.random() * 400;
+          const theta = Math.random() * Math.PI * 2;
+          const phi = Math.random() * Math.PI;
+
+          const x = radius * Math.sin(phi) * Math.cos(theta);
+          const y = 50 + Math.random() * 300; // Higher up in the sky
+          const z = radius * Math.sin(phi) * Math.sin(theta);
+
+          // Random color
+          const color1 = new THREE.Color(theme.particleColor1);
+          const color2 = new THREE.Color(theme.particleColor2);
+          const mixRatio = Math.random();
+          const objectColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
+
+          // Create a random geometric shape
+          let object;
+          const shapeType = Math.floor(Math.random() * 5);
+
+          const material = new THREE.MeshBasicMaterial({
+            color: objectColor,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.7,
+          });
+
+          switch (shapeType) {
+            case 0: // Cube
+              const cubeGeometry = new THREE.BoxGeometry(
+                10 + Math.random() * 20,
+                10 + Math.random() * 20,
+                10 + Math.random() * 20,
+              );
+              object = new THREE.Mesh(cubeGeometry, material);
+              break;
+            case 1: // Sphere
+              const sphereGeometry = new THREE.SphereGeometry(5 + Math.random() * 15, 8, 8);
+              object = new THREE.Mesh(sphereGeometry, material);
+              break;
+            case 2: // Torus
+              const torusGeometry = new THREE.TorusGeometry(10 + Math.random() * 10, 3 + Math.random() * 5, 8, 16);
+              object = new THREE.Mesh(torusGeometry, material);
+              break;
+            case 3: // Tetrahedron
+              const tetraGeometry = new THREE.TetrahedronGeometry(10 + Math.random() * 15);
+              object = new THREE.Mesh(tetraGeometry, material);
+              break;
+            case 4: // Octahedron
+              const octaGeometry = new THREE.OctahedronGeometry(10 + Math.random() * 15);
+              object = new THREE.Mesh(octaGeometry, material);
+              break;
+          }
+
+          // Position
+          object.position.set(x, y, z);
+
+          // Add animation data
+          object.userData = {
+            rotationSpeed: {
+              x: (Math.random() - 0.5) * 0.01,
+              y: (Math.random() - 0.5) * 0.01,
+              z: (Math.random() - 0.5) * 0.01,
+            },
+            floatSpeed: 0.2 + Math.random() * 0.8,
+            floatOffset: Math.random() * Math.PI * 2,
+            originalY: y,
+          };
+
+          this.scene.add(object);
+          this.skyObjects.push(object);
+        }
       },
 
       // Create particles
-      createParticles: function(theme) {
+      createParticles: function (theme) {
         const particleGeometry = new THREE.BufferGeometry();
-        const particleCount = this.config.density * 100;
-        
+        const particleCount = this.config.density * 200; // More particles
+
         const positions = new Float32Array(particleCount * 3);
         const colors = new Float32Array(particleCount * 3);
-        
+
         const color1 = new THREE.Color(theme.particleColor1);
         const color2 = new THREE.Color(theme.particleColor2);
-        
+
         for (let i = 0; i < particleCount; i++) {
-          // Position
-          const x = (Math.random() - 0.5) * 100;
-          const y = Math.random() * 50;
-          const z = (Math.random() - 0.5) * 100;
-          
+          // Position - spread out over a much larger area
+          const x = (Math.random() - 0.5) * 500;
+          const y = Math.random() * 200;
+          const z = (Math.random() - 0.5) * 500;
+
           positions[i * 3] = x;
           positions[i * 3 + 1] = y;
           positions[i * 3 + 2] = z;
-          
+
           // Color
           const mixRatio = Math.random();
           const mixedColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
-          
+
           colors[i * 3] = mixedColor.r;
           colors[i * 3 + 1] = mixedColor.g;
           colors[i * 3 + 2] = mixedColor.b;
         }
-        
-        particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-        
+
+        particleGeometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+        particleGeometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+
         const particleMaterial = new THREE.PointsMaterial({
-          size: 2,
+          size: 4,
           vertexColors: true,
           transparent: true,
-          opacity: 0.8
+          opacity: 0.7,
         });
-        
+
         this.particles = new THREE.Points(particleGeometry, particleMaterial);
         this.scene.add(this.particles);
       },
 
       // Create characters
-      createCharacters: function(theme) {
-        // Create dancers
-        for (let i = 0; i < this.config.dancerCount; i++) {
-          const dancer = this.createCharacter(theme);
-          
-          // Random position on the dance floor
-          dancer.position.x = (Math.random() - 0.5) * 40;
-          dancer.position.z = (Math.random() - 0.5) * 40;
-          dancer.position.y = -2; // On the floor
-          
-          // Random rotation
-          dancer.rotation.y = Math.random() * Math.PI * 2;
-          
-          this.scene.add(dancer);
-          this.characters.push(dancer);
-        }
-      },
+      createCharacters: function (theme) {
+        if (!this.config.showDancers) return;
 
-      // Create a single character
-      createCharacter: function(theme) {
-        // Create a group for the character
-        const character = new THREE.Group();
-        
-        // Random color for this character
-        const color1 = new THREE.Color(theme.particleColor1);
-        const color2 = new THREE.Color(theme.particleColor2);
-        const mixRatio = Math.random();
-        const characterColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
-        
-        // Material for the character - wireframe for vector outline look
-        const material = new THREE.MeshBasicMaterial({
-          color: characterColor,
-          wireframe: true,
-          transparent: true,
-          opacity: 0.8
-        });
-        
-        // Head
-        const headGeometry = new THREE.SphereGeometry(0.5, 8, 8);
-        const head = new THREE.Mesh(headGeometry, material);
-        head.position.y = 4.5;
-        character.add(head);
-        
-        // Body
-        const bodyGeometry = new THREE.CylinderGeometry(0.5, 0.7, 3, 8);
-        const body = new THREE.Mesh(bodyGeometry, material);
-        body.position.y = 2.5;
-        character.add(body);
-        
-        // Arms
-        const armGeometry = new THREE.CylinderGeometry(0.2, 0.2, 2, 6);
-        
-        // Left arm
-        const leftArm = new THREE.Mesh(armGeometry, material);
-        leftArm.position.set(-0.8, 3, 0);
-        leftArm.rotation.z = Math.PI / 4;
-        character.add(leftArm);
-        
-        // Right arm
-        const rightArm = new THREE.Mesh(armGeometry, material);
-        rightArm.position.set(0.8, 3, 0);
-        rightArm.rotation.z = -Math.PI / 4;
-        character.add(rightArm);
-        
-        // Legs
-        const legGeometry = new THREE.CylinderGeometry(0.25, 0.25, 2.5, 6);
-        
-        // Left leg
-        const leftLeg = new THREE.Mesh(legGeometry, material);
-        leftLeg.position.set(-0.5, 0.5, 0);
-        character.add(leftLeg);
-        
-        // Right leg
-        const rightLeg = new THREE.Mesh(legGeometry, material);
-        rightLeg.position.set(0.5, 0.5, 0);
-        character.add(rightLeg);
-        
-        // Add a subtle glow effect
-        const glowGeometry = new THREE.SphereGeometry(1.5, 16, 16);
-        const glowMaterial = new THREE.MeshBasicMaterial({
-          color: characterColor,
-          transparent: true,
-          opacity: 0.1,
-          side: THREE.BackSide
-        });
-        const glow = new THREE.Mesh(glowGeometry, glowMaterial);
-        glow.position.y = 2;
-        character.add(glow);
-        
-        // Add animation data
-        character.userData = {
-          animPhase: Math.random() * Math.PI * 2,
-          animSpeed: 0.5 + Math.random() * 1.5,
-          rotSpeed: (Math.random() - 0.5) * 0.02,
-          danceIntensity: 0.7 + Math.random() * 0.6
-        };
-        
-        return character;
+        for (let i = 0; i < this.config.dancerCount; i++) {
+          // Random position
+          const x = (Math.random() - 0.5) * 400;
+          const z = (Math.random() - 0.5) * 400;
+
+          this.createCharacter(x, z, theme, true);
+        }
+
+        for (let i = 0; i < this.config.regularPeopleCount; i++) {
+          // Random position
+          const x = (Math.random() - 0.5) * 400;
+          const z = (Math.random() - 0.5) * 400;
+
+          this.createCharacter(x, z, theme, false);
+        }
       },
 
       // Create buildings
-      createBuildings: function(theme) {
-        // Create city grid
-        const gridSize = 3;
-        const spacing = 25;
-        
-        for (let x = -gridSize; x <= gridSize; x++) {
-          for (let z = -gridSize; z <= gridSize; z++) {
-            // Skip center area (dance floor)
-            if (Math.abs(x) < 2 && Math.abs(z) < 2) continue;
-            
-            // Random building height
-            const height = 10 + Math.random() * 40;
-            
-            // Create building
-            const building = this.createBuilding(height, theme);
-            
-            // Position
-            building.position.x = x * spacing;
-            building.position.z = z * spacing;
-            building.position.y = height / 2 - 2; // Half height (origin at center) and floor offset
-            
-            this.scene.add(building);
-            this.buildings.push(building);
-          }
-        }
-      },
+      createBuildings: function (theme) {
+        if (!this.config.showBuildings) return;
 
-      // Create a single building
-      createBuilding: function(height, theme) {
-        // Create a group for the building
-        const building = new THREE.Group();
-        
-        // Random color for this building
-        const color1 = new THREE.Color(theme.buildingColor1);
-        const color2 = new THREE.Color(theme.buildingColor2);
-        const mixRatio = Math.random();
-        const buildingColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
-        
-        // Building base geometry
-        const width = 5 + Math.random() * 10;
-        const depth = 5 + Math.random() * 10;
-        const geometry = new THREE.BoxGeometry(width, height, depth);
-        
-        // Wireframe material for vector outline look
-        const material = new THREE.MeshBasicMaterial({
-          color: buildingColor,
-          wireframe: true,
-          transparent: true,
-          opacity: 0.6
-        });
-        
-        const mesh = new THREE.Mesh(geometry, material);
-        building.add(mesh);
-        
-        // Add animation data
-        building.userData = {
-          pulseSpeed: Math.random() * 2 + 1,
-          originalColor: buildingColor.clone()
-        };
-        
-        return building;
+        for (let i = 0; i < this.config.buildingCount; i++) {
+          // Random position
+          const x = (Math.random() - 0.5) * 800;
+          const z = (Math.random() - 0.5) * 800;
+
+          this.createBuilding(x, z, theme);
+        }
       },
 
       // Create lasers
-      createLasers: function(theme) {
+      createLasers: function (theme) {
         if (!this.config.showLasers) return;
-        
-        // Create laser beams
-        const laserCount = 20;
-        
-        for (let i = 0; i < laserCount; i++) {
-          const laser = this.createLaser(theme);
+
+        for (let i = 0; i < this.config.laserCount; i++) {
+          // Random start and end points
+          const startX = (Math.random() - 0.5) * 400;
+          const startY = 5 + Math.random() * 50;
+          const startZ = (Math.random() - 0.5) * 400;
+
+          const endX = (Math.random() - 0.5) * 400;
+          const endY = 5 + Math.random() * 50;
+          const endZ = (Math.random() - 0.5) * 400;
+
+          // Random color
+          const color1 = new THREE.Color(theme.particleColor1);
+          const color2 = new THREE.Color(theme.particleColor2);
+          const mixRatio = Math.random();
+          const laserColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
+
+          // Create laser geometry using BufferGeometry instead of Geometry
+          const laserGeometry = new THREE.BufferGeometry();
+          const vertices = new Float32Array([
+            startX, startY, startZ,
+            endX, endY, endZ
+          ]);
+          laserGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+
+          const laserMaterial = new THREE.LineBasicMaterial({
+            color: laserColor,
+            transparent: true,
+            opacity: 0.6,
+          });
+
+          const laser = new THREE.Line(laserGeometry, laserMaterial);
           this.scene.add(laser);
           this.lasers.push(laser);
+
+          // Add animation data
+          laser.userData = {
+            color1: color1,
+            color2: color2,
+            mixRatio: Math.random(),
+            colorChangeSpeed: 0.01 + Math.random() * 0.05,
+          };
         }
       },
 
-      // Create a single laser
-      createLaser: function(theme) {
-        // Create a group for the laser
-        const laser = new THREE.Group();
-        
-        // Random color
-        const color1 = new THREE.Color(theme.particleColor1);
-        const color2 = new THREE.Color(theme.particleColor2);
-        const mixRatio = Math.random();
-        const laserColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
-        
-        // Create laser beam
-        const beamGeometry = new THREE.CylinderGeometry(0.1, 0.1, 100, 8);
-        const beamMaterial = new THREE.MeshBasicMaterial({
-          color: laserColor,
-          transparent: true,
-          opacity: 0.7
-        });
-        
-        const beam = new THREE.Mesh(beamGeometry, beamMaterial);
-        beam.position.y = 50;
-        beam.rotation.x = Math.PI / 2;
-        laser.add(beam);
-        
-        // Random position around the dance floor
-        const angle = Math.random() * Math.PI * 2;
-        const radius = 30 + Math.random() * 20;
-        
-        laser.position.x = Math.cos(angle) * radius;
-        laser.position.z = Math.sin(angle) * radius;
-        laser.position.y = -2;
-        
-        // Random rotation
-        laser.rotation.y = Math.random() * Math.PI * 2;
-        
-        // Add animation data
-        laser.userData = {
-          rotationSpeed: (Math.random() - 0.5) * 0.02,
-          pulseSpeed: Math.random() * 2 + 1
-        };
-        
-        return laser;
-      },
+      // Create smoke machines
+      createSmokeMachines: function (theme) {
+        for (let i = 0; i < this.config.smokeCount; i++) {
+          // Random position
+          const x = (Math.random() - 0.5) * 400;
+          const y = 0;
+          const z = (Math.random() - 0.5) * 400;
 
-      // Initialize controls
-      initControls: function() {
-        // Mouse/touch event handlers
-        window.addEventListener('mousemove', (e) => this.handleMouseMove(e));
-        window.addEventListener('touchmove', (e) => this.handleTouchMove(e));
-        
-        // Keyboard event handlers
-        window.addEventListener('keydown', (e) => this.handleKeyDown(e));
-        window.addEventListener('keyup', (e) => this.handleKeyUp(e));
-        
-        // Window resize handler
-        window.addEventListener('resize', () => this.onWindowResize());
-        
-        // Button event handlers
-        this.elements.fullscreenButton.addEventListener('click', () => this.toggleFullscreen());
-        this.elements.themeButton.addEventListener('click', () => this.cycleTheme());
-        this.elements.trackButton.addEventListener('click', () => this.toggleTrackSelector());
-        this.elements.audioButton.addEventListener('click', () => this.toggleAudio());
-        this.elements.helpButton.addEventListener('click', () => this.toggleHelp());
-        this.elements.settingsButton.addEventListener('click', () => this.toggleSettings());
-        this.elements.settingsApply.addEventListener('click', () => this.applySettings());
-        this.elements.settingsClose.addEventListener('click', () => this.toggleSettings());
-        
-        // Mobile controls
-        if (this.config.isMobile) {
-          this.initMobileControls();
-        }
-      },
+          // Create smoke particle system using BufferGeometry
+          const particleCount = 50;
+          const smokeGeometry = new THREE.BufferGeometry();
+          const positions = new Float32Array(particleCount * 3);
+          const velocities = [];
 
-      // Initialize mobile controls
-      initMobileControls: function() {
-        // Touch events for mobile controls
-        this.elements.mobileUp.addEventListener('touchstart', () => { this.keys['w'] = true; });
-        this.elements.mobileUp.addEventListener('touchend', () => { this.keys['w'] = false; });
-        
-        this.elements.mobileDown.addEventListener('touchstart', () => { this.keys['s'] = true; });
-        this.elements.mobileDown.addEventListener('touchend', () => { this.keys['s'] = false; });
-        
-        this.elements.mobileLeft.addEventListener('touchstart', () => { this.keys['a'] = true; });
-        this.elements.mobileLeft.addEventListener('touchend', () => { this.keys['a'] = false; });
-        
-        this.elements.mobileRight.addEventListener('touchstart', () => { this.keys['d'] = true; });
-        this.elements.mobileRight.addEventListener('touchend', () => { this.keys['d'] = false; });
-      },
+          for (let j = 0; j < particleCount; j++) {
+            positions[j * 3] = x;
+            positions[j * 3 + 1] = y;
+            positions[j * 3 + 2] = z;
+            
+            // Store velocity separately since BufferGeometry doesn't support custom attributes like Geometry did
+            velocities.push(new THREE.Vector3(0, 0.5 + Math.random(), 0));
+          }
 
-      // Handle mouse move
-      handleMouseMove: function(e) {
-        this.mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-        this.mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-        this.mouse.active = true;
-      },
+          smokeGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
-      // Handle touch move
-      handleTouchMove: function(e) {
-        if (e.touches && e.touches[0]) {
-          this.mouse.x = (e.touches[0].clientX / window.innerWidth) * 2 - 1;
-          this.mouse.y = -(e.touches[0].clientY / window.innerHeight) * 2 + 1;
-          this.mouse.active = true;
-        }
-      },
-
-      // Handle key down
-      handleKeyDown: function(e) {
-        this.keys[e.key.toLowerCase()] = true;
-        
-        // Toggle keyboard controls display with H key
-        if (e.key.toLowerCase() === 'h') {
-          this.toggleHelp();
-        }
-        
-        // Toggle fullscreen with F key
-        if (e.key.toLowerCase() === 'f') {
-          this.toggleFullscreen();
-        }
-        
-        // Toggle audio with Space key
-        if (e.key === ' ') {
-          this.toggleAudio();
-        }
-        
-        // Reset camera with R key
-        if (e.key.toLowerCase() === 'r') {
-          this.camera.position.set(0, 5, 20);
-          this.camera.lookAt(0, 0, 0);
-        }
-        
-        // Change visual theme with C key
-        if (e.key.toLowerCase() === 'c') {
-          this.cycleTheme();
-        }
-        
-        // Change track with T key
-        if (e.key.toLowerCase() === 't') {
-          this.toggleTrackSelector();
-        }
-        
-        // Toggle settings with P key
-        if (e.key.toLowerCase() === 'p') {
-          this.toggleSettings();
-        }
-      },
-
-      // Handle key up
-      handleKeyUp: function(e) {
-        this.keys[e.key.toLowerCase()] = false;
-      },
-
-      // Toggle help display
-      toggleHelp: function() {
-        this.elements.keyboardControls.style.display = 
-          this.elements.keyboardControls.style.display === 'none' ? 'block' : 'none';
-      },
-
-      // Toggle fullscreen
-      toggleFullscreen: function() {
-        if (!document.fullscreenElement) {
-          document.documentElement.requestFullscreen().catch(err => {
-            console.error(`Error attempting to enable fullscreen: ${err.message}`);
+          const smokeMaterial = new THREE.PointsMaterial({
+            color: 0xffffff,
+            size: 5 + Math.random() * 10,
+            transparent: true,
+            opacity: 0.3,
           });
-        } else {
-          if (document.exitFullscreen) {
-            document.exitFullscreen();
+
+          const smoke = new THREE.Points(smokeGeometry, smokeMaterial);
+          smoke.userData = { velocities: velocities }; // Store velocities in userData
+          this.scene.add(smoke);
+          this.smokeMachines.push(smoke);
+        }
+      },
+
+      // Create zones
+      createZones: function (theme) {
+        // Create different party zones
+        const zoneCount = 4;
+        for (let i = 0; i < zoneCount; i++) {
+          // Random position
+          const x = (Math.random() - 0.5) * 800;
+          const z = (Math.random() - 0.5) * 800;
+
+          // Create zone geometry
+          const zoneGeometry = new THREE.CircleGeometry(50 + Math.random() * 100, 32);
+          const zoneMaterial = new THREE.MeshBasicMaterial({
+            color: theme.gridColor,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.3,
+          });
+
+          const zone = new THREE.Mesh(zoneGeometry, zoneMaterial);
+          zone.rotation.x = -Math.PI / 2;
+          zone.position.set(x, -1.9, z);
+          this.scene.add(zone);
+          this.zones.push(zone);
+        }
+      },
+
+      // Animate the scene
+      animate: function () {
+        this.animationFrameId = requestAnimationFrame(() => this.animate());
+
+        // Get delta time
+        const deltaTime = this.clock.getDelta();
+        this.time += deltaTime;
+
+        // Update movement
+        this.updateMovement(deltaTime);
+
+        // Update objects
+        this.updateObjects(deltaTime);
+
+        this.checkProceduralGeneration();
+
+        // Update audio visualizer
+        if (this.config.audioReactive && this.isPlaying) {
+          this.updateAudioVisualizer();
+        }
+
+        // Render the scene
+        this.render();
+
+        // Update FPS counter
+        this.updateFps(deltaTime);
+      },
+
+      // Update movement
+      updateMovement: function (deltaTime) {
+        // Only apply movement if pointer is locked
+        if (!this.movement.pointerLocked) return;
+
+        // Get camera direction
+        this.camera.getWorldDirection(this.movement.direction);
+        
+        // Reset velocity
+        this.movement.velocity.x = 0;
+        this.movement.velocity.z = 0;
+        this.movement.velocity.y = 0;
+
+        // Calculate movement speed with delta time
+        const speed = this.movement.speed * this.config.movementSpeed * deltaTime * 60;
+
+        // Forward/backward
+        if (this.movement.forward) {
+          this.movement.velocity.x += this.movement.direction.x * speed;
+          this.movement.velocity.z += this.movement.direction.z * speed;
+        }
+        if (this.movement.backward) {
+          this.movement.velocity.x -= this.movement.direction.x * speed;
+          this.movement.velocity.z -= this.movement.direction.z * speed;
+        }
+
+        // Left/right (strafe)
+        if (this.movement.left) {
+          this.movement.velocity.x += this.movement.direction.z * speed;
+          this.movement.velocity.z -= this.movement.direction.x * speed;
+        }
+        if (this.movement.right) {
+          this.movement.velocity.x -= this.movement.direction.z * speed;
+          this.movement.velocity.z += this.movement.direction.x * speed;
+        }
+
+        // Up/down (flying)
+        if (this.config.flyingEnabled) {
+          if (this.movement.up) {
+            this.movement.velocity.y += speed;
+          }
+          if (this.movement.down) {
+            this.movement.velocity.y -= speed;
           }
         }
-      },
 
-      // Toggle settings panel
-      toggleSettings: function() {
-        const display = this.elements.settingsPanel.style.display;
-        this.elements.settingsPanel.style.display = display === 'none' ? 'block' : 'none';
-        
-        // Update settings controls with current values
-        if (display === 'none') {
-          document.getElementById('quality-setting').value = this.config.quality;
-          document.getElementById('density-setting').value = this.config.density;
-          document.getElementById('fps-setting').checked = this.config.showFps;
-          document.getElementById('bloom-setting').value = this.visualThemes[this.config.visualTheme].bloomStrength;
-          document.getElementById('glitch-setting').value = this.config.glitchIntensity;
-          document.getElementById('color-shift-setting').value = this.config.colorShiftSpeed;
-          document.getElementById('volume-setting').value = this.config.volume;
-          document.getElementById('bass-setting').value = this.config.bassImpact;
-          document.getElementById('ambient-setting').checked = this.config.showAmbientSound;
+        // Apply velocity to camera position
+        this.camera.position.x += this.movement.velocity.x;
+        this.camera.position.z += this.movement.velocity.z;
+        this.camera.position.y += this.movement.velocity.y;
+
+        // Prevent going below the floor
+        if (this.camera.position.y < 0) {
+          this.camera.position.y = 0;
         }
       },
 
-      // Apply settings
-      applySettings: function() {
-        // Get values from settings controls
-        const quality = document.getElementById('quality-setting').value;
-        const density = parseInt(document.getElementById('density-setting').value);
-        const showFps = document.getElementById('fps-setting').checked;
-        const bloomStrength = parseFloat(document.getElementById('bloom-setting').value);
-        const glitchIntensity = parseFloat(document.getElementById('glitch-setting').value);
-        const colorShiftSpeed = parseFloat(document.getElementById('color-shift-setting').value);
-        const volume = parseFloat(document.getElementById('volume-setting').value);
-        const bassImpact = parseFloat(document.getElementById('bass-setting').value);
-        const showAmbientSound = document.getElementById('ambient-setting').checked;
-        
-        // Apply quality settings
-        this.config.quality = quality;
-        this.applyQualitySettings(quality);
-        
-        // Apply other settings
-        this.config.density = density;
-        this.config.showFps = showFps;
-        this.config.glitchIntensity = glitchIntensity;
-        this.config.colorShiftSpeed = colorShiftSpeed;
-        this.config.volume = volume;
-        this.config.bassImpact = bassImpact;
-        this.config.showAmbientSound = showAmbientSound;
-        
-        // Update bloom strength
-        if (this.bloomPass) {
-          this.bloomPass.strength = bloomStrength;
-          this.visualThemes[this.config.visualTheme].bloomStrength = bloomStrength;
-        }
-        
-        // Update audio volume
-        if (this.audioElement) {
-          this.audioElement.volume = volume;
-        }
-        
-        // Update ambient sound
-        if (this.ambientSound) {
-          if (showAmbientSound) {
-            if (this.isPlaying && !this.ambientSound.paused) {
-              this.ambientSound.play();
-            }
-          } else {
-            this.ambientSound.pause();
-          }
-        }
-        
-        // Show/hide FPS counter
-        this.elements.performanceIndicator.style.display = showFps ? 'block' : 'none';
-        
-        // Hide settings panel
-        this.elements.settingsPanel.style.display = 'none';
-        
-        // Recreate scene objects if density changed significantly
-        if (Math.abs(this.config.density - density) > 10) {
-          this.recreateSceneObjects();
-        }
-      },
-
-      // Recreate scene objects
-      recreateSceneObjects: function() {
-        // Remove existing objects
+      // Update objects
+      updateObjects: function (deltaTime) {
+        // Update particles
         if (this.particles) {
-          this.scene.remove(this.particles);
+          const positions = this.particles.geometry.attributes.position.array;
+
+          for (let i = 0; i < positions.length; i += 3) {
+            // Slightly move particles up and down
+            positions[i + 1] += Math.sin(this.time + i) * 0.01;
+          }
+
+          this.particles.geometry.attributes.position.needsUpdate = true;
         }
-        
-        this.characters.forEach(character => {
-          this.scene.remove(character);
+
+        // Update characters
+        this.characters.forEach((character) => {
+          if (character.userData.isDancing) {
+            // Make characters dance
+            character.position.y = Math.sin(this.time * character.userData.danceSpeed + character.userData.danceOffset) * 2;
+          }
+
+          // Rotate characters slowly
+          character.rotation.y += character.userData.rotationSpeed;
         });
-        this.characters = [];
-        
-        // Create new objects
-        const theme = this.visualThemes[this.config.visualTheme];
-        this.createParticles(theme);
-        this.createCharacters(theme);
+
+        // Update sky objects
+        this.skyObjects.forEach((object) => {
+          // Rotate objects
+          if (object.userData && object.userData.rotationSpeed) {
+            object.rotation.x += object.userData.rotationSpeed.x;
+            object.rotation.y += object.userData.rotationSpeed.y;
+            object.rotation.z += object.userData.rotationSpeed.z;
+          }
+
+          // Float objects up and down
+          if (object.userData && object.userData.floatSpeed) {
+            object.position.y = object.userData.originalY + Math.sin(this.time * object.userData.floatSpeed + object.userData.floatOffset) * 10;
+          }
+        });
+
+        // Update lasers
+        this.lasers.forEach((laser) => {
+          // Change laser color over time
+          laser.userData.mixRatio += laser.userData.colorChangeSpeed;
+          if (laser.userData.mixRatio > 1) {
+            laser.userData.mixRatio = 0;
+            laser.userData.colorChangeSpeed = 0.01 + Math.random() * 0.05;
+          }
+
+          const laserColor = new THREE.Color().lerpColors(laser.userData.color1, laser.userData.color2, laser.userData.mixRatio);
+          laser.material.color.set(laserColor);
+        });
+
+        // Update smoke machines
+        this.smokeMachines.forEach((smoke) => {
+          if (smoke.userData && smoke.userData.velocities) {
+            const positions = smoke.geometry.attributes.position.array;
+            const velocities = smoke.userData.velocities;
+            
+            for (let i = 0; i < velocities.length; i++) {
+              const idx = i * 3;
+              positions[idx + 1] += velocities[i].y * deltaTime * 10;
+              
+              // Reset particle if it goes too high
+              if (positions[idx + 1] > 100) {
+                positions[idx + 1] = 0;
+              }
+            }
+            
+            smoke.geometry.attributes.position.needsUpdate = true;
+          }
+        });
+
+        // Update sky dome position to follow camera
+        if (this.skyMesh) {
+          this.skyMesh.position.copy(this.camera.position);
+        }
+      },
+
+      // Update audio visualizer
+      updateAudioVisualizer: function () {
+        if (!this.audioAnalyser) return;
+
+        // Get frequency data
+        this.frequencyData = new Uint8Array(this.audioAnalyser.frequencyBinCount);
+        this.audioAnalyser.getByteFrequencyData(this.frequencyData);
+
+        // Normalize frequency data
+        const normalizedData = Array.from(this.frequencyData).map((value) => value / 256);
+
+        // Clear visualizer
+        this.visualizerCtx.clearRect(0, 0, this.elements.audioVisualizer.width, this.elements.audioVisualizer.height);
+
+        // Draw frequency bars
+        const barWidth = this.elements.audioVisualizer.width / normalizedData.length;
+        let x = 0;
+
+        normalizedData.forEach((value) => {
+          const barHeight = value * this.elements.audioVisualizer.height;
+          this.visualizerCtx.fillStyle = "#ff00ff";
+          this.visualizerCtx.fillRect(x, this.elements.audioVisualizer.height - barHeight, barWidth, barHeight);
+          x += barWidth;
+        });
+
+        // Adjust trippy level based on audio
+        const averageFrequency = normalizedData.reduce((a, b) => a + b, 0) / normalizedData.length;
+        this.config.trippyLevel = 0.5 + averageFrequency * 1.5;
+
+        // Adjust bloom intensity based on bass
+        const bassFrequency = normalizedData[1];
+        const bassImpact = bassFrequency * this.config.bassImpact;
+
+        if (this.bloomPass) {
+          this.bloomPass.strength = this.visualThemes[this.config.visualTheme].bloomStrength + bassImpact * 0.5;
+        }
+
+        // Adjust glitch intensity based on audio
+        this.glitchPass.enabled = bassImpact > 0.2;
+        this.glitchPass.goWild = bassImpact > 0.5;
+
+        // Adjust RGB shift amount based on audio
+        this.rgbShiftPass.uniforms.amount.value = 0.0015 + bassImpact * 0.001;
+      },
+
+      // Update FPS counter
+      updateFps: function (deltaTime) {
+        this.frameCount++;
+        const now = performance.now();
+        if (now - this.lastFpsUpdate >= 1000) {
+          this.fps = Math.round(this.frameCount / ((now - this.lastFpsUpdate) / 1000));
+          this.frameCount = 0;
+          this.lastFpsUpdate = now;
+
+          if (this.config.showFps) {
+            this.elements.performanceIndicator.textContent = `FPS: ${this.fps}`;
+            this.elements.performanceIndicator.style.display = "block";
+          } else {
+            this.elements.performanceIndicator.style.display = "none";
+          }
+        }
+      },
+
+      // Render the scene
+      render: function () {
+        if (this.composer) {
+          this.composer.render();
+        } else {
+          this.renderer.render(this.scene, this.camera);
+        }
       },
 
       // Handle window resize
-      onWindowResize: function() {
+      onWindowResize: function () {
         this.camera.aspect = window.innerWidth / window.innerHeight;
         this.camera.updateProjectionMatrix();
+
         this.renderer.setSize(window.innerWidth, window.innerHeight);
-        
+        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
         if (this.composer) {
           this.composer.setSize(window.innerWidth, window.innerHeight);
         }
       },
 
-      // Update camera from keyboard
-      updateCameraFromKeyboard: function() {
-        const moveSpeed = 0.5 * this.config.cameraSpeed;
-        
-        // Get camera direction vectors
-        const forward = new THREE.Vector3(0, 0, -1).applyQuaternion(this.camera.quaternion);
-        const right = new THREE.Vector3(1, 0, 0).applyQuaternion(this.camera.quaternion);
-        
-        // Forward/backward
-        if (this.keys['w'] || this.keys['arrowup']) {
-          const newPosition = this.camera.position.clone().addScaledVector(forward, moveSpeed);
-          // Only move if we're not going below the minimum height
-          if (newPosition.y >= this.config.minCameraHeight) {
-            this.camera.position.copy(newPosition);
-          } else {
-            // Allow horizontal movement even if we can't move vertically
-            forward.y = 0;
-            forward.normalize();
-            this.camera.position.addScaledVector(forward, moveSpeed);
-          }
-        }
-        if (this.keys['s'] || this.keys['arrowdown']) {
-          const newPosition = this.camera.position.clone().addScaledVector(forward, -moveSpeed);
-          // Only move if we're not going below the minimum height
-          if (newPosition.y >= this.config.minCameraHeight) {
-            this.camera.position.copy(newPosition);
-          } else {
-            // Allow horizontal movement even if we can't move vertically
-            forward.y = 0;
-            forward.normalize();
-            this.camera.position.addScaledVector(forward, -moveSpeed);
-          }
-        }
-        
-        // Left/right
-        if (this.keys['a'] || this.keys['arrowleft']) {
-          this.camera.position.addScaledVector(right, -moveSpeed);
-        }
-        if (this.keys['d'] || this.keys['arrowright']) {
-          this.camera.position.addScaledVector(right, moveSpeed);
-        }
-        
-        // Enforce minimum height
-        if (this.camera.position.y < this.config.minCameraHeight) {
-          this.camera.position.y = this.config.minCameraHeight;
-        }
-      },
-
-      // Animation loop
-      animate: function() {
-        try {
-          this.animationFrameId = requestAnimationFrame(() => this.animate());
-          
-          const now = performance.now();
-          const delta = this.clock.getDelta();
-          this.time += delta;
-          
-          // Update FPS counter
-          this.frameCount++;
-          if (now - this.lastFpsUpdate > 1000) {
-            this.fps = Math.round((this.frameCount * 1000) / (now - this.lastFpsUpdate));
-            this.lastFpsUpdate = now;
-            this.frameCount = 0;
-            
-            if (this.config.showFps) {
-              this.elements.performanceIndicator.textContent = `FPS: ${this.fps}`;
-            }
-          }
-          
-          // Update camera from keyboard
-          this.updateCameraFromKeyboard();
-          
-          // Update controls
-          this.controls.update();
-          
-          // Get audio reactivity factor if enabled
-          let audioFactor = 1;
-          let bassValue = 0;
-          
-          if (this.config.audioReactive && this.isPlaying && this.frequencyData) {
-            // Get bass frequencies (typically the first few bins)
-            bassValue = 0;
-            for (let i = 0; i < 10; i++) {
-              bassValue += this.frequencyData[i];
-            }
-            bassValue = bassValue / 10 / 255; // Normalize
-            
-            // Apply bass impact multiplier
-            audioFactor = 1 + bassValue * this.config.bassImpact;
-          }
-          
-          // Update particle system
-          if (this.particles) {
-            // Audio reactivity
-            if (audioFactor > 1) {
-              const positions = this.particles.geometry.attributes.position.array;
-              for (let i = 0; i < positions.length; i += 3) {
-                const originalX = positions[i];
-                const originalY = positions[i + 1];
-                const originalZ = positions[i + 2];
-                
-                const distance = Math.sqrt(originalX * originalX + originalY * originalY + originalZ * originalZ);
-                const pulseFactor = 1 + 0.2 * bassValue * Math.sin(this.time * 2 + distance);
-                
-                positions[i] = originalX * pulseFactor;
-                positions[i + 1] = originalY * pulseFactor;
-                positions[i + 2] = originalZ * pulseFactor;
-              }
-              
-              this.particles.geometry.attributes.position.needsUpdate = true;
-            }
-          }
-          
-          // Update floor
-          if (this.floorMesh) {
-            // Warp floor based on audio
-            if (audioFactor > 1) {
-              const positions = this.floorMesh.geometry.attributes.position.array;
-              const count = positions.length / 3;
-              
-              for (let i = 0; i < count; i++) {
-                const x = positions[i * 3];
-                const z = positions[i * 3 + 2];
-                
-                const distance = Math.sqrt(x * x + z * z);
-                const y = Math.sin(distance * 0.1 + this.time * 2) * bassValue * 2;
-                
-                positions[i * 3 + 1] = y;
-              }
-              
-              this.floorMesh.geometry.attributes.position.needsUpdate = true;
-            }
-          }
-          
-          // Update characters
-          this.characters.forEach(character => {
-            // Rotate character
-            character.rotation.y += character.userData.rotSpeed;
-            
-            // Animate character parts based on time and audio
-            const phase = this.time * character.userData.animSpeed + character.userData.animPhase;
-            const intensity = character.userData.danceIntensity * (1 + (audioFactor - 1) * 2);
-            
-            // Get character parts
-            const head = character.children[0];
-            const body = character.children[1];
-            const leftArm = character.children[2];
-            const rightArm = character.children[3];
-            const leftLeg = character.children[4];
-            const rightLeg = character.children[5];
-            const glow = character.children[6];
-            
-            // Animate head bobbing
-            head.position.y = 4.5 + Math.sin(phase) * 0.2 * intensity;
-            
-            // Animate arms
-            leftArm.rotation.z = Math.PI / 4 + Math.sin(phase) * 0.5 * intensity;
-            rightArm.rotation.z = -Math.PI / 4 + Math.sin(phase + Math.PI) * 0.5 * intensity;
-            
-            // Animate legs
-            leftLeg.rotation.x = Math.sin(phase) * 0.3 * intensity;
-            rightLeg.rotation.x = Math.sin(phase + Math.PI) * 0.3 * intensity;
-            
-            // Animate glow - reduced intensity
-            glow.scale.setScalar(1 + bassValue * 0.3);
-            glow.material.opacity = 0.1 + bassValue * 0.1;
-          });
-          
-          // Update buildings
-          this.buildings.forEach(building => {
-            // Pulse building color based on audio
-            const mesh = building.children[0];
-            
-            const pulsePhase = this.time * building.userData.pulseSpeed;
-            const pulseIntensity = 1 + (audioFactor - 1) * 0.5;
-            
-            const originalColor = building.userData.originalColor;
-            const pulseColor = new THREE.Color(originalColor).lerp(
-              new THREE.Color(0xffffff),
-              0.2 * Math.sin(pulsePhase) * pulseIntensity
-            );
-            
-            mesh.material.color.copy(pulseColor);
-          });
-          
-          // Update lasers
-          if (this.config.showLasers) {
-            this.lasers.forEach(laser => {
-              // Rotate laser
-              laser.rotation.y += laser.userData.rotationSpeed;
-              
-              // Pulse laser opacity based on audio
-              const beam = laser.children[0];
-              const pulsePhase = this.time * laser.userData.pulseSpeed;
-              const pulseIntensity = 1 + (audioFactor - 1) * 2;
-              
-              beam.material.opacity = 0.5 + 0.5 * Math.sin(pulsePhase) * pulseIntensity;
-            });
-          }
-          
-          // Update post-processing effects
-          if (this.rgbShiftPass) {
-            this.rgbShiftPass.uniforms.angle.value = this.time * 0.5 * this.config.colorShiftSpeed;
-            this.rgbShiftPass.uniforms.amount.value = 0.001 + 0.004 * this.config.trippyLevel + (audioFactor - 1) * 0.01;
-          }
-          
-          if (this.glitchPass) {
-            // Occasional glitches based on intensity - reduced frequency
-            if (Math.random() < 0.002 * this.config.glitchIntensity) {
-              this.glitchPass.goWild = true;
-              setTimeout(() => {
-                this.glitchPass.goWild = false;
-              }, 50 + Math.random() * 100); // Shorter glitch duration
-            }
-          }
-          
-          if (this.bloomPass) {
-            const theme = this.visualThemes[this.config.visualTheme];
-            this.bloomPass.strength = theme.bloomStrength * (1 + (audioFactor - 1) * 0.5);
-          }
-          
-          // Render scene with post-processing
-          if (this.composer) {
-            this.composer.render();
-          } else {
-            this.renderer.render(this.scene, this.camera);
-          }
-        } catch (error) {
-          console.error("Animation error:", error);
-          cancelAnimationFrame(this.animationFrameId);
-          this.showError(`Animation error: ${error.message}. Try refreshing the page.`);
-        }
-      },
-
       // Initialize audio
-      initAudio: function() {
+      initAudio: function () {
         try {
-          // Create audio element
-          this.audioElement = new Audio();
-          this.audioElement.crossOrigin = "anonymous";
-          this.audioElement.src = this.audioTracks[this.config.audioTrack].url;
+          console.log("Initializing audio...");
           
-          // Show audio status
-          this.elements.audioStatus.textContent = "Loading audio...";
-          this.elements.audioStatus.style.display = "block";
+          // Create audio context
+          this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+          // Create analyser
+          this.audioAnalyser = this.audioContext.createAnalyser();
+          this.audioAnalyser.fftSize = 2048;
+
+          // Load audio track
+          this.loadAudioTrack(this.config.audioTrack);
+
+          // Set initial volume
+          this.setVolume(this.config.volume);
           
-          // Create track selector options
-          this.createTrackSelector();
-          
-          // Audio loaded event
-          this.audioElement.addEventListener('canplaythrough', () => {
-            this.audioLoaded = true;
-            this.elements.audioStatus.textContent = "Audio ready! Click play button to start.";
-            setTimeout(() => {
-              this.elements.audioStatus.style.display = "none";
-            }, 3000);
-          });
-          
-          // Audio error event
-          this.audioElement.addEventListener('error', (e) => {
-            console.error("Audio error:", e);
-            this.elements.audioStatus.textContent = "Audio failed to load. Try another track.";
-            this.elements.audioStatus.style.color = "#ff0000";
-          });
-          
-          // Preload audio
-          this.audioElement.load();
-          
-          // Initialize ambient crowd sound
-          if (this.config.showAmbientSound) {
-            this.ambientSound = new Audio();
-            this.ambientSound.src = "https://cdn.glitch.global/25331b85-e206-4347-93a8-666983818ff8/crowd-talking-loop.mp3?v=1747328000000";
-            this.ambientSound.loop = true;
-            this.ambientSound.volume = 0.2;
-          }
+          console.log("Audio initialized successfully");
         } catch (error) {
+          console.error("Failed to initialize audio:", error);
           this.showError(`Failed to initialize audio: ${error.message}`);
         }
       },
 
-      // Create track selector
-      createTrackSelector: function() {
-        // Clear existing options
-        this.elements.trackSelector.innerHTML = '<h3>SELECT TRACK</h3>';
-        
-        // Add options for each track
-        Object.keys(this.audioTracks).forEach(trackId => {
-          const track = this.audioTracks[trackId];
-          const option = document.createElement('div');
-          option.className = 'track-option';
-          option.textContent = track.title;
-          option.dataset.trackId = trackId;
-          
-          if (trackId === this.config.audioTrack) {
-            option.classList.add('active');
-          }
-          
-          option.addEventListener('click', () => {
-            this.changeTrack(trackId);
-            this.elements.trackSelector.style.display = 'none';
-          });
-          
-          this.elements.trackSelector.appendChild(option);
-        });
-      },
-
-      // Toggle track selector
-      toggleTrackSelector: function() {
-        if (this.elements.trackSelector.style.display === 'block') {
-          this.elements.trackSelector.style.display = 'none';
-        } else {
-          this.elements.trackSelector.style.display = 'block';
+      // Load audio track
+      loadAudioTrack: function (trackName) {
+        if (!this.audioTracks[trackName]) {
+          console.error(`Audio track "${trackName}" not found.`);
+          this.showError(`Audio track "${trackName}" not found.`);
+          return;
         }
-      },
 
-      // Change track
-      changeTrack: function(trackId) {
-        // Update active track
-        this.config.audioTrack = trackId;
-        
-        // Update track info
-        this.elements.trackInfo.textContent = `Now Playing: ${this.audioTracks[trackId].title}`;
-        
-        // If currently playing, restart with new track
-        const wasPlaying = this.isPlaying;
-        
-        if (this.isPlaying) {
-          this.audioElement.pause();
-          this.isPlaying = false;
-        }
-        
-        // Load new track
-        this.audioElement.src = this.audioTracks[trackId].url;
-        this.audioElement.load();
-        
-        // Show loading status
-        this.elements.audioStatus.textContent = "Loading new track...";
+        const track = this.audioTracks[trackName];
+        this.elements.trackInfo.textContent = `Loading: ${track.title}`;
+        this.elements.audioStatus.textContent = "Loading audio...";
         this.elements.audioStatus.style.display = "block";
-        
-        // When loaded, play if it was playing before
-        this.audioElement.addEventListener('canplaythrough', () => {
-          this.elements.audioStatus.textContent = "Track loaded!";
-          setTimeout(() => {
-            this.elements.audioStatus.style.display = "none";
-          }, 2000);
-          
-          if (wasPlaying) {
-            this.toggleAudio();
-          }
+
+        fetch(track.url)
+          .then((response) => response.arrayBuffer())
+          .then((buffer) => this.audioContext.decodeAudioData(buffer))
+          .then((audioBuffer) => {
+            if (this.audioSource) {
+              this.audioSource.stop();
+              this.audioSource.disconnect(this.audioAnalyser);
+            }
+
+            this.audioSource = this.audioContext.createBufferSource();
+            this.audioSource.buffer = audioBuffer;
+            this.audioSource.loop = true;
+            this.audioSource.connect(this.audioAnalyser);
+            this.audioAnalyser.connect(this.audioContext.destination);
+
+            this.audioSource.onended = () => {
+              console.log("Track ended, playing next track");
+              this.playNextTrack();
+            };
+
+            this.audioElement = track;
+            this.audioLoaded = true;
+            this.elements.trackInfo.textContent = `Now Playing: ${track.title}`;
+            this.elements.audioStatus.textContent = "Audio loaded, ready to play";
+
+            if (this.isPlaying) {
+              this.audioSource.start(0);
+              this.elements.audioStatus.textContent = "Playing";
+            } else {
+              this.elements.audioStatus.style.display = "none";
+            }
+          })
+          .catch((error) => {
+            console.error("Failed to load audio track:", error);
+            this.showError(`Failed to load audio track: ${error.message}`);
+            this.elements.audioStatus.textContent = "Error loading audio";
+          });
+      },
+
+      // Play audio
+      playAudio: function () {
+        if (!this.audioLoaded) {
+          console.warn("Audio not loaded yet.");
+          this.elements.audioStatus.textContent = "Audio not loaded yet";
+          this.elements.audioStatus.style.display = "block";
+          return;
+        }
+
+        if (this.isPlaying) {
+          console.log("Audio is already playing.");
+          return;
+        }
+
+        this.audioContext.resume().then(() => {
+          this.audioSource.start(0);
+          this.isPlaying = true;
+          this.elements.audioStatus.textContent = "Playing";
+          this.elements.audioStatus.style.display = "block";
         });
-        
-        // Update track selector
-        this.createTrackSelector();
+      },
+
+      // Pause audio
+      pauseAudio: function () {
+        if (!this.isPlaying) {
+          console.log("Audio is already paused.");
+          return;
+        }
+
+        this.audioSource.stop();
+        this.isPlaying = false;
+        this.elements.audioStatus.textContent = "Paused";
+        this.elements.audioStatus.style.display = "block";
+
+        // Re-create audio source to allow playing again
+        this.loadAudioTrack(this.config.audioTrack);
       },
 
       // Toggle audio
-      toggleAudio: function() {
-        if (!this.audioLoaded) {
-          this.elements.audioStatus.textContent = "Audio still loading... Please wait.";
-          this.elements.audioStatus.style.display = "block";
-          setTimeout(() => {
-            this.elements.audioStatus.style.display = "none";
-          }, 3000);
-          return;
-        }
-        
+      toggleAudio: function () {
         if (this.isPlaying) {
-          this.audioElement.pause();
-          this.elements.audioButton.classList.remove('active');
-          this.elements.audioButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
-          this.elements.audioVisualizer.style.display = 'none';
-          this.elements.trackInfo.style.display = 'none';
-          this.elements.audioStatus.style.display = "none";
-          
-          // Stop ambient sound
-          if (this.ambientSound) {
-            this.ambientSound.pause();
+          this.pauseAudio();
+        } else {
+          this.playAudio();
+        }
+      },
+
+      // Set volume
+      setVolume: function (volume) {
+        if (!this.audioSource) return;
+
+        const gainNode = this.audioContext.createGain();
+        gainNode.gain.value = volume;
+        this.audioSource.disconnect(this.audioContext.destination);
+        this.audioSource.connect(gainNode);
+        gainNode.connect(this.audioContext.destination);
+      },
+
+      // Play next track
+      playNextTrack: function () {
+        if (this.config.randomizeTracks) {
+          const trackNames = Object.keys(this.audioTracks);
+          let nextTrack = trackNames[Math.floor(Math.random() * trackNames.length)];
+
+          // Ensure we don't play the same track twice in a row
+          if (nextTrack === this.config.audioTrack && trackNames.length > 1) {
+            let newTrackIndex = (trackNames.indexOf(nextTrack) + 1) % trackNames.length;
+            nextTrack = trackNames[newTrackIndex];
+          }
+
+          this.config.audioTrack = nextTrack;
+          this.loadAudioTrack(nextTrack);
+          if (this.isPlaying) {
+            this.playAudio();
           }
         } else {
-          // Set up audio context if not already done
-          if (!this.audioContext) {
-            try {
-              const AudioContext = window.AudioContext || window.webkitAudioContext;
-              this.audioContext = new AudioContext();
-              
-              // Create analyzer
-              this.audioAnalyser = this.audioContext.createAnalyser();
-              this.audioAnalyser.fftSize = 256;
-              
-              // Connect audio element to the audio context
-              this.audioSource = this.audioContext.createMediaElementSource(this.audioElement);
-              this.audioSource.connect(this.audioAnalyser);
-              this.audioAnalyser.connect(this.audioContext.destination);
-              
-              // Create data arrays
-              this.audioData = new Float32Array(this.audioAnalyser.frequencyBinCount);
-              this.frequencyData = new Uint8Array(this.audioAnalyser.frequencyBinCount);
-              
-              // Start audio data update loop
-              this.updateAudioData();
-            } catch (e) {
-              console.error("Web Audio API error:", e);
-              this.elements.audioStatus.textContent = "Audio API error. Try a different browser.";
-              this.elements.audioStatus.style.color = "#ff0000";
-              this.elements.audioStatus.style.display = "block";
-              return;
-            }
+          // Play tracks in order
+          const trackNames = Object.keys(this.audioTracks);
+          const currentTrackIndex = trackNames.indexOf(this.config.audioTrack);
+          let nextTrackIndex = (currentTrackIndex + 1) % trackNames.length;
+          this.config.audioTrack = trackNames[nextTrackIndex];
+          this.loadAudioTrack(trackNames[nextTrackIndex]);
+          if (this.isPlaying) {
+            this.playAudio();
           }
-          
-          // Resume audio context if suspended
-          if (this.audioContext.state === "suspended") {
-            this.audioContext.resume();
+        }
+      },
+
+      // Initialize controls
+      initControls: function () {
+        // Pointer lock
+        document.body.addEventListener("click", () => {
+          this.controls.lock();
+        });
+
+        document.addEventListener("pointerlockchange", () => {
+          this.movement.pointerLocked = document.pointerLockElement === document.body;
+          this.elements.controlsInfo.style.display = this.movement.pointerLocked ? "none" : "block";
+        });
+
+        // Keyboard controls
+        document.addEventListener("keydown", (event) => {
+          switch (event.code) {
+            case "KeyW":
+              this.movement.forward = true;
+              break;
+            case "KeyS":
+              this.movement.backward = true;
+              break;
+            case "KeyA":
+              this.movement.left = true;
+              break;
+            case "KeyD":
+              this.movement.right = true;
+              break;
+            case "Space":
+              this.movement.up = true;
+              break;
+            case "ShiftLeft":
+              this.movement.down = true;
+              break;
+            case "Escape":
+              this.controls.unlock();
+              break;
+            case "KeyF":
+              this.toggleFullscreen();
+              break;
+            case "KeyM":
+              this.toggleAudio();
+              break;
+            case "KeyT":
+              this.changeTheme();
+              break;
+            case "KeyN":
+              this.playNextTrack();
+              break;
+            case "KeyP":
+              this.toggleSettings();
+              break;
+            case "KeyH":
+              this.toggleControlsInfo();
+              break;
           }
-          
-          // Set volume
-          this.audioElement.volume = this.config.volume;
-          
-          // Play audio
-          this.audioElement.play().then(() => {
-            this.elements.audioButton.classList.add('active');
-            this.elements.audioButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>';
-            this.elements.audioVisualizer.style.display = 'block';
-            
-            // Display track info
-            this.elements.trackInfo.textContent = `Now Playing: ${this.audioTracks[this.config.audioTrack].title}`;
-            this.elements.trackInfo.style.display = 'block';
-            
-            this.elements.audioStatus.textContent = "Audio playing";
-            this.elements.audioStatus.style.color = "#00ffff";
-            this.elements.audioStatus.style.display = "block";
-            setTimeout(() => {
-              this.elements.audioStatus.style.display = "none";
-            }, 2000);
-            
-            // Start ambient sound
-            if (this.ambientSound && this.config.showAmbientSound) {
-              this.ambientSound.play();
-            }
-          }).catch(e => {
-            console.error("Audio play error:", e);
-            this.elements.audioStatus.textContent = "Couldn't play audio. Try clicking again.";
-            this.elements.audioStatus.style.color = "#ff0000";
-            this.elements.audioStatus.style.display = "block";
-          });
+        });
+
+        document.addEventListener("keyup", (event) => {
+          switch (event.code) {
+            case "KeyW":
+              this.movement.forward = false;
+              break;
+            case "KeyS":
+              this.movement.backward = false;
+              break;
+            case "KeyA":
+              this.movement.left = false;
+              break;
+            case "KeyD":
+              this.movement.right = false;
+              break;
+            case "Space":
+              this.movement.up = false;
+              break;
+            case "ShiftLeft":
+              this.movement.down = false;
+              break;
+          }
+        });
+
+        // Button controls
+        this.elements.fullscreenButton.addEventListener("click", () => this.toggleFullscreen());
+        this.elements.themeButton.addEventListener("click", () => this.changeTheme());
+        this.elements.trackButton.addEventListener("click", () => this.toggleTrackSelector());
+        this.elements.audioButton.addEventListener("click", () => this.toggleAudio());
+        this.elements.helpButton.addEventListener("click", () => this.toggleControlsInfo());
+        this.elements.settingsButton.addEventListener("click", () => this.toggleSettings());
+        this.elements.settingsApply.addEventListener("click", () => this.applySettings());
+        this.elements.settingsClose.addEventListener("click", () => this.toggleSettings());
+
+        // Track selector
+        this.populateTrackSelector();
+
+        // Theme indicator
+        this.updateThemeIndicator();
+      },
+
+      // Toggle fullscreen
+      toggleFullscreen: function () {
+        if (document.fullscreenElement) {
+          document.exitFullscreen();
+        } else {
+          document.body.requestFullscreen();
         }
-        
-        this.isPlaying = !this.isPlaying;
       },
 
-      // Update audio data
-      updateAudioData: function() {
-        if (!this.audioAnalyser) return;
-        
-        // Get time domain data
-        this.audioAnalyser.getFloatTimeDomainData(this.audioData);
-        
-        // Get frequency data
-        this.audioAnalyser.getByteFrequencyData(this.frequencyData);
-        
-        // Update visualizer
-        this.drawAudioVisualizer();
-        
-        requestAnimationFrame(() => this.updateAudioData());
+      // Change theme
+      changeTheme: function () {
+        const themeNames = Object.keys(this.visualThemes);
+        const currentThemeIndex = themeNames.indexOf(this.config.visualTheme);
+        const nextThemeIndex = (currentThemeIndex + 1) % themeNames.length;
+        this.config.visualTheme = themeNames[nextThemeIndex];
+
+        // Update theme
+        this.updateTheme();
       },
 
-      // Draw audio visualizer
-      drawAudioVisualizer: function() {
-        if (!this.visualizerCtx || !this.frequencyData) return;
-        
-        // Clear canvas
-        this.visualizerCtx.clearRect(0, 0, this.elements.audioVisualizer.width, this.elements.audioVisualizer.height);
-        
-        // Set up visualization style
-        const barWidth = 3;
-        const barGap = 1;
-        const barCount = Math.min(64, this.frequencyData.length);
-        const centerY = this.elements.audioVisualizer.height / 2;
-        
-        // Draw frequency bars
-        for (let i = 0; i < barCount; i++) {
-          const amplitude = this.frequencyData[i] / 255; // Normalize to 0-1
-          const barHeight = Math.max(2, amplitude * this.elements.audioVisualizer.height / 2);
-          
-          // Create gradient for each bar
-          const gradient = this.visualizerCtx.createLinearGradient(0, centerY - barHeight, 0, centerY + barHeight);
-          
-          gradient.addColorStop(0, "rgba(255, 0, 255, 0.8)");
-          gradient.addColorStop(0.5, "rgba(0, 255, 255, 0.8)");
-          gradient.addColorStop(1, "rgba(255, 0, 255, 0.8)");
-          
-          this.visualizerCtx.fillStyle = gradient;
-          
-          // Draw mirrored bars
-          this.visualizerCtx.fillRect(i * (barWidth + barGap), centerY - barHeight, barWidth, barHeight);
-          this.visualizerCtx.fillRect(i * (barWidth + barGap), centerY, barWidth, barHeight);
-        }
-        
-        // Draw center line
-        this.visualizerCtx.strokeStyle = "rgba(255, 255, 255, 0.5)";
-        this.visualizerCtx.beginPath();
-        this.visualizerCtx.moveTo(0, centerY);
-        this.visualizerCtx.lineTo(this.elements.audioVisualizer.width, centerY);
-        this.visualizerCtx.stroke();
-      },
-
-      // Cycle through visual themes
-      cycleTheme: function() {
-        const themes = Object.keys(this.visualThemes);
-        const currentIndex = themes.indexOf(this.config.visualTheme);
-        const nextIndex = (currentIndex + 1) % themes.length;
-        this.config.visualTheme = themes[nextIndex];
-        
-        // Show theme indicator
-        this.elements.themeIndicator.textContent = this.visualThemes[this.config.visualTheme].name;
-        this.elements.themeIndicator.style.opacity = "1";
-        this.elements.themeIndicator.classList.add("fade-in");
-        
-        // Hide theme indicator after a delay
-        setTimeout(() => {
-          this.elements.themeIndicator.classList.remove("fade-in");
-          this.elements.themeIndicator.classList.add("fade-out");
-          setTimeout(() => {
-            this.elements.themeIndicator.style.opacity = "0";
-            this.elements.themeIndicator.classList.remove("fade-out");
-          }, 500);
-        }, 2000);
-        
-        // Update scene
-        this.updateVisualTheme();
-      },
-
-      // Update visual theme
-      updateVisualTheme: function() {
+      // Update theme
+      updateTheme: function () {
         const theme = this.visualThemes[this.config.visualTheme];
-        
-        // Update fog
-        if (this.scene && this.scene.fog) {
-          this.scene.fog.color.set(theme.fogColor);
-        }
-        
-        // Update sky
-        if (this.skyMesh) {
-          this.skyMesh.material.color.set(theme.skyColor);
-        }
-        
-        // Update floor
+
+        // Update fog color
+        this.scene.fog.color.set(theme.fogColor);
+
+        // Update floor color
         if (this.floorMesh) {
           this.floorMesh.material.color.set(theme.gridColor);
         }
-        
-        // Update particles
+
+        // Update sky color
+        if (this.skyMesh) {
+          this.skyMesh.material.color.set(theme.skyColor);
+        }
+
+        // Update particles color
         if (this.particles) {
-          const colors = this.particles.geometry.attributes.color.array;
           const color1 = new THREE.Color(theme.particleColor1);
           const color2 = new THREE.Color(theme.particleColor2);
-          
-          for (let i = 0; i < colors.length / 3; i++) {
+          const colors = this.particles.geometry.attributes.color.array;
+
+          for (let i = 0; i < colors.length; i += 3) {
             const mixRatio = Math.random();
             const mixedColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
-            
-            colors[i * 3] = mixedColor.r;
-            colors[i * 3 + 1] = mixedColor.g;
-            colors[i * 3 + 2] = mixedColor.b;
+
+            colors[i] = mixedColor.r;
+            colors[i + 1] = mixedColor.g;
+            colors[i + 2] = mixedColor.b;
           }
-          
+
           this.particles.geometry.attributes.color.needsUpdate = true;
         }
-        
-        // Update bloom settings
+
+        // Update buildings color
+        this.buildings.forEach((building) => {
+          const color1 = new THREE.Color(theme.buildingColor1);
+          const color2 = new THREE.Color(theme.buildingColor2);
+          const mixRatio = Math.random();
+          const buildingColor = new THREE.Color().lerpColors(color1, color2, mixRatio);
+          building.material.color.set(buildingColor);
+        });
+
+        // Update lasers color
+        this.lasers.forEach((laser) => {
+          laser.userData.color1.set(theme.particleColor1);
+          laser.userData.color2.set(theme.particleColor2);
+        });
+
+        // Update bloom pass
         if (this.bloomPass) {
           this.bloomPass.strength = theme.bloomStrength;
           this.bloomPass.radius = theme.bloomRadius;
           this.bloomPass.threshold = theme.bloomThreshold;
         }
-      }
+
+        // Update theme indicator
+        this.updateThemeIndicator();
+      },
+
+      // Update theme indicator
+      updateThemeIndicator: function () {
+        this.elements.themeIndicator.textContent = this.visualThemes[this.config.visualTheme].name;
+        this.elements.themeIndicator.classList.add("fade-in");
+        this.elements.themeIndicator.style.opacity = 1;
+
+        setTimeout(() => {
+          this.elements.themeIndicator.classList.remove("fade-in");
+          this.elements.themeIndicator.classList.add("fade-out");
+          setTimeout(() => {
+            this.elements.themeIndicator.classList.remove("fade-out");
+            this.elements.themeIndicator.style.opacity = 0;
+          }, 500);
+        }, 3000);
+      },
+
+      // Populate track selector
+      populateTrackSelector: function () {
+        const trackNames = Object.keys(this.audioTracks);
+
+        trackNames.forEach((trackName) => {
+          const track = this.audioTracks[trackName];
+          const trackOption = document.createElement("div");
+          trackOption.className = "track-option";
+          trackOption.textContent = track.title;
+          trackOption.dataset.track = trackName;
+
+          trackOption.addEventListener("click", () => {
+            this.config.audioTrack = trackName;
+            this.loadAudioTrack(trackName);
+            this.toggleTrackSelector();
+
+            // Update active state
+            document.querySelectorAll(".track-option").forEach((option) => {
+              option.classList.remove("active");
+            });
+            trackOption.classList.add("active");
+          });
+
+          this.elements.trackSelector.appendChild(trackOption);
+        });
+      },
+
+      // Toggle track selector
+      toggleTrackSelector: function () {
+        this.elements.trackSelector.style.display = this.elements.trackSelector.style.display === "none" ? "block" : "none";
+      },
+
+      // Toggle controls info
+      toggleControlsInfo: function () {
+        this.elements.controlsInfo.style.display = this.elements.controlsInfo.style.display === "none" ? "block" : "none";
+      },
+
+      // Toggle settings
+      toggleSettings: function () {
+        this.elements.settingsPanel.style.display = this.elements.settingsPanel.style.display === "none" ? "block" : "none";
+      },
+
+      // Apply settings
+      applySettings: function () {
+        // Get settings values
+        const quality = document.getElementById("quality-setting").value;
+        const density = document.getElementById("density-setting").value;
+        const showFps = document.getElementById("fps-setting").checked;
+        const bloomIntensity = document.getElementById("bloom-setting").value;
+        const glitchIntensity = document.getElementById("glitch-setting").value;
+        const colorShiftSpeed = document.getElementById("color-shift-setting").value;
+        const volume = document.getElementById("volume-setting").value;
+        const bassImpact = document.getElementById("bass-setting").value;
+        const ambientSound = document.getElementById("ambient-setting").checked;
+        const randomizeTracks = document.getElementById("random-tracks-setting").checked;
+        const movementSpeed = document.getElementById("movement-speed-setting").value;
+        const flyingEnabled = document.getElementById("flying-setting").checked;
+        const sensitivity = document.getElementById("sensitivity-setting").value;
+
+        // Apply settings
+        this.config.quality = quality;
+        this.applyQualitySettings(quality);
+        this.config.density = density;
+        this.config.showFps = showFps;
+        this.config.volume = volume;
+        this.config.bassImpact = bassImpact;
+        this.config.randomizeTracks = randomizeTracks;
+        this.config.movementSpeed = movementSpeed;
+        this.config.flyingEnabled = flyingEnabled;
+        this.config.mouseSensitivity = sensitivity;
+
+        // Apply audio settings
+        this.setVolume(volume);
+
+        // Apply visual effects settings
+        this.config.glitchIntensity = glitchIntensity;
+        this.config.colorShiftSpeed = colorShiftSpeed;
+
+        if (this.bloomPass) {
+          this.bloomPass.strength = bloomIntensity;
+        }
+
+        // Update scene objects
+        this.updateScene();
+
+        // Toggle settings panel
+        this.toggleSettings();
+      },
+
+      // Update scene
+      updateScene: function () {
+        // Clear scene
+        this.clearScene();
+
+        // Create scene objects
+        this.createSceneObjects();
+      },
+
+      // Clear scene
+      clearScene: function () {
+        // Remove all objects from the scene
+        while (this.scene.children.length > 0) {
+          this.scene.remove(this.scene.children[0]);
+        }
+
+        // Dispose of geometries and materials
+        if (this.particles) this.particles.geometry.dispose();
+        if (this.particles) this.particles.material.dispose();
+        if (this.floorMesh) this.floorMesh.geometry.dispose();
+        if (this.floorMesh) this.floorMesh.material.dispose();
+        if (this.skyMesh) this.skyMesh.geometry.dispose();
+        if (this.skyMesh) this.skyMesh.material.dispose();
+
+        this.characters.forEach((character) => {
+          character.children.forEach((child) => {
+            child.geometry.dispose();
+            child.material.dispose();
+          });
+        });
+
+        this.buildings.forEach((building) => {
+          building.geometry.dispose();
+          building.material.dispose();
+        });
+
+        this.lasers.forEach((laser) => {
+          laser.geometry.dispose();
+          laser.material.dispose();
+        });
+
+        this.smokeMachines.forEach((smoke) => {
+          smoke.geometry.dispose();
+          smoke.material.dispose();
+        });
+
+        this.zones.forEach((zone) => {
+          zone.geometry.dispose();
+          zone.material.dispose();
+        });
+
+        this.characters = [];
+        this.buildings = [];
+        this.lasers = [];
+        this.smokeMachines = [];
+        this.zones = [];
+      },
     };
 
-    // Start Tripscape when the DOM is loaded
-    document.addEventListener('DOMContentLoaded', () => Tripscape.init());
+    // Initialize Tripscape when the page loads
+    window.onload = () => {
+      Tripscape.init();
+    };
   </script>
 </body>
 </html>

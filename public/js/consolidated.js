@@ -554,7 +554,7 @@ function initStartMenu() {
 // ===== DESKTOP ICONS =====
 function initDesktopIcons() {
   document.querySelectorAll(".desktop-icon").forEach((icon) => {
-    // IMPORTANT: Remove any existing event listeners to prevent duplicates
+    // IMPORTANT: Remove any existing event listeners to prevent s
     const newIcon = icon.cloneNode(true);
     if (icon.parentNode) {
       icon.parentNode.replaceChild(newIcon, icon);

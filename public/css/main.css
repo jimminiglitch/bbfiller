@@ -4,82 +4,6 @@
   position: relative;
 }
 
-#desktop-icons {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.desktop-icon {
-  position: absolute;
-  width: 64px;
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-  text-align: center;
-  transition: transform 0.2s ease, filter 0.2s ease;
-}
-
-.desktop-icon img {
-  width: 64px;
-  height: 64px;
-  display: block;
-  margin: 0 auto;
-}
-
-
-
-.desktop-icon span {
-  display: block;
-  margin-top: 4px;
-  font-size: var(--font-size-sm);
-  color: white;
-  text-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
-}
-
-/* Initial icon positions */
-#icon-about { top: 100px; left: 40px; }
-#icon-resume { top: 100px; left: 140px; }
-#icon-contact { top: 100px; left: 240px; }
-#icon-tigerrr { top: 100px; left: 340px; }
-#icon-nature { top: 200px; left: 40px; }
-#icon-Joyful { top: 200px; left: 140px; }
-#icon-Papaz { top: 200px; left: 240px; }
-#icon-Abstract { top: 200px; left: 340px; }
-#icon-music { top: 300px; left: 40px; }
-#icon-octavia { top: 300px; left: 140px; }
-#icon-toader { top: 300px; left: 240px; }
-#icon-MILES { top: 300px; left: 340px; }
-#icon-SPACEWORM { top: 400px; left: 40px; }
-#icon-r3d3ch0 { top: 400px; left: 140px; }
-#icon-weight { top: 400px; left: 240px; }
-#icon-birdbrian { top: 400px; left: 340px; }
-#icon-clydecup { top: 100px; left: 440px; }
-#icon-3drave { top: 200px; left: 440px; }
-#icon-future { top: 100px; left: 540px; }
-#icon-critter { top: 200px; left: 540px; }
-
-
-
-
-
-
-
-
-.desktop-icon img {
-  width: 64px;
-  height: 64px;
-  display: block;
-  margin: 0 auto;
-}
-
-
-
-
-
-
-
-
 .popup-window {
   position: absolute;
   top: 120px;
@@ -100,7 +24,6 @@
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-
 .window-content {
   flex: 1;
   overflow: auto;
@@ -108,6 +31,7 @@
   background: rgba(0, 0, 0, 0);
   position: relative;
   z-index: 1;
+}
 }
 
 
@@ -591,7 +515,7 @@ document.addEventListener("DOMContentLoaded", function() {
   font-family: 'VT323', monospace;
   color: #00ffff;
   background-color: rgba(0, 0, 0, 0.7);
-  padding: 20px;
+  padding: 10px;
   border-radius: 5px;
   width: 80%;
   max-width: 600px;
@@ -1039,7 +963,7 @@ body {
   color: #00ffff;
   font-family: 'VT323', monospace;
   font-size: 1.2rem;
-  padding: 2rem;
+  padding: 1rem;
   margin: 0;
   line-height: 1.5;
 }
@@ -1544,12 +1468,6 @@ audio {
   font-family: "VT323", monospace !important;
 }
 
-/* Prevent any hover effects on desktop icons that might trigger sounds */
-
-
-/* Add a subtle visual hover effect instead */
-
-/* Resize Handle Fixes */
 
 /* Make resize handles more reliable */
 .resize-handle {
@@ -1639,6 +1557,33 @@ audio {
 /*───────────────────────────  ─────────────────────────────────────────────────
   GLOBAL VARIABLES & RESET - ULTIMATE CYBERPUNK UPGRADE
 ─────────────────────────────────────────────────────────────────────────────*/
+/* Initial icon positions */
+#icon-about { top: 100px; left: 40px; }
+#icon-resume { top: 100px; left: 140px; }
+#icon-contact { top: 100px; left: 240px; }
+#icon-tigerrr { top: 100px; left: 340px; }
+#icon-nature { top: 200px; left: 40px; }
+#icon-Joyful { top: 200px; left: 140px; }
+#icon-Papaz { top: 200px; left: 240px; }
+#icon-Abstract { top: 200px; left: 340px; }
+#icon-music { top: 300px; left: 40px; }
+#icon-octavia { top: 300px; left: 140px; }
+#icon-toader { top: 300px; left: 240px; }
+#icon-MILES { top: 300px; left: 340px; }
+#icon-SPACEWORM { top: 400px; left: 40px; }
+#icon-r3d3ch0 { top: 400px; left: 140px; }
+#icon-weight { top: 400px; left: 240px; }
+#icon-birdbrian { top: 400px; left: 340px; }
+#icon-clydecup { top: 100px; left: 440px; }
+#icon-3drave { top: 200px; left: 440px; }
+#icon-future { top: 100px; left: 540px; }
+#icon-critter { top: 200px; left: 540px; }
+
+/* Ensure desktop icons use absolute positioning */
+.desktop-icon {
+  position: absolute;
+}
+/* Global Variables & Reset */
 :root {
   /* Colors */
   --font-press-start: "Press Start 2P", monospace;
@@ -1686,407 +1631,212 @@ body {
   background: black;
   color: white;
   font-family: var(--font-vt323);
-  /* allow fixed windows to escape the body bounds */
-  overflow: visible !important;
-  height: 100vh;
-  position: relative;
-}
-
-.desktop-icon img {
-  filter: drop-shadow(0 0 2px rgba(255, 141, 161, 0.3));
-}
-
-/*─────────────────────────────────────────────────────────────────────────────
-  SCANLINES OVERLAY
-─────────────────────────────────────────────────────────────────────────────*/
-.scanlines {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.94) 0px,
-    rgba(0, 0, 0, 0.03) 1px,
-    rgba(0, 0, 0, 0) 2px
-  );
-  z-index: 5;
-}
-
-/*─────────────────────────────────────────────────────────────────────────────
-  GLITCH TITLE
-─────────────────────────────────────────────────────────────────────────────*/
-.glitch {
-  position: relative;
-  font-family: var(--font-press-start);
-  font-size: var(--font-size-xl);
-  color: var(--neon-cyan);
-  text-align: center;
-  margin-top: var(--spacing-lg);  
-  /* Fix for user-select: none; error in Safari */
-  -webkit-user-select: none;
-  /* Fix for 'user-select: none;' error in Safari */
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-.glitch::before,
-.glitch::after {
-  content: attr(data-text);
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
   overflow: hidden;
-  clip-path: inset(0 0 0 0);
-}
-
-.glitch::before {
-  animation: glitch-top 2s infinite linear;
-  color: var(--neon-pink);
-}
-
-.glitch::after {
-  animation: glitch-bottom 3s infinite linear;
-  color: var(--neon-purple);
-}
-
-@keyframes glitch-top {
-  0% {
-    clip-path: inset(0 0 90% 0);
-    transform: translate(2px, -2px);
-  }
-  5% {
-    clip-path: inset(0 0 40% 0);
-    transform: translate(-2px, 2px);
-  }
-  10% {
-    clip-path: inset(0 0 85% 0);
-    transform: translate(2px, 2px);
-  }
-  15% {
-    clip-path: inset(0 0 20% 0);
-    transform: translate(-2px, -2px);
-  }
-  20% {
-    clip-path: inset(0 0 90% 0);
-    transform: translate(2px, -2px);
-  }
-  100% {
-    clip-path: inset(0 0 0 0);
-    transform: translate(0, 0);
-  }
-}
-
-@keyframes glitch-bottom {
-  0% {
-    clip-path: inset(85% 0 0 0);
-    transform: translate(-2px, 2px);
-  }
-  10% {
-    clip-path: inset(40% 0 0 0);
-    transform: translate(2px, -2px);
-  }
-  20% {
-    clip-path: inset(80% 0 0 0);
-    transform: translate(-2px, 2px);
-  }
-  30% {
-    clip-path: inset(25% 0 0 0);
-    transform: translate(2px, -2px);
-  }
-  40% {
-    clip-path: inset(85% 0 0 0);
-    transform: translate(-2px, 2px);
-  }
-  100% {
-    clip-path: inset(0 0 0 0);
-    transform: translate(0, 0);
-  }
-}
-
-/* Glitching animation for elements with .glitching class */
-.glitching {
-  animation: glitching 0.2s linear;
-}
-
-@keyframes glitching {
-  0% {
-    transform: translate(0);
-    filter: hue-rotate(0deg);
-  }
-  20% {
-    transform: translate(-3px, 3px);
-    filter: hue-rotate(90deg);
-  }
-  40% {
-    transform: translate(-3px, -3px);
-    filter: hue-rotate(180deg);
-  }
-  60% {
-    transform: translate(3px, 3px);
-    filter: hue-rotate(270deg);
-  }
-  80% {
-    transform: translate(3px, -3px);
-    filter: hue-rotate(360deg);
-  }
-  100% {
-    transform: translate(0);
-    filter: hue-rotate(0deg);
-  }
-}
-
-/* Screen glitch effect */
-.screen-glitch {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
   height: 100vh;
-  background: rgba(255, 255, 255, 0.03);
-  mix-blend-mode: overlay;
-  pointer-events: none;
-  z-index: 9999;
-  animation: screen-glitch 0.2s linear;
-}
-
-@keyframes screen-glitch {
-  0% {
-    opacity: 0;
-    transform: translateX(0);
-  }
-  25% {
-    opacity: 0.5;
-    transform: translateX(5px);
-  }
-  50% {
-    opacity: 0.7;
-    transform: translateX(-5px);
-  }
-  75% {
-    opacity: 0.5;
-    transform: translateX(5px);
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(0);
-  }
-}
-
-/*─────────────────────────────────────────────────────────────────────────────
-  DESKTOP ICONS
-─────────────────────────────────────────────────────────────────────────────*/
-.container {
-  width: 100%;
-  height: calc(100vh - 36px); /* leave room for taskbar */
   position: relative;
 }
 
-#desktop-icons {
+/* Desktop Icons */
+.desktop-icons {
   position: relative;
   width: 100%;
-  height: 100%;
-}
-
-/* Base icon style */
-/* Fix for user-select: none in Safari */
-@-keyframes shimmer {
-  0% {
-    background-color: #000010;
-    text-shadow: 0 0 5px #ff00ff;
-  }
-  50% {
-    background-color: #0f001f;
-    text-shadow: 0 0 10px #ff00ff, 0 0 20px #00f0ff;
-  }
-  100% {
-    background-color: #000010;
-    text-shadow: 0 0 5px #ff00ff;
-  }
+  height: calc(100vh - 36px); /* Adjust for taskbar height */
+  overflow: hidden;
 }
 
 .desktop-icon {
-  width: 100px;
-  height: 100px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #000000;
-  font-family: 'VT323', monospace;
-  box-shadow: 0 0 25px #ff00ffaa, inset 0 0 20px #00ffeebb;
+  position: absolute;
+  width: 80px;
+  text-align: center;
+  color: white;
+  font-size: var(--font-size-sm);
   cursor: pointer;
-  webkit-user-select: none; /* Add this line */
-}
-
-/* Rest of the code... */
-
-.desktop-icon img {
-  width: 64px;
-  height: 64px;
-  display: block;
-  margin: 0 auto;
-  will-change: transform; /* Optimize for animations */
   transition: transform 0.2s ease;
 }
-<div>
-.desktop-icon span {
-  display: block;
-  margin-top: 8px;
-  font-size: var(--font-size-med);
-  color: white;
-  text-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
-}
-</div>
 
-/* Icon hover effect */
-.desktop-icon.icon-hover img {
+.desktop-icon img {
+  width: 48px;
+  height: 48px;
+  margin-bottom: var(--spacing-xs);
+  filter: drop-shadow(0 0 2px rgba(255, 141, 161, 0.3));
+}
+
+.desktop-icon:hover {
   transform: scale(1.1);
-  filter: drop-shadow(0 0 8px var(--neon-cyan));
 }
 
-/* Initial positions */
-#icon-about {
-  top: 100px;
-  left: 40px;
-}
-#icon-resume {
-  top: 100px;
-  left: 140px;
-}
-#icon-contact {
-  top: 100px;
-  left: 240px;
-}
-#icon-tigerrr {
-  top: 100px;
-  left: 340px;
-}
-#icon-nature {
-  top: 200px;
-  left: 40px;
-}
-#icon-Joyful {
-  top: 200px;
-  left: 140px;
-}
-#icon-Papaz {
-  top: 200px;
-  left: 240px;
-}
-#icon-Abstract {
-  top: 200px;
-  left: 340px;
-}
-#icon-music {
-  top: 300px;
-  left: 40px;
-}
-#icon-octavia {
-  top: 300px;
-  left: 140px;
-}
-#icon-toader {
-  top: 300px;
-  left: 240px;
-}
-#icon-MILES {
-  top: 300px;
-  left: 340px;
-}
-#icon-SPACEWORM {
-  top: 400px;
-  left: 40px;
-}
-#icon-r3d3ch0 {
-  top: 400px;
-  left: 140px;
-}
-#icon-weight {
-  top: 400px;
-  left: 240px;
-}
-#icon-birdbrian {
-  top: 400px;
-  left: 340px;
-}
-#icon-clydecup {
-  top: 100px;
-  left: 440px;
-}
-
-#icon-3drave {
-  top: 200px;
-  left: 440px;
-}
-
-#icon-future {
-  top: 100px;
-  left: 640px;
-}
-
-#icon-critter {
-  top: 200px;
-  left: 640px;
-}
-#icon-videofolder {
-  top: 300px;
-  left: 640px;
-}
-
-
-/* Selected state */
-.desktop-icon.selected {
-  background: rgba(255, 255, 255, 0.1);
-
-}
-
-/* Multi-select rectangle */
-#selection-rect {
-  position: absolute;
-  border: 2px dashed;
-  border-image: linear-gradient(
-      45deg,
-      var(--neon-pink),
-      var(--neon-yellow),
-      var(--neon-green),
-      var(--neon-cyan),
-      var(--neon-purple)
-    )
-    1;
-  background: rgba(255, 255, 255, 0.05);
-  pointer-events: none;
-  z-index: 999;
-}
-
-/*─────────────────────────────────────────────────────────────────────────────
-  POPUP WINDOW CHROME
-─────────────────────────────────────────────────────────────────────────────*/
+/* Initial icon positions */
+#icon-about { top: 20px; left: 20px; }
+#icon-resume { top: 120px; left: 20px; }
+#icon-contact { top: 220px; left: 20px; }
+#icon-tigerrr { top: 320px; left: 20px; }
+#icon-nature { top: 20px; left: 120px; }
+#icon-Joyful { top: 120px; left: 120px; }
+#icon-Papaz { top: 220px; left: 120px; }
+#icon-Abstract { top: 320px; left: 120px; }
+#icon-music { top: 20px; left: 220px; }
+#icon-octavia { top: 120px; left: 220px; }
+#icon-toader { top: 220px; left: 220px; }
+#icon-MILES { top: 320px; left: 220px; }
+#icon-SPACEWORM { top: 20px; left: 320px; }
+#icon-r3d3ch0 { top: 120px; left: 320px; }
+#icon-weight { top: 220px; left: 320px; }
+#icon-birdbrian { top: 320px; left: 320px; }
+#icon-clydecup { top: 20px; left: 420px; }
+#icon-future { top: 220px; left: 420px; }
+#icon-critter { top: 320px; left: 420px; }
+#icon-3drave { top: 20px; left: 520px; }
+/* Popup Window Styles */
 .popup-window {
   position: absolute;
-  top: 120px;
-  left: 120px;
-  width: 750px;
-  height: 60vh;
-  background: rgba(0, 0, 0, 0.4);
+  top: 50px;
+  left: 50px;
+  width: 600px;
+  height: 400px;
+  background: rgba(0, 0, 0, 0.8);
   border: 2px solid var(--neon-purple);
-  border-radius: 0.5rem;
+  border-radius: 8px;
   box-shadow: 0 0 10px var(--neon-pink);
   display: none;
   flex-direction: column;
   overflow: hidden;
   z-index: var(--z-window);
-  will-change: transform, opacity; /* Optimize for animations */
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .popup-window.active {
   display: flex;
-  z-index: 100;
+}
+
+.window-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-sm);
+  background: rgba(0, 0, 0, 0.6);
+  border-bottom: 1px solid var(--neon-purple);
+}
+
+.window-title {
+  color: var(--neon-cyan);
+  font-size: var(--font-size-lg);
+}
+
+.window-controls button {
+  background: none;
+  border: none;
+  color: var(--neon-cyan);
+  font-size: var(--font-size-lg);
+  cursor: pointer;
+  margin-left: var(--spacing-sm);
+}
+
+.window-content {
+  flex: 1;
+  overflow: auto;
+  padding: var(--spacing-md);
+}
+
+/* Taskbar Styles */
+#start-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 36px;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(20, 0, 40, 0.9));
+  border-top: 2px solid var(--neon-purple);
+  box-shadow: 0 -2px 12px var(--neon-purple);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--spacing-md);
+  z-index: var(--z-taskbar);
+}
+
+#start-button {
+  font-family: var(--font-press-start);
+  font-size: var(--font-size-sm);
+  background: transparent;
+  border: 2px solid var(--neon-purple);
+  border-radius: 4px;
+  padding: 2px 8px;
+  color: var(--neon-purple);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#start-button:hover {
+  background: var(--neon-purple);
+  color: black;
+  box-shadow: 0 0 8px var(--neon-purple);
+}
+
+#clock {
+  margin-left: auto;
+  font-size: var(--font-size-sm);
+  color: var(--neon-cyan);
+}
+
+/* Start Menu Styles */
+#start-menu {
+  position: fixed;
+  bottom: 36px;
+  left: 0;
+  background: rgba(0, 0, 0, 0.9);
+  border: 2px solid var(--neon-purple);
+  display: none;
+  flex-direction: column;
+  z-index: var(--z-startmenu);
+  box-shadow: 0 0 15px var(--neon-pink);
+  min-width: 200px;
+}
+
+#start-menu a {
+  padding: var(--spacing-sm) var(--spacing-md);
+  color: var(--neon-pink);
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+  transition: background 0.2s, color 0.2s;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#start-menu a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--neon-cyan);
+}
+
+/* Animations */
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+.glitching {
+  animation: glitch 0.2s linear infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .popup-window {
+    width: 90vw;
+    height: 80vh;
+  }
+
+  .desktop-icon {
+    font-size: var(--font-size-xs);
+  }
+
+  #start-bar {
+    height: 30px;
+  }
+
+  #start-button, #clock {
+    font-size: var(--font-size-xs);
+  }
 }
 
 .popup-window.hidden {
@@ -2416,7 +2166,7 @@ body {
 #clock {
   margin-left: auto;
   font-size: 0.8rem;
-  color: white;
+  color: rgba(119, 0, 255, 0.677);
   text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
@@ -2974,19 +2724,6 @@ body {
   }
     }
   
-  .desktop-icon {
-    width: 74px;
-  }
-  
-  .desktop-icon img {
-    width: 64px;
-    height: 64px;
-  }
-  
-  .desktop-icon span {
-    font-size: 1.4rem;
-  }
-  
   #start-bar {
     height: 40px;
   }
@@ -3370,10 +3107,98 @@ video:-ms-fullscreen {
   border-width: 0;
 }
 
-/* Focus styles are in the JS file */
-button.desktop-icon {
-  background: transparent;
-  border: none;
-  padding: 0;
+/* Container Layout */
+.container {
+  width: 100%;
+  height: 100%; /* leave room for taskbar */
+  position: relative;
 }
 
+#desktop-icons {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Desktop Icon */
+.desktop-icon {
+  position: absolute;
+  width: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  text-align: center;
+  font-family: 'VT323', monospace;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  outline: none;
+}
+
+.desktop-icon.selected .icon-frame {
+  background: rgba(3, 0, 160, 0.258);
+    transform: scale(1.1);
+  filter: drop-shadow(0 0 8px var(--neon-cyan));
+}
+
+
+.desktop-icon.icon-hover img {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 8px var(--neon-pink));
+}
+
+/* Desktop Icon Image */
+.desktop-icon img,
+.icon-frame img {
+  width: 64px;
+  height: 64px;
+  display: block;
+  margin: 0 auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 2px rgba(255, 141, 161, 0.3));
+  will-change: transform;
+  transition: transform 0.2s ease;
+}
+
+/* Icon Frame */
+.icon-frame {
+  border: 2px solid magenta;
+  border-radius: 8px;
+  padding: 8px;
+  box-shadow: 0 0 10px magenta;
+  transition: 0.3s ease;
+}
+
+/* Icon Label */
+.icon-label,
+.desktop-icon span {
+  margin-top: 5px;
+  font-size: var(--font-size-sm);
+  font-family: 'Press Start 2P', monospace;
+  color: white;
+  text-shadow: 0 0 4px #0ff;
+  word-break: flex: 1 1 auto;;
+  text-align: center;
+}
+
+/* Selection Rectangle */
+#selection-rect {
+  position: absolute;
+  border: 2px dashed;
+  border-image: linear-gradient(
+    45deg,
+    var(--neon-pink),
+    var(--neon-yellow),
+    var(--neon-green),
+    var(--neon-cyan),
+    var(--neon-purple)
+  ) 1;
+  background: rgba(201, 0, 167, 0.132);
+  pointer-events: none;
+  z-index: 999;
+}
