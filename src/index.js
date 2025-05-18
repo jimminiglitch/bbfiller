@@ -1,0 +1,12 @@
+import './consolidated.js';
+import './accesibility.js';
+import './sw.js';
+import './file-explorer.js';
+import './desktop.js';
+import './folder.js';
+import './lazy-loader.js';
+import './media-loading.js';
+import './mobile-enhancements.js';
+import './utils.js';
+import './window-size-fix.js';
+import './profile-glitch.js';
