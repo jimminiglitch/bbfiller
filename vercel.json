@@ -1,0 +1,19 @@
+{
+  "builds": [
+    // 1) Static-build step: runs "npm run build" in your package.json
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "dist" }
+    },
+    // 2) Node step: your server entrypoint
+    {
+      "src": "server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    // Serve all traffic to your Node server
+    { "src": "/(.*)", "dest": "server.js" }
+  ]
+}
