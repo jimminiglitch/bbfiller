@@ -10,3 +10,7 @@ import './mobile-enhancements.js';
 import './utils.js';
 import './window-size-fix.js';
 import './profile-glitch.js';
+import './styles/main.css';
+import './styles/file-explorer.css';
+import './styles/music-player.css';
+import './styles/video.css';
