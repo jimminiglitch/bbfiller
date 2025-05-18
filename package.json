@@ -11,5 +11,8 @@
     "js-dos": "^8.3.16",
     "react-rnd": "^10.5.2",
     "styled-components": "^6.1.18"
+  },
+  "devDependencies": {
+    "webpack-cli": "^6.0.1"
   }
 }
