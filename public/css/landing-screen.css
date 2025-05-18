@@ -1,0 +1,281 @@
+/* Landing Screen Styles */
+.landing-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.landing-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 2rem;
+}
+
+.logo-container {
+  margin-bottom: 2rem;
+}
+
+.logo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 3px solid #00ffff;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.7);
+  animation: pulse 2s infinite ease-in-out;
+}
+
+.landing-title {
+  font-family: "Press Start 2P", monospace;
+  font-size: 2.5rem;
+  color: #00ffff;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
+}
+
+.divider {
+  width: 300px;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #00ffff, #f3a1ff, transparent);
+  margin: 0 auto 2rem;
+}
+
+.prompt-container {
+  animation: blink 1.5s infinite;
+}
+
+.prompt {
+  font-family: "VT323", monospace;
+  font-size: 1.8rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.system-info {
+  font-family: "VT323", monospace;
+  font-size: 1rem;
+  color: #666;
+}
+
+/* Scanlines effect */
+.scanlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* CRT flicker effect */
+.crt-flicker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(16, 16, 32, 0.1);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 4;
+  animation: flicker 0.3s infinite alternate-reverse;
+}
+
+/* Glitch effect for title */
+.landing-title.glitch {
+  position: relative;
+}
+
+.landing-title.glitch::before,
+.landing-title.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.landing-title.glitch::before {
+  left: 2px;
+  text-shadow: -2px 0 #ff00ff;
+  animation: glitch-1 2s infinite linear alternate-reverse;
+}
+
+.landing-title.glitch::after {
+  left: -2px;
+  text-shadow: 2px 0 #00ffff;
+  animation: glitch-2 3s infinite linear alternate-reverse;
+}
+
+/* Animations */
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.7);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.9);
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes flicker {
+  0%,
+  95% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes glitch-1 {
+  0% {
+    clip-path: inset(20% 0 80% 0);
+  }
+  20% {
+    clip-path: inset(60% 0 1% 0);
+  }
+  40% {
+    clip-path: inset(25% 0 58% 0);
+  }
+  60% {
+    clip-path: inset(10% 0 90% 0);
+  }
+  80% {
+    clip-path: inset(42% 0 43% 0);
+  }
+  100% {
+    clip-path: inset(4% 0 94% 0);
+  }
+}
+
+@keyframes glitch-2 {
+  0% {
+    clip-path: inset(80% 0 20% 0);
+  }
+  20% {
+    clip-path: inset(1% 0 60% 0);
+  }
+  40% {
+    clip-path: inset(58% 0 25% 0);
+  }
+  60% {
+    clip-path: inset(90% 0 10% 0);
+  }
+  80% {
+    clip-path: inset(43% 0 42% 0);
+  }
+  100% {
+    clip-path: inset(94% 0 4% 0);
+  }
+}
+
+/* Landing screen glitching effect */
+.landing-screen.glitching {
+  animation: screen-glitch 0.15s steps(2) forwards;
+}
+
+.landing-screen.fade-out {
+  animation: fade-out 1s forwards;
+}
+
+@keyframes screen-glitch {
+  0% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+  20% {
+    transform: translate(-5px, 5px);
+    filter: hue-rotate(90deg);
+  }
+  40% {
+    transform: translate(-5px, -5px);
+    filter: hue-rotate(180deg);
+  }
+  60% {
+    transform: translate(5px, 5px);
+    filter: hue-rotate(270deg);
+  }
+  80% {
+    transform: translate(5px, -5px);
+    filter: hue-rotate(360deg);
+  }
+  100% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  .landing-title {
+    font-size: 1.8rem;
+  }
+
+  .divider {
+    width: 200px;
+  }
+
+  .prompt {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    width: 100px;
+    height: 100px;
+  }
+
+  .landing-title {
+    font-size: 1.2rem;
+  }
+
+  .divider {
+    width: 150px;
+  }
+
+  .prompt {
+    font-size: 1.2rem;
+  }
+}

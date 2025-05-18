@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Music</title>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <!-- Three.js for 3D visualization -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    /* Base Styles */
+    body {
+      background: #000;
+      color: #0ff;
+      font-family: "VT323", monospace;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* CRT Effects */
+    .scanlines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.3) 50%);
+      background-size: 100% 4px;
+      opacity: 0.15;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    .crt-effect {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      box-shadow: inset 0 0 100px rgba(0, 255, 255, 0.2);
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    /* iPod-like Layout */
+    .ipod-container {
+      width: 320px;
+      height: 600px;
+      background: linear-gradient(145deg, #222, #111);
+      border-radius: 30px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 
+                  inset 0 2px 10px rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #333;
+    }
+
+    .player-header {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .player-title {
+      font-family: "Press Start 2P", monospace;
+      font-size: 1.2rem;
+      color: #0ff;
+      margin: 0;
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    }
+
+    .player-title span {
+      color: #f0f;
+    }
+
+    /* Visualizer */
+    .visualizer-container {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      background: #000;
+      border: 2px solid #0ff;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+      margin-bottom: 15px;
+    }
+
+    #visualizer, #visualizer-3d {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    #visualizer-3d {
+      display: none;
+    }
+
+    /* Track Info */
+    .track-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 10px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .track-info-icon {
+      width: 30px;
+      height: 30px;
+      background: #f0f;
+      color: #000;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .track-info-text {
+      flex: 1;
+    }
+
+    #now-playing {
+      font-family: "Press Start 2P", monospace;
+      color: #fff;
+      font-size: 0.7rem;
+      margin-bottom: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #track-artist {
+      color: #0ff;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Progress Bar */
+    .track-time {
+      display: flex;
+      justify-content: space-between;
+      color: #0ff;
+      font-size: 0.8rem;
+      margin: 5px 0;
+    }
+
+    .progress-container {
+      position: relative;
+      width: 100%;
+      height: 6px;
+      background: #111;
+      border: 1px solid #0ff;
+      border-radius: 3px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background: linear-gradient(to right, #0ff, #f0f);
+      width: 0;
+      border-radius: 3px;
+      transition: width 0.1s ease;
+    }
+
+    /* iPod-like Control Wheel */
+    .control-wheel {
+      width: 180px;
+      height: 180px;
+      background: linear-gradient(145deg, #333, #222);
+      border-radius: 50%;
+      margin: 15px auto;
+      position: relative;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5),
+                  inset 0 1px 5px rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .center-button {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(145deg, #444, #333);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+      z-index: 2;
+    }
+
+    .center-button:active {
+      transform: scale(0.95);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .wheel-button {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Press Start 2P", monospace;
+      font-size: 0.6rem;
+      color: #0ff;
+      cursor: pointer;
+      text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+    }
+
+    .wheel-button:active {
+      transform: scale(0.95);
+    }
+
+    .menu-button {
+      top: 10px;
+    }
+
+    .next-button {
+      right: 10px;
+    }
+
+    .prev-button {
+      left: 10px;
+    }
+
+    .play-button {
+      bottom: 10px;
+    }
+
+    /* Visualizer Modes */
+    .visualizer-modes {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 5px;
+      margin-top: 15px;
+    }
+
+    .mode-button {
+      font-family: "Press Start 2P", monospace;
+      background: rgba(0, 0, 0, 0.8);
+      border: 1px solid #0ff;
+      color: #0ff;
+      border-radius: 4px;
+      padding: 5px 8px;
+      font-size: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .mode-button:hover {
+      background: rgba(0, 255, 255, 0.2);
+    }
+
+    .mode-button.active {
+      background: linear-gradient(to right, #0ff, #f0f);
+      color: #000;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
+    }
+
+    /* Playlist */
+    .playlist-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 10;
+      display: none;
+      flex-direction: column;
+      padding: 20px;
+      box-sizing: border-box;
+      border-radius: 30px;
+    }
+
+    .playlist-container.active {
+      display: flex;
+    }
+
+    .playlist-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .playlist-header h2 {
+      font-family: "Press Start 2P", monospace;
+      color: #0ff;
+      font-size: 1rem;
+      margin: 0;
+    }
+
+    .close-playlist {
+      font-family: "Press Start 2P", monospace;
+      background: none;
+      border: none;
+      color: #f0f;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    #playlist {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      overflow-y: auto;
+      flex-grow: 1;
+    }
+
+    #playlist li {
+      padding: 10px;
+      border-bottom: 1px solid #333;
+      transition: background 0.2s, color 0.2s;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #playlist li:hover {
+      background: rgba(0, 255, 255, 0.1);
+    }
+
+    #playlist li.playing {
+      background: linear-gradient(to right, rgba(0, 255, 255, 0.2), rgba(255, 0, 255, 0.2));
+      border-left: 4px solid #f0f;
+    }
+
+    .track-number {
+      width: 24px;
+      height: 24px;
+      background: #0ff;
+      color: #000;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+    .playing .track-number {
+      background: #f0f;
+    }
+
+    .track-details {
+      flex: 1;
+    }
+
+    .track-title {
+      color: #fff;
+      font-size: 0.9rem;
+      margin-bottom: 3px;
+    }
+
+    .track-artist-name {
+      color: #0ff;
+      font-size: 0.7rem;
+    }
+
+    /* Volume Indicator */
+    .volume-indicator {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .volume-indicator.active {
+      opacity: 1;
+    }
+
+    .volume-icon {
+      font-size: 0.8rem;
+      color: #0ff;
+    }
+
+    .volume-level {
+      width: 50px;
+      height: 5px;
+      background: #111;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .volume-fill {
+      height: 100%;
+      background: linear-gradient(to right, #0ff, #f0f);
+      width: 70%;
+    }
+
+    /* Animations */
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+      }
+    }
+
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 400px) {
+      .ipod-container {
+        width: 280px;
+        height: 550px;
+        padding: 15px;
+      }
+
+      .control-wheel {
+        width: 150px;
+        height: 150px;
+      }
+
+      .center-button {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="scanlines"></div>
+  <div class="crt-effect"></div>
+
+  <div class="ipod-container">
+    <div class="player-header">
+      <h1 class="player-title">MY<span>MUSIC</span></h1>
+    </div>
+
+    <div class="visualizer-container">
+      <canvas id="visualizer"></canvas>
+      <div id="visualizer-3d"></div>
+      
+      <div class="track-info">
+        <div class="track-info-icon">▶</div>
+        <div class="track-info-text">
+          <div id="now-playing">Select a track</div>
+          <div id="track-artist"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="track-time">
+      <span id="current-time">0:00</span>
+      <span id="total-time">0:00</span>
+    </div>
+
+    <div class="progress-container" id="progress-container">
+      <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <div class="control-wheel">
+      <div class="wheel-button menu-button" id="menu-button">MENU</div>
+      <div class="wheel-button next-button" id="next-button">▶▶</div>
+      <div class="wheel-button prev-button" id="prev-button">◀◀</div>
+      <div class="wheel-button play-button" id="play-button">▶/❚❚</div>
+      <div class="center-button" id="center-button"></div>
+    </div>
+
+    <div class="visualizer-modes">
+      <button class="mode-button active" data-mode="bars">BARS</button>
+      <button class="mode-button" data-mode="wave">WAVE</button>
+      <button class="mode-button" data-mode="circle">CIRCLE</button>
+      <button class="mode-button" data-mode="3d">3D</button>
+    </div>
+
+    <div class="volume-indicator">
+      <div class="volume-icon">🔊</div>
+      <div class="volume-level">
+        <div class="volume-fill" id="volume-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="playlist-container" id="playlist-container">
+    <div class="playlist-header">
+      <h2>PLAYLIST</h2>
+      <button class="close-playlist" id="close-playlist">X</button>
+    </div>
+    <ul id="playlist"></ul>
+  </div>
+
+  <!-- Audio element - crossOrigin needed for Web Audio API -->
+  <audio id="music-player" preload="none" crossOrigin="anonymous"></audio>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      console.log("🎵 Initializing...");
+
+      // Define tracks with artist information
+      const tracks = [
+        {
+          title: "Paper Doll (LIVE)",
+          artist: "Dead Beast",
+          src: "https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/Paper%20Doll%20(LIVE).mp3?v=1746751595622",
+        },
+        {
+          title: "Hard Thing",
+          artist: "Dead Beast",
+          src: "https://cdn.glitch.global/25331b85-e206-4347-93a8-666983818ff8/Dead%20Beast%20-%20Hard%20Thing.mp3?v=1746889492826",
+        },
+        {
+          title: "Monsters",
+          artist: "Dead Beast",
+          src: "https://cdn.glitch.global/25331b85-e206-4347-93a8-666983818ff8/Dead%20Beast%20-%20Monsters%20in%20the%20CiA.mp3?v=1746889496155",
+        },
+        {
+          title: "F*ck",
+          artist: "Dead Beast",
+          src: "https://cdn.glitch.global/25331b85-e206-4347-93a8-666983818ff8/Dead%20Beast%20-%20Fuck.mp3?v=1746889506198",
+        },
+        {
+          title: "Manameisdrnk",
+          artist: "Dead Beast",
+          src: "https://cdn.glitch.me/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/mynameisdrunk.wav?v=1746751634863",
+        },
+        {
+          title: "L1k32D13",
+          artist: "Dread Wingz",
+          src: "https://cdn.glitch.global/25331b85-e206-4347-93a8-666983818ff8/Dread%20Wingz%20-%20Like2Die.mp3?v=1746889500203",
+        },
+        {
+          title: "M@k1n B@k1n",
+          artist: "Dread Wingz",
+          src: "https://cdn.glitch.global/25331b85-e206-4347-93a8-666983818ff8/Dread%20Wingz%20-%20Makin%20Bacon.mp3?v=1746889503112",
+        },
+      ];
+
+      // Safely get DOM elements with error handling
+      function getElement(id) {
+        const element = document.getElementById(id);
+        if (!element) {
+          console.error(`Element with id "${id}" not found`);
+          return null;
+        }
+        return element;
+      }
+
+      // DOM refs - with safety checks
+      const audio = getElement("music-player");
+      const canvas = getElement("visualizer");
+      const visualizer3d = getElement("visualizer-3d");
+      const playlist = getElement("playlist");
+      const playlistContainer = getElement("playlist-container");
+      const closePlaylistBtn = getElement("close-playlist");
+      const nowTxt = getElement("now-playing");
+      const artistTxt = getElement("track-artist");
+      const curT = getElement("current-time");
+      const totT = getElement("total-time");
+      const progBar = getElement("progress-bar");
+      const progCon = getElement("progress-container");
+      const menuBtn = getElement("menu-button");
+      const prevBtn = getElement("prev-button");
+      const nextBtn = getElement("next-button");
+      const playBtn = getElement("play-button");
+      const centerBtn = getElement("center-button");
+      const modeBtns = document.querySelectorAll(".mode-button");
+      const volumeIndicator = document.querySelector(".volume-indicator");
+      const volumeFill = getElement("volume-fill");
+
+      // Initialize canvas context if canvas exists
+      let ctx = null;
+      if (canvas) {
+        try {
+          ctx = canvas.getContext("2d");
+        } catch (e) {
+          console.error("Error getting canvas context:", e);
+        }
+      }
+
+      // State variables
+      let currentTrackIndex = 0;
+      let isPlaying = false;
+      let visualizerMode = "bars";
+      let audioContext = null;
+      let analyser = null;
+      let sourceNode = null;
+      let dataArray = null;
+      let timeData = null;
+      let audioInitialized = false;
+      let volume = 0.7;
+      let isMuted = false;
+      let animationId = null;
+      let wheelTouchActive = false;
+      let wheelAngle = 0;
+      let lastWheelAngle = 0;
+
+      // 3D visualization variables
+      const three = {
+        initialized: false,
+        scene: null,
+        camera: null,
+        renderer: null,
+        objects: [],
+      };
+
+      // Prevent screen from sleeping
+      let wakeLock = null;
+
+      async function requestWakeLock() {
+        try {
+          if ("wakeLock" in navigator) {
+            wakeLock = await navigator.wakeLock.request("screen");
+            console.log("Wake Lock is active");
+
+            // Re-request wake lock if page becomes visible again
+            document.addEventListener("visibilitychange", handleVisibilityChange);
+          } else {
+            console.log("Wake Lock API not supported");
+          }
+        } catch (err) {
+          console.error(`Error requesting wake lock: ${err.name}, ${err.message}`);
+        }
+      }
+
+      async function handleVisibilityChange() {
+        if (document.visibilityState === "visible" && wakeLock === null) {
+          await requestWakeLock();
+        }
+      }
+
+      // Request wake lock when user interacts with the page
+      document.addEventListener("click", () => {
+        if (!wakeLock) {
+          requestWakeLock();
+        }
+      });
+
+      // Initialize Web Audio API
+      function initAudio() {
+        if (audioInitialized || !audio) return false;
+
+        try {
+          // Create audio context
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (!AudioContext) {
+            console.error("Web Audio API not supported in this browser");
+            return false;
+          }
+
+          audioContext = new AudioContext();
+          
+          // Create audio nodes
+          analyser = audioContext.createAnalyser();
+          analyser.fftSize = 2048;
+          
+          // Connect nodes
+          sourceNode = audioContext.createMediaElementSource(audio);
+          sourceNode.connect(analyser);
+          analyser.connect(audioContext.destination);
+          
+          // Create data arrays
+          dataArray = new Uint8Array(analyser.frequencyBinCount);
+          timeData = new Uint8Array(analyser.frequencyBinCount);
+          
+          audioInitialized = true;
+          console.log("Audio system initialized successfully");
+          return true;
+        } catch (e) {
+          console.error("Error initializing audio system:", e);
+          return false;
+        }
+      }
+
+      // Resize canvas to match container
+      function resizeCanvas() {
+        if (!canvas || !ctx) return;
+        
+        try {
+          const container = canvas.parentElement;
+          if (container) {
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+          }
+          
+          // Also resize 3D renderer if initialized
+          if (visualizerMode === "3d" && three.initialized && three.renderer) {
+            three.renderer.setSize(container.clientWidth, container.clientHeight);
+            three.camera.aspect = container.clientWidth / container.clientHeight;
+            three.camera.updateProjectionMatrix();
+          }
+        } catch (e) {
+          console.error("Error resizing canvas:", e);
+        }
+      }
+
+      // Call resize on load and window resize
+      window.addEventListener("resize", resizeCanvas);
+      resizeCanvas();
+
+      // Build playlist
+      function buildPlaylist() {
+        if (!playlist) return;
+        
+        try {
+          // Clear existing playlist
+          playlist.innerHTML = "";
+          
+          // Add tracks
+          tracks.forEach((track, index) => {
+            const li = document.createElement("li");
+            li.innerHTML = `
+              <div class="track-number">${index + 1}</div>
+              <div class="track-details">
+                <div class="track-title">${track.title}</div>
+                <div class="track-artist-name">${track.artist}</div>
+              </div>
+            `;
+            li.onclick = () => {
+              loadTrack(index);
+              togglePlaylist();
+            };
+            playlist.appendChild(li);
+          });
+          
+          console.log("Playlist built with", tracks.length, "tracks");
+        } catch (e) {
+          console.error("Error building playlist:", e);
+        }
+      }
+
+      buildPlaylist();
+
+      // Toggle playlist visibility
+      function togglePlaylist() {
+        if (playlistContainer) {
+          playlistContainer.classList.toggle("active");
+        }
+      }
+
+      // Load & play track
+      function loadTrack(index) {
+        if (!audio || !tracks[index]) return;
+        
+        try {
+          currentTrackIndex = index;
+          
+          // Set audio source
+          if (audio.src !== tracks[index].src) {
+            audio.src = tracks[index].src;
+            audio.load(); // Explicitly load the audio
+          }
+          
+          // Update track info display
+          if (nowTxt) nowTxt.textContent = tracks[index].title;
+          if (artistTxt) artistTxt.textContent = tracks[index].artist;
+          
+          updateUI();
+          
+          if (isPlaying) {
+            playAudio();
+          }
+        } catch (e) {
+          console.error("Error loading track:", e);
+        }
+      }
+
+      // Update UI elements
+      function updateUI() {
+        try {
+          // Update playlist highlighting
+          if (playlist) {
+            const items = playlist.querySelectorAll("li");
+            items.forEach((item, i) => {
+              item.classList.toggle("playing", i === currentTrackIndex);
+            });
+          }
+          
+          // Update play button and track info icon
+          const trackInfoIcon = document.querySelector(".track-info-icon");
+          if (trackInfoIcon) {
+            trackInfoIcon.textContent = isPlaying ? "▶" : "❚❚";
+            trackInfoIcon.classList.toggle("pulse", isPlaying);
+          }
+        } catch (e) {
+          console.error("Error updating UI:", e);
+        }
+      }
+
+      // Play audio with error handling
+      function playAudio() {
+        if (!audio) return;
+        
+        try {
+          // Initialize audio if needed
+          if (!audioInitialized) {
+            if (!initAudio()) {
+              console.error("Failed to initialize audio");
+              return;
+            }
+          }
+          
+          // Resume audio context if suspended
+          if (audioContext && audioContext.state !== "running") {
+            audioContext.resume().catch(e => console.error("Error resuming audio context:", e));
+          }
+          
+          // Play audio
+          audio.play()
+            .then(() => {
+              isPlaying = true;
+              updateUI();
+              console.log("Audio playback started");
+              
+              // Request wake lock when playback starts
+              requestWakeLock();
+            })
+            .catch(e => {
+              console.error("Error playing audio:", e);
+              isPlaying = false;
+              updateUI();
+            });
+        } catch (e) {
+          console.error("Error in playAudio:", e);
+        }
+      }
+
+      // Toggle play/pause
+      function togglePlay() {
+        if (!audio) return;
+        
+        try {
+          if (audio.paused) {
+            playAudio();
+          } else {
+            audio.pause();
+            isPlaying = false;
+            updateUI();
+          }
+        } catch (e) {
+          console.error("Error toggling play:", e);
+        }
+      }
+
+      // Format time as mm:ss
+      function formatTime(seconds) {
+        if (isNaN(seconds) || !isFinite(seconds)) return "0:00";
+        
+        try {
+          const minutes = Math.floor(seconds / 60);
+          const secs = Math.floor(seconds % 60).toString().padStart(2, "0");
+          return `${minutes}:${secs}`;
+        } catch (e) {
+          console.error("Error formatting time:", e);
+          return "0:00";
+        }
+      }
+
+      // Update time display
+      if (audio) {
+        audio.addEventListener("timeupdate", () => {
+          try {
+            if (audio.duration) {
+              const percent = (audio.currentTime / audio.duration) * 100;
+              if (progBar) progBar.style.width = `${percent}%`;
+              if (curT) curT.textContent = formatTime(audio.currentTime);
+              if (totT) totT.textContent = formatTime(audio.duration);
+            }
+          } catch (e) {
+            console.error("Error updating time:", e);
+          }
+        });
+      }
+
+      // Handle track end
+      if (audio) {
+        audio.addEventListener("ended", () => {
+          try {
+            currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+            loadTrack(currentTrackIndex);
+            playAudio();
+          } catch (e) {
+            console.error("Error handling track end:", e);
+          }
+        });
+      }
+
+      // Set up controls
+      if (playBtn) playBtn.addEventListener("click", togglePlay);
+      if (centerBtn) centerBtn.addEventListener("click", togglePlay);
+      
+      if (prevBtn) {
+        prevBtn.addEventListener("click", () => {
+          try {
+            currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
+            loadTrack(currentTrackIndex);
+          } catch (e) {
+            console.error("Error on prev track:", e);
+          }
+        });
+      }
+      
+      if (nextBtn) {
+        nextBtn.addEventListener("click", () => {
+          try {
+            currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+            loadTrack(currentTrackIndex);
+          } catch (e) {
+            console.error("Error on next track:", e);
+          }
+        });
+      }
+      
+      if (menuBtn) {
+        menuBtn.addEventListener("click", togglePlaylist);
+      }
+      
+      if (closePlaylistBtn) {
+        closePlaylistBtn.addEventListener("click", togglePlaylist);
+      }
+      
+      if (progCon) {
+        progCon.addEventListener("click", (e) => {
+          try {
+            if (!audio || !audio.duration) return;
+            
+            const rect = progCon.getBoundingClientRect();
+            const percent = (e.clientX - rect.left) / rect.width;
+            audio.currentTime = percent * audio.duration;
+          } catch (e) {
+            console.error("Error seeking:", e);
+          }
+        });
+      }
+
+      // Set up visualizer mode buttons
+      modeBtns.forEach(button => {
+        button.addEventListener("click", () => {
+          try {
+            visualizerMode = button.dataset.mode;
+            modeBtns.forEach(btn => btn.classList.toggle("active", btn === button));
+            
+            // Toggle 3D mode
+            if (visualizerMode === "3d") {
+              if (canvas) canvas.style.display = "none";
+              if (visualizer3d) visualizer3d.style.display = "block";
+              
+              // Initialize 3D if needed
+              if (!three.initialized) {
+                init3D();
+              }
+            } else {
+              if (canvas) canvas.style.display = "block";
+              if (visualizer3d) visualizer3d.style.display = "none";
+            }
+          } catch (e) {
+            console.error("Error changing visualizer mode:", e);
+          }
+        });
+      });
+
+      // Volume control with iPod wheel
+      const controlWheel = document.querySelector(".control-wheel");
+      if (controlWheel) {
+        // Mouse/touch events for the wheel
+        controlWheel.addEventListener("mousedown", startWheelControl);
+        controlWheel.addEventListener("touchstart", startWheelControl);
+        
+        document.addEventListener("mousemove", moveWheelControl);
+        document.addEventListener("touchmove", moveWheelControl);
+        
+        document.addEventListener("mouseup", endWheelControl);
+        document.addEventListener("touchend", endWheelControl);
+      }
+
+      function startWheelControl(e) {
+        e.preventDefault();
+        wheelTouchActive = true;
+        
+        // Get center of wheel
+        const rect = controlWheel.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        
+        // Get touch/mouse position
+        const clientX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+        const clientY = e.clientY || (e.touches && e.touches[0].clientY) || 0;
+        
+        // Calculate angle
+        wheelAngle = Math.atan2(clientY - centerY, clientX - centerX);
+        lastWheelAngle = wheelAngle;
+        
+        // Show volume indicator
+        if (volumeIndicator) {
+          volumeIndicator.classList.add("active");
+        }
+      }
+
+      function moveWheelControl(e) {
+        if (!wheelTouchActive || !audio) return;
+        
+        try {
+          // Get center of wheel
+          const rect = controlWheel.getBoundingClientRect();
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+          
+          // Get touch/mouse position
+          const clientX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+          const clientY = e.clientY || (e.touches && e.touches[0].clientY) || 0;
+          
+          // Calculate new angle
+          const newAngle = Math.atan2(clientY - centerY, clientX - centerX);
+          
+          // Calculate angle difference
+          let angleDiff = newAngle - lastWheelAngle;
+          
+          // Handle angle wrap-around
+          if (angleDiff > Math.PI) angleDiff -= Math.PI * 2;
+          if (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
+          
+          // Update volume based on wheel rotation
+          volume += angleDiff * 0.1;
+          volume = Math.max(0, Math.min(1, volume));
+          
+          // Apply volume
+          audio.volume = volume;
+          
+          // Update volume indicator
+          if (volumeFill) {
+            volumeFill.style.width = `${volume * 100}%`;
+          }
+          
+          // Update last angle
+          lastWheelAngle = newAngle;
+        } catch (e) {
+          console.error("Error in wheel control:", e);
+        }
+      }
+
+      function endWheelControl() {
+        wheelTouchActive = false;
+        
+        // Hide volume indicator after a delay
+        setTimeout(() => {
+          if (volumeIndicator) {
+            volumeIndicator.classList.remove("active");
+          }
+        }, 1500);
+      }
+
+      // Initialize 3D visualization
+      function init3D() {
+        if (!visualizer3d || !window.THREE) {
+          console.error("Cannot initialize 3D: missing element or THREE.js");
+          return;
+        }
+        
+        try {
+          // Create scene
+          three.scene = new THREE.Scene();
+          
+          // Create camera
+          const container = visualizer3d;
+          const width = container.clientWidth;
+          const height = container.clientHeight;
+          three.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+          three.camera.position.z = 20;
+          
+          // Create renderer
+          three.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+          three.renderer.setSize(width, height);
+          three.renderer.setClearColor(0x000000, 0);
+          
+          // Add renderer to container
+          container.innerHTML = "";
+          container.appendChild(three.renderer.domElement);
+          
+          // Add lights
+          const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+          three.scene.add(ambientLight);
+          
+          const pointLight = new THREE.PointLight(0x00ffff, 1, 100);
+          pointLight.position.set(10, 10, 10);
+          three.scene.add(pointLight);
+          
+          // Create 3D objects
+          create3DObjects();
+          
+          three.initialized = true;
+          console.log("3D visualization initialized");
+        } catch (e) {
+          console.error("Error initializing 3D:", e);
+        }
+      }
+
+      // Create 3D objects for visualization
+      function create3DObjects() {
+        if (!three.scene) return;
+        
+        try {
+          // Create a group to hold all objects
+          const group = new THREE.Group();
+          three.scene.add(group);
+          three.objects.push(group);
+          
+          // Create cubes in a circle
+          const cubeCount = 32;
+          for (let i = 0; i < cubeCount; i++) {
+            const geometry = new THREE.BoxGeometry(1, 1, 1);
+            const material = new THREE.MeshPhongMaterial({
+              color: new THREE.Color(`hsl(${(i / cubeCount) * 360}, 100%, 50%)`),
+              transparent: true,
+              opacity: 0.8,
+              specular: 0xffffff,
+              shininess: 100
+            });
+            
+            const cube = new THREE.Mesh(geometry, material);
+            
+            // Position in a circle
+            const angle = (i / cubeCount) * Math.PI * 2;
+            const radius = 10;
+            cube.position.x = Math.cos(angle) * radius;
+            cube.position.y = Math.sin(angle) * radius;
+            
+            group.add(cube);
+          }
+          
+          // Create center sphere
+          const sphereGeometry = new THREE.SphereGeometry(3, 32, 32);
+          const sphereMaterial = new THREE.MeshPhongMaterial({
+            color: 0x00ffff,
+            transparent: true,
+            opacity: 0.6,
+            specular: 0xffffff,
+            shininess: 100,
+            wireframe: true
+          });
+          
+          const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+          group.add(sphere);
+        } catch (e) {
+          console.error("Error creating 3D objects:", e);
+        }
+      }
+
+      // Update 3D visualization
+      function update3D() {
+        if (!three.initialized || !analyser || !dataArray) return;
+        
+        try {
+          // Get audio data
+          analyser.getByteFrequencyData(dataArray);
+          
+          // Calculate average levels for different frequency ranges
+          let bassSum = 0, midSum = 0, highSum = 0;
+          const bassRange = 10, midRange = 100, highRange = 300;
+          
+          for (let i = 0; i < bassRange; i++) {
+            bassSum += dataArray[i];
+          }
+          for (let i = bassRange; i < midRange; i++) {
+            midSum += dataArray[i];
+          }
+          for (let i = midRange; i < highRange; i++) {
+            highSum += dataArray[i];
+          }
+          
+          const bassLevel = bassSum / (bassRange * 255);
+          const midLevel = midSum / ((midRange - bassRange) * 255);
+          const highLevel = highSum / ((highRange - midRange) * 255);
+          
+          // Get the main group
+          const group = three.objects[0];
+          if (!group) return;
+          
+          // Rotate the group
+          group.rotation.y += 0.005;
+          group.rotation.x = Math.sin(Date.now() * 0.001) * 0.2;
+          
+          // Update cubes based on frequency data
+          const cubes = group.children.filter(child => 
+            child.geometry && child.geometry.type === "BoxGeometry"
+          );
+          
+          const cubeCount = cubes.length;
+          for (let i = 0; i < cubeCount; i++) {
+            const cube = cubes[i];
+            const dataIndex = Math.floor((i / cubeCount) * dataArray.length);
+            const value = dataArray[dataIndex] / 255;
+            
+            // Scale based on frequency
+            cube.scale.y = 1 + value * 5;
+            
+            // Move in and out based on frequency
+            const angle = (i / cubeCount) * Math.PI * 2;
+            const radius = 10 + value * 5;
+            cube.position.x = Math.cos(angle) * radius;
+            cube.position.y = Math.sin(angle) * radius;
+            
+            // Rotate based on frequency
+            cube.rotation.x += value * 0.1;
+            cube.rotation.y += value * 0.1;
+            
+            // Update color based on frequency
+            const hue = ((i / cubeCount) * 360 + Date.now() * 0.05) % 360;
+            if (cube.material) {
+              cube.material.color.setHSL(hue / 360, 1, 0.5);
+              cube.material.opacity = 0.5 + value * 0.5;
+            }
+          }
+          
+          // Update center sphere
+          const sphere = group.children.find(child => 
+            child.geometry && child.geometry.type === "SphereGeometry"
+          );
+          
+          if (sphere) {
+            // Pulse with bass
+            sphere.scale.set(1 + bassLevel * 2, 1 + bassLevel * 2, 1 + bassLevel * 2);
+            
+            // Change color with time
+            const hue = (Date.now() * 0.02) % 360;
+            if (sphere.material) {
+              sphere.material.color.setHSL(hue / 360, 1, 0.5);
+            }
+            
+            // Rotate
+            sphere.rotation.y += 0.01;
+            sphere.rotation.x += 0.005;
+          }
+          
+          // Render the scene
+          three.renderer.render(three.scene, three.camera);
+        } catch (e) {
+          console.error("Error updating 3D:", e);
+        }
+      }
+
+      // Draw bars visualizer
+      function drawBars() {
+        if (!ctx || !analyser || !dataArray) return;
+        
+        try {
+          const width = canvas.width;
+          const height = canvas.height;
+          
+          // Get frequency data
+          analyser.getByteFrequencyData(dataArray);
+          
+          // Clear canvas
+          ctx.clearRect(0, 0, width, height);
+          
+          const barCount = dataArray.length / 4; // Use a quarter of the data for better visibility
+          const barWidth = width / barCount;
+          const barSpacing = 1;
+          
+          // Draw bars
+          for (let i = 0; i < barCount; i++) {
+            const value = dataArray[i] / 255;
+            const barHeight = value * height * 0.8;
+            
+            // Calculate color based on frequency and time
+            const hue = ((i / barCount) * 360 + Date.now() * 0.05) % 360;
+            
+            ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
+            ctx.fillRect(
+              i * barWidth + barSpacing / 2,
+              height - barHeight,
+              barWidth - barSpacing,
+              barHeight
+            );
+            
+            // Add glow for high amplitudes
+            if (value > 0.6) {
+              ctx.shadowColor = `hsl(${hue}, 100%, 50%)`;
+              ctx.shadowBlur = 15 * value;
+              ctx.fillRect(
+                i * barWidth + barSpacing / 2,
+                height - barHeight,
+                barWidth - barSpacing,
+                barHeight
+              );
+              ctx.shadowBlur = 0;
+            }
+          }
+        } catch (e) {
+          console.error("Error drawing bars:", e);
+        }
+      }
+
+      // Draw wave visualizer
+      function drawWave() {
+        if (!ctx || !analyser || !dataArray || !timeData) return;
+        
+        try {
+          const width = canvas.width;
+          const height = canvas.height;
+          
+          // Get time domain data
+          analyser.getByteTimeDomainData(timeData);
+          analyser.getByteFrequencyData(dataArray);
+          
+          // Calculate average frequency for color
+          let sum = 0;
+          for (let i = 0; i < dataArray.length; i++) {
+            sum += dataArray[i];
+          }
+          const avgFreq = sum / dataArray.length / 255;
+          
+          // Clear canvas
+          ctx.clearRect(0, 0, width, height);
+          
+          // Draw wave
+          ctx.beginPath();
+          ctx.lineWidth = 3;
+          
+          // Create gradient for line
+          const gradient = ctx.createLinearGradient(0, 0, width, 0);
+          gradient.addColorStop(0, `hsl(${(Date.now() * 0.05) % 360}, 100%, 50%)`);
+          gradient.addColorStop(0.5, `hsl(${(Date.now() * 0.05 + 120) % 360}, 100%, 50%)`);
+          gradient.addColorStop(1, `hsl(${(Date.now() * 0.05 + 240) % 360}, 100%, 50%)`);
+          
+          ctx.strokeStyle = gradient;
+          
+          // Draw waveform
+          for (let i = 0; i < timeData.length; i++) {
+            const x = (i / timeData.length) * width;
+            const y = ((timeData[i] / 128) - 1) * height / 2 + height / 2;
+            
+            if (i === 0) {
+              ctx.moveTo(x, y);
+            } else {
+              ctx.lineTo(x, y);
+            }
+          }
+          
+          // Add glow effect
+          ctx.shadowColor = `hsl(${(Date.now() * 0.05) % 360}, 100%, 50%)`;
+          ctx.shadowBlur = 10 + avgFreq * 20;
+          ctx.stroke();
+        } catch (e) {
+          console.error("Error drawing wave:", e);
+        }
+      }
+
+      // Draw circle visualizer
+      function drawCircle() {
+        if (!ctx || !analyser || !dataArray) return;
+        
+        try {
+          const width = canvas.width;
+          const height = canvas.height;
+          const centerX = width / 2;
+          const centerY = height / 2;
+          
+          // Get frequency data
+          analyser.getByteFrequencyData(dataArray);
+          
+          // Clear canvas
+          ctx.clearRect(0, 0, width, height);
+          
+          // Calculate base radius and rotation
+          const baseRadius = Math.min(width, height) / 4;
+          const rotation = Date.now() * 0.001;
+          
+          // Calculate average frequency for effects
+          let sum = 0;
+          for (let i = 0; i < dataArray.length; i++) {
+            sum += dataArray[i];
+          }
+          const avgFreq = sum / dataArray.length / 255;
+          
+          // Draw frequency bins in a circle
+          for (let i = 0; i < dataArray.length; i += 4) {
+            const angle = (i / dataArray.length) * Math.PI * 2 + rotation;
+            const value = dataArray[i] / 255;
+            const amplitude = value * baseRadius;
+            
+            // Calculate positions
+            const innerX = centerX + Math.cos(angle) * baseRadius;
+            const innerY = centerY + Math.sin(angle) * baseRadius;
+            const outerX = centerX + Math.cos(angle) * (baseRadius + amplitude);
+            const outerY = centerY + Math.sin(angle) * (baseRadius + amplitude);
+            
+            // Calculate color
+            const hue = ((angle * 180) / Math.PI + Date.now() * 0.05) % 360;
+            
+            // Draw line from inner to outer point
+            ctx.beginPath();
+            ctx.moveTo(innerX, innerY);
+            ctx.lineTo(outerX, outerY);
+            ctx.lineWidth = 2 + value * 3;
+            ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+            ctx.stroke();
+            
+            // Draw point at the end
+            ctx.beginPath();
+            ctx.arc(outerX, outerY, 2 + value * 5, 0, Math.PI * 2);
+            ctx.fillStyle = `hsl(${hue}, 100%, 70%)`;
+            ctx.fill();
+          }
+          
+          // Draw center circle
+          ctx.beginPath();
+          const pulseSize = baseRadius * 0.2 * (0.8 + avgFreq * 0.5);
+          ctx.arc(centerX, centerY, pulseSize, 0, Math.PI * 2);
+          ctx.fillStyle = `hsl(${(Date.now() * 0.05) % 360}, 100%, 70%)`;
+          ctx.fill();
+        } catch (e) {
+          console.error("Error drawing circle:", e);
+        }
+      }
+
+      // Draw placeholder when not playing
+      function drawPlaceholder() {
+        if (!ctx) return;
+        
+        try {
+          const width = canvas.width;
+          const height = canvas.height;
+          const centerX = width / 2;
+          const centerY = height / 2;
+          
+          // Clear canvas
+          ctx.clearRect(0, 0, width, height);
+          
+          // Draw pulsing circle
+          const time = Date.now() * 0.001;
+          const radius = (Math.min(width, height) / 4) * (0.8 + Math.sin(time) * 0.2);
+          
+          ctx.beginPath();
+          ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+          ctx.strokeStyle = `hsl(${(time * 30) % 360}, 100%, 50%)`;
+          ctx.lineWidth = 2;
+          ctx.stroke();
+          
+          // Draw text
+          ctx.font = "12px 'Press Start 2P', monospace";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillStyle = "#0ff";
+          ctx.fillText("Press Play", centerX, centerY);
+        } catch (e) {
+          console.error("Error drawing placeholder:", e);
+        }
+      }
+
+      // Main visualization loop
+      function draw() {
+        try {
+          // Cancel any existing animation frame
+          if (animationId) {
+            cancelAnimationFrame(animationId);
+          }
+          
+          // If 3D mode is active, update 3D visualization
+          if (visualizerMode === "3d") {
+            if (three.initialized) {
+              if (audioInitialized && isPlaying) {
+                update3D();
+              } else {
+                // Just render the scene without updates
+                if (three.renderer && three.scene && three.camera) {
+                  three.renderer.render(three.scene, three.camera);
+                }
+              }
+            }
+            animationId = requestAnimationFrame(draw);
+            return;
+          }
+          
+          // If audio isn't initialized or playing, show placeholder
+          if (!audioInitialized || !isPlaying) {
+            drawPlaceholder();
+            animationId = requestAnimationFrame(draw);
+            return;
+          }
+          
+          // Draw selected visualization
+          switch (visualizerMode) {
+            case "bars":
+              drawBars();
+              break;
+            case "wave":
+              drawWave();
+              break;
+            case "circle":
+              drawCircle();
+              break;
+            default:
+              drawBars();
+          }
+          
+          // Continue animation loop
+          animationId = requestAnimationFrame(draw);
+        } catch (e) {
+          console.error("Error in draw loop:", e);
+          // Try to continue the animation even if there was an error
+          animationId = requestAnimationFrame(draw);
+        }
+      }
+
+      // Start visualization loop
+      draw();
+
+      // Load first track
+      loadTrack(0);
+
+      console.log("🎵 SonicWave Music Player initialization complete");
+    });
+  </script>
+</body>
+</html>

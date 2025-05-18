@@ -1,0 +1,663 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+    "Helvetica Neue", sans-serif;
+  background-color: #000;
+  color: #fff;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+}
+
+canvas {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Loading screen */
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: opacity 0.5s ease;
+}
+
+.loading-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.loading-title {
+  font-size: 3.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(to right, #ff00ff, #00ffff, #ffff00);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: glitch 1s infinite, rainbow 4s infinite linear;
+}
+
+.loading-text {
+  color: #22d3ee;
+  font-family: monospace;
+  letter-spacing: 0.1em;
+  margin-bottom: 2rem;
+}
+
+.progress-bar {
+  position: relative;
+  height: 8px;
+  background-color: #1f2937;
+  border-radius: 9999px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(to right, #ff00ff, #00ffff, #ffff00);
+  border-radius: 9999px;
+  transition: width 0.3s ease;
+  animation: rainbow 2s infinite linear;
+}
+
+.progress-text {
+  color: #22d3ee;
+  font-family: monospace;
+  font-size: 0.875rem;
+}
+
+.loading-info {
+  margin-top: 2rem;
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+/* Audio visualizer */
+#audio-visualizer {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  z-index: 50;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 0, 255, 0.3);
+  border-radius: 8px;
+  width: 256px;
+  height: 80px;
+  display: none;
+}
+
+/* Track info */
+#track-info {
+  position: absolute;
+  bottom: 104px;
+  left: 16px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #00ffff;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  z-index: 50;
+  display: none;
+  max-width: 256px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Audio status */
+#audio-status {
+  position: absolute;
+  bottom: 80px;
+  left: 16px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #ff00ff;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  z-index: 50;
+  display: none;
+}
+
+/* Control buttons */
+.control-buttons {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  display: flex;
+  gap: 12px;
+  z-index: 50;
+}
+
+.control-button {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid #ff00ff;
+  color: #ff00ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+}
+
+.control-button:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 15px rgba(255, 0, 255, 0.8);
+  transform: scale(1.05);
+}
+
+.control-button:active {
+  transform: scale(0.95);
+}
+
+.control-button.active {
+  background-color: rgba(255, 0, 255, 0.3);
+  border-color: #00ffff;
+  color: #00ffff;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+}
+
+/* Track selector */
+#track-selector {
+  position: absolute;
+  bottom: 16px;
+  left: 280px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 1px solid #ff00ff;
+  border-radius: 8px;
+  padding: 8px;
+  color: #00ffff;
+  z-index: 100;
+  display: none;
+  max-width: 300px;
+  max-height: 300px;
+  overflow-y: auto;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+#track-selector h3 {
+  margin: 0 0 8px 0;
+  color: #ff00ff;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.track-option {
+  padding: 6px 10px;
+  margin-bottom: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.track-option:hover {
+  background-color: rgba(255, 0, 255, 0.3);
+}
+
+.track-option.active {
+  background-color: rgba(0, 255, 255, 0.3);
+}
+
+/* Theme indicator */
+#theme-indicator {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 1px solid #ff00ff;
+  border-radius: 8px;
+  padding: 4px 12px;
+  color: #ff00ff;
+  font-size: 0.9rem;
+  z-index: 100;
+  text-align: center;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+/* Error message */
+#error-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 1px solid #ff0000;
+  border-radius: 8px;
+  padding: 16px;
+  color: #ff0000;
+  font-size: 1rem;
+  z-index: 2000;
+  text-align: center;
+  max-width: 80%;
+  display: none;
+}
+
+/* Performance indicator */
+#performance-indicator {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  padding: 4px 8px;
+  color: #00ffff;
+  font-size: 0.75rem;
+  z-index: 50;
+  display: none;
+}
+
+/* Performance mode indicator */
+#performance-mode {
+  position: absolute;
+  top: 50px;
+  right: 16px;
+  background-color: rgba(255, 0, 0, 0.3);
+  border: 1px solid rgba(255, 0, 0, 0.5);
+  border-radius: 4px;
+  padding: 4px 8px;
+  color: #ffffff;
+  font-size: 0.75rem;
+  z-index: 50;
+  display: none;
+}
+
+/* Settings panel */
+#settings-panel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 1px solid #ff00ff;
+  border-radius: 8px;
+  padding: 16px;
+  color: #fff;
+  font-size: 0.9rem;
+  z-index: 1000;
+  width: 300px;
+  max-width: 90%;
+  display: none;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+#settings-panel h3 {
+  margin: 0 0 16px 0;
+  color: #ff00ff;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.settings-group {
+  margin-bottom: 16px;
+}
+
+.settings-group h4 {
+  margin: 0 0 8px 0;
+  color: #00ffff;
+  font-size: 1rem;
+  border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+  padding-bottom: 4px;
+}
+
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.setting-label {
+  flex: 1;
+}
+
+.setting-control {
+  flex: 1;
+  text-align: right;
+}
+
+.setting-control input[type="range"] {
+  width: 100%;
+  background: #1f2937;
+  height: 6px;
+  border-radius: 3px;
+  -webkit-appearance: none;
+}
+
+.setting-control input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ff00ff;
+  cursor: pointer;
+}
+
+.setting-control input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.setting-control select {
+  background-color: #1f2937;
+  color: #fff;
+  border: 1px solid #ff00ff;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.settings-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.settings-button {
+  background-color: rgba(255, 0, 255, 0.3);
+  border: 1px solid #ff00ff;
+  border-radius: 4px;
+  padding: 6px 12px;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.settings-button:hover {
+  background-color: rgba(255, 0, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.settings-button:active {
+  transform: translateY(1px);
+}
+
+/* Controls info */
+#controls-info {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 1px solid #ff00ff;
+  border-radius: 8px;
+  padding: 16px;
+  color: #fff;
+  font-size: 0.9rem;
+  z-index: 1000;
+  width: 300px;
+  max-width: 90%;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+#controls-info h4 {
+  margin: 0 0 8px 0;
+  color: #00ffff;
+  font-size: 1rem;
+  border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+  padding-bottom: 4px;
+}
+
+#controls-info ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px 0;
+}
+
+#controls-info li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.key {
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+  padding: 2px 6px;
+  margin-right: 8px;
+  font-family: monospace;
+  min-width: 20px;
+  text-align: center;
+}
+
+.controls-note {
+  margin-top: 16px;
+  text-align: center;
+  color: #ff00ff;
+  font-style: italic;
+}
+
+/* Crosshair */
+.crosshair {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Animations */
+@keyframes glitch {
+  0% {
+    text-shadow: 0.05em 0 0 rgba(255, 0, 255, 0.75), -0.05em -0.025em 0 rgba(0, 255, 255, 0.75), -0.025em 0.05em 0
+      rgba(255, 255, 0, 0.75);
+  }
+  14% {
+    text-shadow: 0.05em 0 0 rgba(255, 0, 255, 0.75), -0.05em -0.025em 0 rgba(0, 255, 255, 0.75), -0.025em 0.05em 0
+      rgba(255, 255, 0, 0.75);
+  }
+  15% {
+    text-shadow: -0.05em -0.025em 0 rgba(255, 0, 255, 0.75), 0.025em 0.025em 0 rgba(0, 255, 255, 0.75), -0.05em -0.05em
+      0 rgba(255, 255, 0, 0.75);
+  }
+  49% {
+    text-shadow: -0.05em -0.025em 0 rgba(255, 0, 255, 0.75), 0.025em 0.025em 0 rgba(0, 255, 255, 0.75), -0.05em -0.05em
+      0 rgba(255, 255, 0, 0.75);
+  }
+  50% {
+    text-shadow: 0.025em 0.05em 0 rgba(255, 0, 255, 0.75), 0.05em 0 0 rgba(0, 255, 255, 0.75), 0 -0.05em 0
+      rgba(255, 255, 0, 0.75);
+  }
+  99% {
+    text-shadow: 0.025em 0.05em 0 rgba(255, 0, 255, 0.75), 0.05em 0 0 rgba(0, 255, 255, 0.75), 0 -0.05em 0
+      rgba(255, 255, 0, 0.75);
+  }
+  100% {
+    text-shadow: -0.025em 0 0 rgba(255, 0, 255, 0.75), -0.025em -0.025em 0 rgba(0, 255, 255, 0.75), -0.025em -0.05em 0
+      rgba(255, 255, 0, 0.75);
+  }
+}
+
+@keyframes rainbow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.rainbow-text {
+  background: linear-gradient(to right, #ff00ff, #00ffff, #ffff00, #ff00ff);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: rainbow 4s linear infinite;
+}
+
+/* Pulse animation for audio status */
+@keyframes pulse {
+  0% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.7;
+  }
+}
+
+.pulse {
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* Fade in/out animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s forwards;
+}
+
+.fade-out {
+  animation: fadeOut 0.5s forwards;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .loading-title {
+    font-size: 2.5rem;
+  }
+
+  .control-buttons {
+    gap: 8px;
+  }
+
+  .control-button {
+    width: 40px;
+    height: 40px;
+  }
+
+  #audio-visualizer {
+    width: 200px;
+    height: 60px;
+  }
+
+  #track-info,
+  #audio-status {
+    max-width: 200px;
+    font-size: 0.8rem;
+  }
+
+  #track-info {
+    bottom: 84px;
+  }
+
+  #audio-status {
+    bottom: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .loading-title {
+    font-size: 2rem;
+  }
+
+  .control-buttons {
+    gap: 6px;
+  }
+
+  .control-button {
+    width: 36px;
+    height: 36px;
+  }
+
+  .control-button svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  #audio-visualizer {
+    width: 160px;
+    height: 50px;
+  }
+
+  #track-info,
+  #audio-status {
+    max-width: 160px;
+    font-size: 0.75rem;
+  }
+
+  #track-info {
+    bottom: 74px;
+  }
+
+  #audio-status {
+    bottom: 50px;
+  }
+
+  #settings-panel,
+  #controls-info {
+    width: 280px;
+    font-size: 0.8rem;
+  }
+}

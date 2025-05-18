@@ -1,0 +1,165 @@
+/* video.css – shared styles for video popup windows */
+
+body {
+  background-color: black;
+  color: #00ffff;
+  font-family: 'VT323', monospace;
+  margin: 0;
+  padding: 1rem;
+  text-align: center;
+}
+
+h1, h2 {
+  color: #00ff00;
+  margin-bottom: 1rem;
+}
+
+video {
+  width: 100%;
+  max-width: 960px;
+  height: auto;
+  border: 2px solid #00ffff;
+  border-radius: 8px;
+  margin: 0 auto;
+  display: block;
+  background-color: black;
+}
+
+#Joyful-player,
+#Papaz-player,
+#Abstract-player {
+  outline: none;
+}
+
+::-webkit-media-controls {
+  color-scheme: dark;
+}
+
+/*────────────────────────────────────────
+  Responsive Adjustments
+────────────────────────────────────────*/
+/* ────────────────────────────────────────────────────────────────
+   GLOBAL VIDEO/IFRAME ASPECT-RATIO FIX
+   Ensures all videos & iframes in .window-content fill width,
+   but never get “smooshed” — they’ll letterbox to 16:9.
+──────────────────────────────────────────────────────────────── */
+.window-content video,
+.window-content iframe {
+  display: block;         /* remove inline gaps */
+  width: 100%;            /* fill the window’s width */
+  height: auto;           /* let height follow width */
+  aspect-ratio: 16 / 9;   /* lock to widescreen ratio */
+  object-fit: contain;    /* letterbox rather than crop or stretch */
+}
+/*──────────────────────────────────────────────────────────────
+  GLOBAL VIDEO/IFRAME ASPECT-RATIO (NORMAL MODE)
+──────────────────────────────────────────────────────────────*/
+.window-content video,
+.window-content iframe {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+}
+
+/*──────────────────────────────────────────────────────────────
+  FIXED: Fullscreen mode still letterboxes with object-fit
+──────────────────────────────────────────────────────────────*/
+video:fullscreen,
+video:-webkit-full-screen,
+video:-moz-full-screen,
+video:-ms-fullscreen {
+  /* make the video fill the screen but preserve its aspect */
+  width: 100vw !important;
+  height: 100vh !important;
+  object-fit: contain !important;
+  background-color: black; /* letterbox bars */
+}
+
+/* If you’re full-screening the wrapper instead of the <video> element: */
+.video-wrapper:fullscreen {
+  padding-top: 0 !important;
+}
+.video-wrapper:fullscreen video {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain !important;
+  background-color: black;
+}
+
+.window-content video,
+.window-content iframe {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+  object-fit: contain;
+  background-color: black;
+}
+
+.window-content video:fullscreen,
+.window-content iframe:fullscreen,
+.window-content .video-wrapper:fullscreen,
+.window-content video:-webkit-full-screen,
+.window-content iframe:-webkit-full-screen,
+.window-content .video-wrapper:-webkit-full-screen,
+.window-content video:-moz-full-screen,
+.window-content iframe:-moz-full-screen,
+.window-content .video-wrapper:-moz-full-screen,
+.window-content video:-ms-fullscreen,
+.window-content iframe:-ms-fullscreen,
+.window-content .video-wrapper:-ms-fullscreen {
+  width: 100vw !important;
+  height: 100vh !important;
+  object-fit: contain !important;
+  background-color: black !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Base styles for .window-content */
+.window-content {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
+  background-color: black;
+  overflow: hidden;
+}
+
+/* Styles for video and iframe within .window-content */
+.window-content video,
+.window-content iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background-color: black;
+}
+
+/* Fullscreen styles */
+.window-content:fullscreen,
+.window-content:-webkit-full-screen,
+.window-content:-moz-full-screen,
+.window-content:-ms-fullscreen {
+  width: 100vw !important;
+  height: 100vh !important;
+  padding: 0 !important;
+}
+
+.window-content:fullscreen video,
+.window-content:fullscreen iframe,
+.window-content:-webkit-full-screen video,
+.window-content:-webkit-full-screen iframe,
+.window-content:-moz-full-screen video,
+.window-content:-moz-full-screen iframe,
+.window-content:-ms-fullscreen video,
+.window-content:-ms-fullscreen iframe {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  background-color: black !important;
+}

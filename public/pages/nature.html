@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nature Gallery</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'VT323', monospace;
+      background: #111;
+      color: #fff;
+    }
+    .gallery-header {
+      text-align: center;
+      padding: 1rem;
+      font-size: 2rem;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 10px;
+      padding: 10px;
+    }
+    .gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .gallery img:hover {
+      transform: scale(1.02);
+    }
+    .caption {
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+    .lightbox {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 1000;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .lightbox.show {
+      display: flex;
+      opacity: 1;
+    }
+    .lightbox img {
+      max-width: 90%;
+      max-height: 80vh;
+      transition: transform 0.3s ease;
+    }
+    .lightbox-caption {
+      color: white;
+      margin-top: 10px;
+      font-size: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="gallery-header">🌿 Nature Gallery</div>
+  <div class="gallery" id="gallery"></div>
+  <div class="lightbox" id="lightbox">
+    <img id="lightbox-img" />
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
+  <script>
+    const gallery = document.getElementById('gallery');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+
+    const images = [
+      { src: 'https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/Galloway%20Geese%20at%20Sunset.png?v=1746411517025', caption: 'Galloway Sunset' },
+      { src: 'https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/GoldenHourGeese.png?v=1746411283749', caption: 'Galloway Landing' },
+      { src: 'https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/A%20Sedge%20of%20Sandhill%20on%20the%20Green.png?v=1746411505927', caption: 'Sandhill Sedge' },
+      { src: 'https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/bombilate%20vicissitude.png?v=1746411262153', caption: 'Bombilate Vicissitude' },
+      { src: 'https://cdn.glitch.me/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/SB1012.png?v=1746413539089', caption: 'Old Stump Hole' },
+      { src: 'https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/LeafTrail.png?v=1746413486576', caption: 'Fall Trail' },
+      { src: 'https://cdn.glitch.me/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/HawkTrail.png?v=1746413521889', caption: 'Tree Falls in the Woods' },
+      { src: 'https://cdn.glitch.me/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/ToadInTheHole.png?v=1746413566459', caption: 'Toad in the Hole' }
+    ];
+
+    let currentIndex = 0;
+
+function showLightbox(index) {
+  const { src, caption } = images[index];
+  lightboxImg.src        = src;
+  lightboxCaption.textContent = caption;
+  lightbox.style.display = 'flex';
+  requestAnimationFrame(() => {
+    lightbox.classList.add('show');
+  });
+  currentIndex = index;
+}
+
+
+    function hideLightbox() {
+      lightbox.classList.remove('show');
+      setTimeout(() => {
+        if (!lightbox.classList.contains('show')) {
+          lightbox.style.display = 'none';
+        }
+      }, 300);
+    }
+
+    function nextImage() {
+      currentIndex = (currentIndex + 1) % images.length;
+      showLightbox(currentIndex);
+    }
+
+    function prevImage() {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      showLightbox(currentIndex);
+    }
+
+    images.forEach(({ src, caption }, index) => {
+      const wrapper = document.createElement('div');
+      const img = document.createElement('img');
+      const cap = document.createElement('div');
+      img.src = src;
+      img.alt = caption;
+      cap.className = 'caption';
+      cap.textContent = caption;
+      img.addEventListener('click', () => showLightbox(index));
+      wrapper.appendChild(img);
+      wrapper.appendChild(cap);
+      gallery.appendChild(wrapper);
+    });
+
+    lightbox.addEventListener('click', hideLightbox);
+
+    let touchStartX = 0;
+    lightbox.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+    lightbox.addEventListener('touchend', (e) => {
+      const touchEndX = e.changedTouches[0].screenX;
+      if (touchEndX - touchStartX > 50) prevImage();
+      if (touchEndX - touchStartX < -50) nextImage();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('show')) return;
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
+      if (e.key === 'Escape') hideLightbox();
+    });
+  </script>
+</body>
+</html>

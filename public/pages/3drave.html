@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Rave City - Immersive Party Experience</title>
+  <link rel="stylesheet" href="/css/pages/3drave.css">
+</head>
+<body>
+  <!-- Main Canvas (Three.js will use this) -->
+  <canvas id="scene-canvas"></canvas>
+
+  <!-- Audio Visualizer -->
+  <canvas id="audio-visualizer" width="256" height="80"></canvas>
+
+  <!-- Track Info -->
+  <div id="track-info">
+    Now Playing: Initializing...
+  </div>
+
+  <!-- Audio Status -->
+  <div id="audio-status" class="pulse">
+    Loading audio...
+  </div>
+
+  <!-- Error Message -->
+  <div id="error-message"></div>
+
+  <!-- Performance Indicator -->
+  <div id="performance-indicator">FPS: 60</div>
+
+  <!-- Loading Screen -->
+  <div id="loading-screen">
+    <div class="loading-container">
+      <h1 class="loading-title">3D RAVE CITY</h1>
+      <p id="loading-text" class="loading-text">INITIALIZING NEURAL INTERFACE</p>
+      
+      <div class="progress-bar">
+        <div id="progress-fill" class="progress-fill" style="width: 0%; background-size: 200% auto;"></div>
+      </div>
+      
+      <div class="progress-text">
+        <span id="progress-percent">0%</span>
+      </div>
+      
+      <div class="loading-info">
+        <p>CALIBRATING PSYCHEDELIC PARAMETERS</p>
+        <p>LOADING DIMENSIONAL GATEWAYS</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Theme Indicator -->
+  <div id="theme-indicator">
+    RAVE MADNESS
+  </div>
+
+  <!-- Track Selector -->
+  <div id="track-selector">
+    <h3>SELECT TRACK</h3>
+    <!-- Track options will be added dynamically -->
+  </div>
+
+  <!-- Settings Panel -->
+  <div id="settings-panel">
+    <h3>SETTINGS</h3>
+    
+    <div class="settings-group">
+      <h4>Performance</h4>
+      <div class="setting-item">
+        <div class="setting-label">Quality</div>
+        <div class="setting-control">
+          <select id="quality-setting">
+            <option value="low">Low</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High</option>
+            <option value="ultra">Ultra</option>
+          </select>
+        </div>
+      </div>
+      <div class="setting-item">
+        <div class="setting-label">Particle Density</div>
+        <div class="setting-control">
+          <input type="range" id="density-setting" min="10" max="100" value="40">
+        </div>
+      </div>
+      <div class="setting-item">
+        <div class="setting-label">Show FPS</div>
+        <div class="setting-control">
+          <input type="checkbox" id="fps-setting">
+        </div>
+      </div>
+      <div class="setting-item">
+        <div class="setting-label">Auto-Optimize</div>
+        <div class="setting-control">
+          <input type="checkbox" id="auto-optimize-setting" checked>
+        </div>
+      </div>
+    </div>
+    
+    <div class="settings-group">
+      <h4>Visual Effects</h4>
+      <div class="setting-item">
+        <div class="setting-label">Bloom Intensity</div>
+        <div class="setting-control">
+          <input type="range" id="bloom-setting" min="0" max="2" step="0.1" value="1">
+        </div>
+      </div>
+      <div class="setting-item">
+        <div class="setting-label">Glitch Effect</div>
+        <div class="setting-control">
+          <input type="range" id="glitch-setting" min="0" max="1" step="0.05" value="0.15">
+        </div>
+      </div>
+      <div class="setting-item">
+        <div class="setting-label">Color Shift Speed</div>
+        <div class="setting-control">
+          <input type="range" id="color-shift-setting" min="0" max="2" step="0.1" value="1">
+        </div>
+      </div>
+    </div>
+    
+    <div class="settings-group">
+      <h4>Audio</h4>
+      <div class="setting-item">
+        <div class="setting-label">Volume</div>
+        <div class="setting-control">
+          <input type="range" id="volume-setting" min="0" max="1" step="0.05" value="0.7">
+        </div>
+      </div>
+      <div class="setting-item">
+        <div class="setting-label">Bass Impact</div>
+        <div class="setting-control">
+          <input type="range" id="bass-setting" min="0" max="3" step="0.1" value="1.5">
+        </div>
+      </div>
+      <div class="setting-item">
+        <div class="setting-label">Randomize Tracks</div>
+        <div class="setting-control">
+          <input type="checkbox" id="random-tracks-setting" checked>
+        </div>
+      </div>
+    </div>
+    
+    <div class="settings-group">
+      <h4>Movement</h4>
+      <div class="setting-item">
+        <div class="setting-label">Movement Speed</div>
+        <div class="setting-control">
+          <input type="range" id="movement-speed-setting" min="0.5" max="5" step="0.5" value="2">
+        </div>
+      </div>
+      <div class="setting-item">
+        <div class="setting-label">Flying Enabled</div>
+        <div class="setting-control">
+          <input type="checkbox" id="flying-setting" checked>
+        </div>
+      </div>
+      <div class="setting-item">
+        <div class="setting-label">Mouse Sensitivity</div>
+        <div class="setting-control">
+          <input type="range" id="sensitivity-setting" min="0.1" max="2" step="0.1" value="1">
+        </div>
+      </div>
+    </div>
+    
+    <div class="settings-group">
+      <h4>Dancers</h4>
+      <div class="setting-item">
+        <div class="setting-label">Dancer Count</div>
+        <div class="setting-control">
+          <input type="range" id="dancer-count-setting" min="10" max="300" step="10" value="100">
+        </div>
+      </div>
+      <div class="setting-item">
+        <div class="setting-label">Dancer Detail</div>
+        <div class="setting-control">
+          <select id="dancer-detail-setting">
+            <option value="low">Low</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    
+    <div class="settings-buttons">
+      <button class="settings-button" id="settings-apply">Apply</button>
+      <button class="settings-button" id="settings-close">Close</button>
+    </div>
+  </div>
+
+  <!-- Control Buttons -->
+  <div class="control-buttons">
+    <button id="fullscreen-button" class="control-button" title="Toggle Fullscreen">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 3 21 3 21 9"></polyline>
+        <polyline points="9 21 3 21 3 15"></polyline>
+        <line x1="21" y1="3" x2="14" y2="10"></line>
+        <line x1="3" y1="21" x2="10" y2="14"></line>
+      </svg>
+    </button>
+    
+    <button id="settings-button" class="control-button" title="Settings">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+      </svg>
+    </button>
+    
+    <button id="theme-button" class="control-button" title="Change Theme">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+      </svg>
+    </button>
+    
+    <button id="track-button" class="control-button" title="Change Track">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="5.5" cy="17.5" r="2.5"></circle>
+        <circle cx="17.5" cy="15.5" r="2.5"></circle>
+        <path d="M8 17V5l12-2v12"></path>
+      </svg>
+    </button>
+    
+    <button id="audio-button" class="control-button" title="Toggle Audio">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+      </svg>
+    </button>
+    
+    <button id="help-button" class="control-button" title="Show Controls">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Controls Info -->
+  <div id="controls-info">
+    <h4>Movement Controls</h4>
+    <ul>
+      <li><span class="key">W</span> Move forward</li>
+      <li><span class="key">S</span> Move backward</li>
+      <li><span class="key">A</span> Move left</li>
+      <li><span class="key">D</span> Move right</li>
+      <li><span class="key">Space</span> Fly up</li>
+      <li><span class="key">Shift</span> Fly down</li>
+      <li><span class="key">Mouse</span> Look around</li>
+      <li><span class="key">Esc</span> Release mouse</li>
+    </ul>
+    <h4>Other Controls</h4>
+    <ul>
+      <li><span class="key">F</span> Fullscreen</li>
+      <li><span class="key">M</span> Toggle music</li>
+      <li><span class="key">T</span> Change theme</li>
+      <li><span class="key">N</span> Next track</li>
+      <li><span class="key">P</span> Settings</li>
+      <li><span class="key">H</span> Toggle this help</li>
+    </ul>
+    <p class="controls-note">Click anywhere to lock mouse and start exploring!</p>
+  </div>
+
+  <!-- Crosshair -->
+  <div class="crosshair"></div>
+
+  <!-- Performance Mode Indicator -->
+  <div id="performance-mode">
+    <span id="performance-mode-text">PERFORMANCE MODE ACTIVE</span>
+  </div>
+
+  <!-- Load Three.js from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/PointerLockControls.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/RGBShiftShader.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/DigitalGlitch.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/GlitchPass.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/objects/Reflector.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.min.js"></script>
+
+  <!-- Main Application Script -->
+  <script src="/js/pages/3drave.js"></script>
+</body>
+</html>
