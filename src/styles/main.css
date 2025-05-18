@@ -3176,10 +3176,11 @@ video:-ms-fullscreen {
     to right,
     rgba(0, 0, 0, 0.9),
     rgba(20, 0, 40, 0.9)
+.window-title {
   color: var(--neon-cyan);
-  font-family:
-
-
+  font-family: var(--font-press-start);
+  font-size: 1rem;
+  text-shadow: 0 0 5px var(--neon-green);
 .desktop-icon.icon-hover img {
   transform: scale(1.1);
   filter: drop-shadow(0 0 8px var(--neon-pink));
