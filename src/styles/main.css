@@ -3110,7 +3110,72 @@ video:-ms-fullscreen {
   cursor: move;
 }
 
-.window-title {
+.window-title {  color: var(--neon-cyan);
+  font-family: var(--font-press-start);
+  font-size: 1rem;
+  text-shadow: 0 0 5px var(--neon-green);
+}
+
+.window-controls {
+  display: flex;
+}
+
+.window-controls button {
+  background: none;
+  border: none;
+  color: var(--neon-green);
+  font-family: var(--font-press-start);
+  font-size: 1rem;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.window-controls button:hover {
+  color: white;
+  text-shadow: 0 0 5px var(--neon-green);
+}
+
+.window-controls .minimize:hover {
+  color: var(--neon-green);
+  text-shadow: 0 0 5px var(--neon-green);
+}
+
+.window-controls .maximize:hover {
+  color: var(--neon-green);
+  text-shadow: 0 0 5px var(--neon-green);
+}
+
+.window-controls .close:hover {
+  color: var(--neon-red);
+  text-shadow: 0 0 5px var(--neon-red);
+}
+
+.window-content {
+  flex: 1;
+  overflow: auto;
+  padding: 1rem;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+.window-content p {
+  line-height: 1.6;
+}
+
+/* Taskbar Styles */
+#start-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 36px;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.9),
+    rgba(20, 0, 40, 0.9)
   color: var(--neon-cyan);
   font-family:
 
