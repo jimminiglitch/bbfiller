@@ -42,17 +42,17 @@ document.addEventListener("DOMContentLoaded", function() {
   // ——— ENHANCED AUDIO SYSTEM ———
   const AudioSystem = {
     // Main glitch sound
-    glitchSfx: new Audio('https://cdn.glitch.global/25331b85-e206-4347-93a8-666983818ff8/boot.mp3?v=1746845093718'),
+    glitchSfx: new Audio('sounds/boot.mp3'),
     
     // Additional sound effects
     glitchSounds: [
-      { audio: new Audio('https://cdn.glitch.global/25331b85-e206-4347-93a8-666983818ff8/retro-blip-2-236668.mp3?v=1746891741011'), volume: CONFIG.audio.effectsVolume * 0.8 },
-      { audio: new Audio('https://cdn.glitch.global/25331b85-e206-4347-93a8-666983818ff8/big-robot-footstep-330678.mp3?v=1746884720082'), volume: CONFIG.audio.effectsVolume * 0.6 },
-      { audio: new Audio('https://cdn.glitch.global/25331b85-e206-4347-93a8-666983818ff8/typing-42562.mp3?v=1746884408348'), volume: CONFIG.audio.effectsVolume }
+      { audio: new Audio('sounds/glitch1.mp3'), volume: CONFIG.audio.effectsVolume * 0.8 },
+      { audio: new Audio('sounds/glitch2.mp3'), volume: CONFIG.audio.effectsVolume * 0.6 },
+      { audio: new Audio('sounds/glitch3.mp3'), volume: CONFIG.audio.effectsVolume * 0.4 }
     ],
     
     // Low frequency drone for ambience
-    droneSfx: new Audio('https://cdn.glitch.global/25331b85-e206-4347-93a8-666983818ff8/psychtoad.mp3?v=1746846223194'),
+    droneSfx: new Audio('sounds/psychtoad.mp3'),
     
     init() {
       // Set up main glitch sound
@@ -339,7 +339,7 @@ document.addEventListener("DOMContentLoaded", function() {
       
       // Create profile image
       this.profileImage = document.createElement("img");
-      this.profileImage.src = "https://cdn.glitch.global/09e9ba26-fd4e-41f2-88c1-651c3d32a01a/Benny.png?v=1746392528967";
+      this.profileImage.src = "images/Benny.png";
       this.profileImage.style.width = "150px";
       this.profileImage.style.height = "150px";
       this.profileImage.style.borderRadius = "50%";

@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Try to play boot sound
     try {
-      const bootSound = new Audio("/sounds/boot.mp3")
+      const bootSound = new Audio("sounds/boot.mp3")
       bootSound.volume = 0.3
       bootSound.play().catch((e) => {
         console.log("Audio play prevented by browser")
